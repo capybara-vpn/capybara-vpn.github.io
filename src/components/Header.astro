@@ -1,0 +1,81 @@
+---
+import { site, nav } from '../data/site';
+import Icon from './Icon.astro';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const logoSrc = `${base.endsWith('/') ? base.slice(0, -1) : base}/logo.png`;
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50">
+  <!-- announcement strip -->
+  <div class="border-b border-white/8 bg-[#0b0e14]/80">
+    <p class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-[12.5px] leading-snug text-[#9aa6b2]">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#60a1a3]" aria-hidden="true"></span>
+      <span>Capybara VPN — спокойный VPN с подпиской от 249 ₽. Подключение через Telegram или браузер.</span>
+    </p>
+  </div>
+
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6" aria-label="Основная навигация">
+    <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх страницы">
+      <img
+        src={logoSrc}
+        alt=""
+        width="36"
+        height="36"
+        class="h-9 w-9 rounded-full object-cover ring-1 ring-white/15"
+        loading="eager"
+        decoding="async"
+      />
+      <span class="text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
+    </a>
+
+    <div class="hidden items-center gap-7 lg:flex">
+      {
+        nav.map((n) => (
+          <a
+            href={n.href}
+            class="text-[14px] font-medium text-[#9aa6b2] transition-colors hover:text-white"
+          >
+            {n.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="#pricing"
+        class="btn btn-ghost hidden px-4 py-2 text-[13.5px] sm:inline-flex"
+        aria-label="Перейти к тарифам"
+      >
+        Тарифы
+      </a>
+      <a
+        href={site.telegramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary px-4 py-2 text-[13.5px] sm:px-5 sm:py-2.5 sm:text-sm"
+        data-cta
+        data-placement="header"
+        data-destination="telegram"
+        aria-label="Открыть Capybara VPN в Telegram"
+      >
+        <Icon name="telegram" class="h-4 w-4" />
+        <span>Открыть в Telegram</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- compact mobile nav -->
+  <nav class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
+    <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 text-[13px] font-medium text-[#9aa6b2]">
+      {
+        nav.map((n) => (
+          <a href={n.href} class="whitespace-nowrap py-1 transition-colors hover:text-white">
+            {n.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>

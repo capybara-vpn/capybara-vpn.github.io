@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+
+const cards = [
+  {
+    icon: 'gauge',
+    title: 'Скорость без нервов',
+    text: 'Современный протокол VLESS и каналы до 10 Гбит/с. Видео, звонки и лента — без долгой загрузки.',
+    metric: 'до 10 Гбит/с',
+  },
+  {
+    icon: 'globe',
+    title: 'География на выбор',
+    text: '38 локаций и больше сотни серверов. Переключайтесь между странами в пару касаний.',
+    metric: '38 локаций',
+  },
+  {
+    icon: 'bolt',
+    title: 'Простота подключения',
+    text: 'Никаких конфигов вручную. Открыли бота или браузер, нажали пару кнопок — готово.',
+    metric: '≈ 2 минуты',
+  },
+  {
+    icon: 'eye',
+    title: 'Спокойная приватность',
+    text: 'Минимум лишних данных: никаких сложных анкет. Серверы работают в режиме RAM-only — без долговременных логов.',
+    metric: 'VLESS',
+  },
+  {
+    icon: 'telegram',
+    title: 'Поддержка в Telegram',
+    text: 'Живая помощь там, где вы уже есть. Вопрос — сообщение — ответ. Без тикет-систем.',
+    metric: 'в Telegram',
+  },
+  {
+    icon: 'device',
+    title: 'Ваши устройства',
+    text: 'iOS, Android, Windows, macOS, Linux и TV. Знакомая среда везде, где вы смотрите и работаете.',
+    metric: '1 устройство / тариф',
+  },
+];
+---
+
+<section id="benefits" class="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:py-10" aria-labelledby="benefits-title">
+  <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Почему Capybara</p>
+      <h2 id="benefits-title" class="display mt-4 text-4xl text-white sm:text-5xl">
+        Спокойный сервис для быстрого интернета
+      </h2>
+    </div>
+    <p class="lead max-w-sm text-[15px]">
+      Техника — на втором плане. На первом — ощущение, что всё просто работает.
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      cards.map((c, i) => (
+        <article
+          class="reveal card-lift glass group rounded-3xl p-7"
+          style={`--reveal-delay:${(i % 3) * 90}ms`}
+        >
+          <span class="icon-wrap flex h-12 w-12 items-center justify-center rounded-2xl border border-[#60a1a3]/30 bg-[#60a1a3]/12 text-[#8fc3c4]">
+            <Icon name={c.icon as never} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-[19px] font-semibold tracking-tight text-white">{c.title}</h3>
+          <p class="mt-2.5 text-[14.5px] leading-relaxed text-[#9aa6b2]">{c.text}</p>
+          <p class="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[12.5px] font-semibold text-[#c6d4d4]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#60a1a3]" aria-hidden="true" />
+            {c.metric}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<div
+  id="mobile-cta"
+  class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b0e14]/92 px-3 pt-2.5 md:hidden"
+  style="padding-bottom: calc(10px + env(safe-area-inset-bottom)); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);"
+  role="navigation"
+  aria-label="Быстрые действия"
+>
+  <div class="grid grid-cols-2 gap-2">
+    <a
+      href={site.telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary px-3 py-3 text-[14px]"
+      data-cta
+      data-placement="sticky"
+      data-destination="telegram"
+      aria-label="Открыть Capybara VPN в Telegram"
+    >
+      <Icon name="telegram" class="h-4.5 w-4.5" />
+      Telegram
+    </a>
+    <a
+      href={site.browserUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-ghost px-3 py-3 text-[14px]"
+      data-cta
+      data-placement="sticky"
+      data-destination="browser"
+      aria-label="Открыть Capybara VPN в браузере"
+    >
+      <Icon name="globe" class="h-4.5 w-4.5 text-[#8fc3c4]" />
+      Браузер
+    </a>
+  </div>
+</div>

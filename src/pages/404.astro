@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Страница не найдена — Capybara VPN"
+  description="Такой страницы нет. Вернитесь на главную Capybara VPN: тарифы от 249 ₽, подключение через Telegram или браузер."
+  canonicalPath="/404"
+>
+  <main class="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-6 text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="display mt-4 text-5xl text-white">Такой страницы нет</h1>
+    <p class="lead mt-4">Зато есть быстрый VPN от 249 ₽. Вернёмся к главному?</p>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href="/" class="btn btn-primary px-6 py-3.5">На главную</a>
+      <a href={site.telegramUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer">
+        Открыть в Telegram
+      </a>
+    </div>
+  </main>
+</BaseLayout>

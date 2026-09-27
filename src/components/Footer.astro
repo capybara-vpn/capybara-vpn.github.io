@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+const logoSrc = `${b}/logo.png`;
+---
+
+<footer class="border-t border-white/8 bg-[#090c11]" aria-label="Подвал сайта">
+  <div class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between">
+    <div class="max-w-sm">
+      <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх">
+        <img src={logoSrc} alt="" width="32" height="32" loading="lazy" decoding="async" class="h-8 w-8 rounded-full object-cover ring-1 ring-white/15" />
+        <span class="text-[15px] font-semibold tracking-tight text-white">Capybara VPN</span>
+      </a>
+      <p class="mt-4 text-[13.5px] leading-relaxed text-[#6b7684]">
+        Спокойный и быстрый VPN. Подключение через Telegram или браузер.
+        Тарифы от 249 ₽, каждый — на 1 устройство.
+      </p>
+      <div class="mt-5 flex gap-2">
+        <a
+          href={site.telegramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
+          data-cta
+          data-placement="footer"
+          data-destination="telegram"
+          aria-label="Capybara VPN в Telegram"
+        >
+          <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
+          Telegram
+        </a>
+        <a
+          href={site.browserUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
+          data-cta
+          data-placement="footer"
+          data-destination="browser"
+          aria-label="Capybara VPN в браузере"
+        >
+          <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
+          Браузер
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid grid-cols-2 gap-x-12 gap-y-2.5 text-[14px] sm:flex sm:gap-8" aria-label="Навигация в подвале">
+      <a href="#benefits" class="text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
+      <a href="#how" class="text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
+      <a href="#platforms" class="text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
+      <a href="#pricing" class="text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
+      <a href="#faq" class="text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+    </nav>
+  </div>
+
+  <div class="border-t border-white/6">
+    <div class="mx-auto max-w-6xl px-4 py-5 text-[12.5px] text-[#6b7684] sm:px-6">
+      <p>© {year} Capybara VPN. Все права защищены.</p>
+    </div>
+  </div>
+  <!-- spacer so mobile sticky bar never covers footer content -->
+  <div class="h-[76px] md:hidden" aria-hidden="true"></div>
+</footer>

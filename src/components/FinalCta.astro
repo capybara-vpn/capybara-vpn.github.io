@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+const logoSrc = `${b}/logo.png`;
+---
+
+<section id="final" class="relative overflow-hidden border-t border-white/8" aria-labelledby="final-title">
+  <div class="ambient left-1/2 top-1/2 h-[480px] w-[820px] -translate-x-1/2 -translate-y-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
+  <div class="dotgrid absolute inset-0 opacity-50" aria-hidden="true"></div>
+
+  <div class="reveal relative mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:py-32">
+    <img
+      src={logoSrc}
+      alt="Логотип Capybara VPN"
+      width="120"
+      height="120"
+      loading="lazy"
+      decoding="async"
+      class="h-24 w-24 rounded-full object-cover shadow-[0_24px_70px_-18px_rgba(96,161,163,0.6)] ring-1 ring-white/20 sm:h-28 sm:w-28"
+    />
+    <h2 id="final-title" class="display mt-8 text-[42px] text-white sm:text-6xl">
+      Попробуйте Capybara сегодня
+    </h2>
+    <p class="lead mt-4 max-w-xl text-[16px]">
+      Тариф от 249 ₽, подключение за пару минут, безлим уже внутри.
+      Выберите, где удобнее начать.
+    </p>
+    <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <a
+        href={site.telegramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary px-8 py-4 text-[16px]"
+        data-cta
+        data-placement="final"
+        data-destination="telegram"
+        aria-label="Открыть Capybara VPN в Telegram"
+      >
+        <Icon name="telegram" class="h-5 w-5" />
+        Открыть в Telegram
+      </a>
+      <a
+        href={site.browserUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-ghost px-8 py-4 text-[16px]"
+        data-cta
+        data-placement="final"
+        data-destination="browser"
+        aria-label="Открыть Capybara VPN в браузере"
+      >
+        <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
+        Открыть в браузере
+      </a>
+    </div>
+    <p class="mt-5 text-[13px] text-[#6b7684]">1 тариф — 1 устройство · VLESS · 38 локаций · поддержка в Telegram</p>
+  </div>
+</section>

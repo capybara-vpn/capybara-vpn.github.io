@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="problem-title">
+  <div class="reveal max-w-2xl">
+    <p class="eyebrow">Проблема → решение</p>
+    <h2 id="problem-title" class="display mt-4 text-4xl text-white sm:text-5xl">
+      VPN не должен быть второй работой
+    </h2>
+    <p class="lead mt-4 text-[16px]">
+      Знакомо: сайты открываются через раз, видео подвисает, а подключение требует
+      инструкций, форумов и лишних настроек. Capybara убирает лишнее.
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-4 lg:grid-cols-2">
+    <div class="reveal hairline rounded-3xl bg-white/[0.02] p-7 sm:p-9" style="--reveal-delay:60ms">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#6b7684]">Без Capybara</p>
+      <ul class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#9aa6b2]">
+        <li class="flex gap-3">
+          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#6b7684]">–</span>
+          Соединение тормозит именно тогда, когда оно нужно.
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#6b7684]">–</span>
+          Приходится разбираться в протоколах и конфигах.
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#6b7684]">–</span>
+          Непонятные тарифы и оплата через три перехода.
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal relative overflow-hidden rounded-3xl border border-[#60a1a3]/30 bg-gradient-to-b from-[#60a1a3]/14 to-[#60a1a3]/4 p-7 sm:p-9" style="--reveal-delay:140ms">
+      <div class="ambient -top-20 -right-20 h-64 w-64 bg-[#60a1a3]/25" aria-hidden="true"></div>
+      <p class="relative text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8fc3c4]">С Capybara</p>
+      <ul class="relative mt-5 space-y-4 text-[15px] leading-relaxed text-[#e8efef]">
+        <li class="flex gap-3">
+          <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#60a1a3] text-[#061114]">
+            <Icon name="check" class="h-3.5 w-3.5" />
+          </span>
+          Подключились. Выбрали локацию. Пользуетесь.
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#60a1a3] text-[#061114]">
+            <Icon name="check" class="h-3.5 w-3.5" />
+          </span>
+          Всё управление — в привычном Telegram или в браузере.
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#60a1a3] text-[#061114]">
+            <Icon name="check" class="h-3.5 w-3.5" />
+          </span>
+          Три понятных тарифа от 249 ₽. Безлим уже включён.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

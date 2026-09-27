@@ -1,0 +1,38 @@
+---
+import { facts } from '../data/site';
+import Icon from './Icon.astro';
+
+const items = [
+  { icon: 'bolt', title: facts.protocol, note: 'современный протокол' },
+  { icon: 'globe', title: facts.locationsLabel, note: 'на выбор' },
+  { icon: 'server', title: facts.serversLabel, note: 'инфраструктура' },
+  { icon: 'gauge', title: `до ${facts.speed}`, note: 'каналы связи' },
+  { icon: 'device', title: '1 устройство', note: 'на каждый тариф' },
+  { icon: 'card', title: facts.traffic, note: 'трафик во всех тарифах' },
+] as const;
+---
+
+<section aria-label="Ключевые факты о Capybara VPN" class="relative border-y border-white/8 bg-[#0e1219]/80">
+  <div class="rail overflow-hidden" role="list">
+    <div class="rail-track flex w-max items-center">
+      {
+        [0, 1].map((dup) => (
+          <div class="flex items-center" aria-hidden={dup === 1 ? 'true' : undefined}>
+            {items.map((it) => (
+              <div role={dup === 0 ? 'listitem' : undefined} class="flex items-center gap-3 px-7 py-4">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full border border-[#60a1a3]/30 bg-[#60a1a3]/10 text-[#8fc3c4]">
+                  <Icon name={it.icon as never} class="h-4.5 w-4.5" />
+                </span>
+                <span class="leading-tight">
+                  <span class="block text-[14.5px] font-semibold text-white">{it.title}</span>
+                  <span class="block text-[12px] text-[#6b7684]">{it.note}</span>
+                </span>
+                <span class="ml-5 h-1 w-1 rounded-full bg-white/15" aria-hidden="true" />
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

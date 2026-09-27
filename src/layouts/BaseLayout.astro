@@ -1,0 +1,228 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = site.seo.title,
+  description = site.seo.description,
+  canonicalPath = '/',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL ?? '/';
+const withBase = (p: string) => {
+  const b = base.endsWith('/') ? base.slice(0, -1) : base;
+  const path = p.startsWith('/') ? p : `/${p}`;
+  return `${b}${path}` || '/';
+};
+
+// site.siteUrl is the full public URL (origin + base). Derive origin here so
+// asset URLs never get a doubled base path (withBase already includes it).
+const origin = new URL(site.siteUrl).origin;
+const abs = (p: string) => `${origin}${withBase(p)}`;
+
+const pageUrl = `${origin}${withBase(canonicalPath)}`;
+const ogImage = abs('og/og-image.png');
+const gaId = site.gaId;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Capybara VPN',
+    url: site.siteUrl,
+    logo: `${origin}${withBase('logo.png')}`,
+    sameAs: [site.telegramUrl],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Capybara VPN',
+    url: site.siteUrl,
+    inLanguage: 'ru',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Capybara VPN',
+    serviceType: 'VPN',
+    url: pageUrl,
+    description: description,
+    provider: { '@type': 'Organization', name: 'Capybara VPN' },
+    areaServed: 'RU',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Тарифы Capybara VPN',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          name: 'Capybara VPN — 30 дней',
+          price: '249',
+          priceCurrency: 'RUB',
+          availability: 'https://schema.org/InStock',
+          url: site.browserUrl,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Capybara VPN — 90 дней',
+          price: '672',
+          priceCurrency: 'RUB',
+          availability: 'https://schema.org/InStock',
+          url: site.browserUrl,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Capybara VPN — 180 дней',
+          price: '1195',
+          priceCurrency: 'RUB',
+          availability: 'https://schema.org/InStock',
+          url: site.browserUrl,
+        },
+      ],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Что такое Capybara VPN?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Capybara VPN — сервис для спокойного и быстрого доступа в интернет. Подключение занимает пару минут через Telegram-бота или прямо в браузере, без сложных настроек.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Это вообще законно?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Да. VPN — это технология шифрования трафика, она легальна и используется банками, корпорациями и обычными пользователями для защиты данных.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Сколько стоит подписка?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '30 дней — 249 ₽, 90 дней — 672 ₽ со скидкой 10%, 180 дней — 1195 ₽ со скидкой 20%. Каждый тариф включает безлимитный трафик.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Сколько устройств можно подключить?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Количество устройств зависит от выбранного тарифа. На одной подписке можно подключить телефон, ноутбук, планшет, ТВ и роутер.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Точно ли не сохраняются логи?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Мы не храним историю посещений, IP-адреса и DNS-запросы. Серверы работают в режиме RAM-only без долговременных логов.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Как оплатить из России?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Доступны популярные способы оплаты: карты, СБП и другие провайдеры, подключённые к сервису.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Можно ли вернуть деньги?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Да, предусмотрен простой возврат в рамках правил сервиса. Обратитесь в поддержку с номером платежа.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Есть ли ограничения по трафику?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Нет. Во всех тарифах трафик безлимитный.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Как подключиться?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Выберите тариф, откройте Capybara VPN в Telegram или в браузере и следуйте короткой инструкции. Обычно подключение занимает несколько минут.',
+        },
+      },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="ru" data-ga-id={gaId}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Capybara VPN" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32.png')} />
+    <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('manifest.webmanifest')} />
+
+    <link rel="preload" as="image" href={withBase('logo.png')} fetchpriority="high" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="noise min-h-screen antialiased">
+    <a href="#main" class="skip-link">Перейти к содержимому</a>
+    <div id="cursor-glow" aria-hidden="true"></div>
+    <slot />
+
+    <!-- Consent Mode defaults: denied until user agrees -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
+    </script>
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>

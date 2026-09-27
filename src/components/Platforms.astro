@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { facts } from '../data/site';
+
+const platforms = [
+  { name: 'iOS', icon: 'phone', note: 'iPhone · iPad' },
+  { name: 'Android', icon: 'phone', note: 'смартфоны · планшеты' },
+  { name: 'Windows', icon: 'grid', note: 'ПК · ноутбуки' },
+  { name: 'macOS', icon: 'laptop', note: 'Mac' },
+  { name: 'Linux', icon: 'terminal', note: 'десктоп' },
+  { name: 'TV', icon: 'tv', note: 'Smart TV' },
+] as const;
+---
+
+<section id="platforms" class="relative border-y border-white/8 bg-[#0e1219]/60" aria-labelledby="platforms-title">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-24">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow justify-center">Платформы</p>
+      <h2 id="platforms-title" class="display mt-4 text-4xl text-white sm:text-5xl">
+        Работает на ваших устройствах
+      </h2>
+      <p class="lead mt-4 text-[16px]">
+        Один сервис — знакомая среда везде. Купить VPN можно и для телефона, и для
+        компьютера: iOS, Android, Windows, macOS, Linux и TV.
+      </p>
+    </div>
+
+    <ul class="reveal mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" aria-label="Поддерживаемые платформы">
+      {
+        platforms.map((p) => (
+          <li class="card-lift glass flex flex-col items-center gap-1.5 rounded-2xl px-3 py-6 text-center">
+            <span class="icon-wrap flex h-11 w-11 items-center justify-center rounded-xl border border-[#60a1a3]/25 bg-[#60a1a3]/10 text-[#8fc3c4]">
+              <Icon name={p.icon as never} class="h-5.5 w-5.5" />
+            </span>
+            <span class="mt-2 text-[15px] font-semibold text-white">{p.name}</span>
+            <span class="text-[12px] text-[#6b7684]">{p.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="reveal mx-auto mt-7 max-w-xl text-center text-[13.5px] leading-relaxed text-[#9aa6b2]">
+      Важно: выбранный тариф действует на <strong class="font-semibold text-white">1 устройство</strong>.
+      Подписка не покрывает несколько устройств одновременно.
+    </p>
+  </div>
+</section>

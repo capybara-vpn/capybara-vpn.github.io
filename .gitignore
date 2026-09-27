@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# astro cache
+.astro/
+
+# logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# local debug scratchpad (playwright/puppeteer probes, screenshots)
+/tmp/
