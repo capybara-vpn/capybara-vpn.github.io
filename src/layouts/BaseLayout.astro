@@ -202,6 +202,13 @@ const jsonLd = [
 
     <link rel="preload" as="image" href={withBase('logo.png')} fetchpriority="high" />
 
+    <!-- Google tag: library loads always (detectable by GA verification),
+         but Consent Mode defaults to denied (see body script), so no data
+         is collected until the visitor grants analytics consent. -->
+    {!gaId.includes('XXXX') && (
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+    )}
+
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="noise min-h-screen antialiased">

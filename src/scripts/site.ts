@@ -192,16 +192,16 @@ if (glow && !reduced && window.matchMedia('(pointer: fine)').matches) {
 /* ---------- consent + GA4 lazy load ---------- */
 const CONSENT_KEY = 'capybara-consent-v1';
 const banner = document.getElementById('consent');
-let gaLoaded = false;
+let gaConfigured = false;
 
-function loadGA(id: string) {
-  if (gaLoaded || !id || id.includes('XXXX')) return;
-  gaLoaded = true;
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
-  document.head.appendChild(s);
-  track('page_view', {});
+function configureGA(id: string) {
+  if (gaConfigured || !id || id.includes('XXXX')) return;
+  gaConfigured = true;
+  try {
+    (window as unknown as { gtag: (...a: unknown[]) => void }).gtag('config', id);
+  } catch {
+    /* noop */
+  }
 }
 
 function applyConsent(value: 'granted' | 'denied') {
@@ -219,7 +219,7 @@ function applyConsent(value: 'granted' | 'denied') {
     const id =
       document.documentElement.dataset.gaId ||
       (document.getElementById('ga-id')?.textContent?.trim() ?? '');
-    if (id) loadGA(id);
+    if (id) configureGA(id);
   }
 }
 
