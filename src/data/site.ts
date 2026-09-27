@@ -28,7 +28,7 @@ export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io/capybar
 // Keep in sync for canonical / sitemap / OG absolute URLs.
 export const SITE_BASE = '/';
 
-export const GA_ID = 'G-XXXXXXXXXX';
+export const GA_ID = 'G-FHS5BR8L5J';
 
 export const site = {
   brand: 'Capybara VPN',
