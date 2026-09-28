@@ -232,7 +232,7 @@ const stored = (() => {
 })();
 
 if (stored === 'granted' || stored === 'denied') {
-  banner?.remove();
+  banner?.classList.add('hidden');
   applyConsent(stored);
 } else {
   banner?.classList.remove('hidden');
@@ -245,7 +245,7 @@ document.getElementById('consent-accept')?.addEventListener('click', () => {
     /* noop */
   }
   applyConsent('granted');
-  banner?.remove();
+  banner?.classList.add('hidden');
   track('consent_granted', {});
 });
 document.getElementById('consent-decline')?.addEventListener('click', () => {
@@ -255,7 +255,7 @@ document.getElementById('consent-decline')?.addEventListener('click', () => {
     /* noop */
   }
   applyConsent('denied');
-  banner?.remove();
+  banner?.classList.add('hidden');
 });
 document.getElementById('consent-manage')?.addEventListener('click', () => {
   try {
