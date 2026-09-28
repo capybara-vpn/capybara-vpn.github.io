@@ -17,13 +17,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 170px;
-}
-
-@media (min-width: 640px) {
-  html {
-    scroll-padding-top: 88px;
-  }
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -125,17 +119,6 @@ body {
   outline: 2px solid #8fc3c4;
   outline-offset: 3px;
   border-radius: 12px;
-}
-
-/* .btn sets display:inline-flex in unlayered CSS, which beats Tailwind's
-   layered display utilities. Restore responsive hiding for buttons. */
-.btn.hidden {
-  display: none;
-}
-@media (min-width: 640px) {
-  .btn.sm\:inline-flex {
-    display: inline-flex;
-  }
 }
 
 /* ---------- background decor ---------- */
@@ -296,9 +279,13 @@ details.faq[open] .faq-body {
   top: 12px;
 }
 
-/* NOTE: no content-visibility here on purpose: estimated intrinsic sizes
-   shift layout while sections render, which breaks anchor navigation
-   (the page is static HTML and renders fast anyway). */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+#hero, #final {
+  content-visibility: visible;
+}
 
 #cursor-glow {
   position: fixed;

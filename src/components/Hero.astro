@@ -7,7 +7,7 @@ const b = base.endsWith('/') ? base.slice(0, -1) : base;
 const logoSrc = `${b}/logo.png`;
 ---
 
-<section id="hero" class="relative overflow-hidden pt-[176px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
+<section id="hero" class="relative overflow-hidden pt-[148px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
   <!-- ambient background -->
   <div class="ambient left-1/2 top-[-320px] h-[560px] w-[900px] -translate-x-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
   <div class="ambient right-[-180px] top-[30%] h-[420px] w-[420px] bg-[#3c6f71]/14" aria-hidden="true"></div>
@@ -22,7 +22,7 @@ const logoSrc = `${b}/logo.png`;
         Быстрый VPN · VLESS · от 249 ₽
       </p>
 
-      <h1 data-hero-in class="display mt-5 text-[40px] text-[#f2f4f3] sm:text-[64px] lg:text-[76px]">
+      <h1 data-hero-in class="display mt-5 text-[44px] text-[#f2f4f3] sm:text-[64px] lg:text-[76px]">
         Интернет —<br />
         <span class="bg-gradient-to-r from-[#a8d8d9] via-[#60a1a3] to-[#4d888a] bg-clip-text text-transparent">без лишней суеты</span>
       </h1>
@@ -68,32 +68,32 @@ const logoSrc = `${b}/logo.png`;
       <dl data-hero-in class="mt-7 grid max-w-lg grid-cols-3 gap-3">
         <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
           <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Протокол</dt>
-          <dd class="mt-1 text-[14px] font-semibold text-white sm:text-[15px]">{facts.protocol}</dd>
+          <dd class="mt-1 text-[15px] font-semibold text-white">{facts.protocol}</dd>
         </div>
         <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
           <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Локации</dt>
-          <dd class="mt-1 text-[14px] font-semibold text-white sm:text-[15px]">{facts.locationsLabel}</dd>
+          <dd class="mt-1 text-[15px] font-semibold text-white">{facts.locationsLabel}</dd>
         </div>
         <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
           <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Каналы</dt>
-          <dd class="mt-1 text-[14px] font-semibold text-white sm:text-[15px]">до {facts.speed}</dd>
+          <dd class="mt-1 text-[15px] font-semibold text-white">до {facts.speed}</dd>
         </div>
       </dl>
     </div>
 
     <!-- Visual composition -->
     <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" aria-label="Логотип Capybara VPN в световой композиции">
-      <div class="glow-pulse absolute h-[320px] w-[320px] rounded-full bg-[#60a1a3]/22 blur-[100px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
+      <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
 
       <!-- orbit rings -->
-      <div class="orbit-slow absolute h-[320px] w-[320px] rounded-full border border-dashed border-white/12 sm:h-[480px] sm:w-[480px]" aria-hidden="true">
+      <div class="orbit-slow absolute h-[420px] w-[420px] rounded-full border border-dashed border-white/12 sm:h-[480px] sm:w-[480px]" aria-hidden="true">
         <span class="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-[#8fc3c4] shadow-[0_0_18px_rgba(143,195,196,0.9)]"></span>
       </div>
-      <div class="orbit-rev absolute h-[260px] w-[260px] rounded-full border border-white/10 sm:h-[380px] sm:w-[380px]" aria-hidden="true">
+      <div class="orbit-rev absolute h-[330px] w-[330px] rounded-full border border-white/10 sm:h-[380px] sm:w-[380px]" aria-hidden="true">
         <span class="absolute top-1/2 -right-1 h-2 w-2 -translate-y-1/2 rounded-full bg-white/70"></span>
         <span class="absolute bottom-8 left-10 h-1.5 w-1.5 rounded-full bg-[#60a1a3]"></span>
       </div>
-      <div class="absolute h-[210px] w-[210px] rounded-full border border-[#60a1a3]/25 sm:h-[250px] sm:w-[250px]" aria-hidden="true"></div>
+      <div class="absolute h-[250px] w-[250px] rounded-full border border-[#60a1a3]/25" aria-hidden="true"></div>
 
       <!-- logo core -->
       <div class="relative">
