@@ -46,7 +46,7 @@ export const site = {
     height: 640,
   },
   seo: {
-    title: 'Capybara VPN — быстрый VPN от 249 ₽ | Telegram и браузер',
+    title: 'Capybara VPN — быстрый VPN от 249 ₽ для всех устройств',
     description:
       'Capybara VPN — спокойный и быстрый VPN с подпиской от 249 ₽. Подключение за пару минут через Telegram или прямо в браузере. VLESS, 38 локаций, 100+ серверов, каналы до 10 Гбит/с.',
     keywords: [
