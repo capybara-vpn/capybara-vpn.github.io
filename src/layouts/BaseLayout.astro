@@ -190,7 +190,7 @@ const jsonLd = jsonLdAll.filter(
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={canonicalPath === '/404' ? 'noindex, follow' : 'index, follow'} />
     <meta name="theme-color" content={site.themeColor} />
     <meta name="color-scheme" content="dark" />
 
