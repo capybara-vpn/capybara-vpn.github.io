@@ -6,12 +6,14 @@ interface Props {
   title?: string;
   description?: string;
   canonicalPath?: string;
+  showFaq?: boolean;
 }
 
 const {
   title = site.seo.title,
   description = site.seo.description,
   canonicalPath = '/',
+  showFaq = true,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL ?? '/';
@@ -30,7 +32,7 @@ const pageUrl = `${origin}${withBase(canonicalPath)}`;
 const ogImage = abs('og/og-image.png');
 const gaId = site.gaId;
 
-const jsonLd = [
+const jsonLdAll = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -173,6 +175,11 @@ const jsonLd = [
     ],
   },
 ];
+// FAQPage matches the homepage FAQ; guides carry their own Article/HowTo
+// markup, so drop it there to keep structured data truthful.
+const jsonLd = jsonLdAll.filter(
+  (x) => showFaq || (x as Record<string, unknown>)["@type"] !== "FAQPage"
+);
 ---
 
 <!doctype html>
@@ -218,6 +225,7 @@ const jsonLd = [
     )}
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body class="noise min-h-screen antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>

@@ -5,6 +5,7 @@ import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL ?? '/';
 const b = base.endsWith('/') ? base.slice(0, -1) : base;
+const withBase = (p: string) => `${b}${p}`;
 const logoSrc = `${b}/logo.png`;
 ---
 
@@ -49,13 +50,25 @@ const logoSrc = `${b}/logo.png`;
       </div>
     </div>
 
-    <nav class="grid grid-cols-2 gap-x-12 gap-y-2.5 text-[14px] sm:flex sm:gap-8" aria-label="Навигация в подвале">
-      <a href="#benefits" class="text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
-      <a href="#how" class="text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
-      <a href="#platforms" class="text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
-      <a href="#pricing" class="text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
-      <a href="#faq" class="text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
-    </nav>
+    <div class="flex flex-col gap-8 sm:flex-row sm:gap-16">
+      <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Навигация в подвале">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b7684]">Разделы</p>
+        <a href={withBase('/#benefits')} class="text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
+        <a href={withBase('/#how')} class="text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
+        <a href={withBase('/#platforms')} class="text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
+        <a href={withBase('/#pricing')} class="text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
+        <a href={withBase('/#faq')} class="text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+      </nav>
+
+      <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Гид по сервису">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b7684]">Гид</p>
+        <a href={withBase('/tarify')} class="text-[#9aa6b2] transition-colors hover:text-white">Тарифы подробно</a>
+        <a href={withBase('/vless')} class="text-[#9aa6b2] transition-colors hover:text-white">Что такое VLESS</a>
+        <a href={withBase('/ios')} class="text-[#9aa6b2] transition-colors hover:text-white">Настройка на iOS</a>
+        <a href={withBase('/android')} class="text-[#9aa6b2] transition-colors hover:text-white">Настройка на Android</a>
+        <a href={withBase('/windows')} class="text-[#9aa6b2] transition-colors hover:text-white">Настройка на Windows</a>
+      </nav>
+    </div>
   </div>
 
   <div class="border-t border-white/6">

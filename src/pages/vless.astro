@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import Consent from '../components/Consent.astro';
+import Related from '../components/Related.astro';
+import GuideCta from '../components/GuideCta.astro';
+import { site } from '../data/site';
+
+const title = 'Что такое VLESS: протокол Capybara VPN простыми словами';
+const description =
+  'VLESS — современный протокол VPN: быстрый, стабильный, устойчивый к блокировкам. Объясняем просто + где он уже настроен.';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  author: { '@type': 'Organization', name: 'Capybara VPN' },
+  about: 'Протокол VLESS',
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/vless/" showFaq={false}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <div id="top">
+    <Header />
+    <main id="main">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+        <nav class="reveal text-[13px] text-[#6b7684]" aria-label="Хлебные крошки">
+          <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+          <span aria-hidden="true"> → </span>
+          <span class="text-[#9aa6b2]">VLESS</span>
+        </nav>
+        <p class="eyebrow reveal mt-6">Гид · Технологии</p>
+        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
+          Что такое VLESS — простыми словами
+        </h1>
+        <p class="lead reveal mt-4 text-[16.5px]">
+          VLESS — современный протокол подключения, на котором работает Capybara VPN.
+          Именно он отвечает за то, что видео не виснет, а соединение не отваливается вечером.
+        </p>
+
+        <div class="guide-body reveal mt-8">
+          <h2>Зачем вообще нужен протокол</h2>
+          <p>
+            VPN — это не волшебство, а договорённость: как ваше устройство упаковывает
+            трафик и разговаривает с сервером. Старые протоколы легко узнать и замедлить —
+            отсюда классика: «VPN работает через раз». Современные протоколы лишены
+            этих слабостей.
+          </p>
+
+          <h2>Чем VLESS лучше</h2>
+          <ul>
+            <li><strong>Скорость.</strong> Минимальные накладные расходы: там, где старые протоколы режут скорость вдвое, VLESS держит почти полную.</li>
+            <li><strong>Стабильность.</strong> Соединение не рвётся и не «умирает» в час пик.</li>
+            <li><strong>Устойчивость.</strong> Трафик выглядит как обычный, его сложнее детектить и резать.</li>
+          </ul>
+
+          <h2>Протокол — это половина дела</h2>
+          <p>
+            Вторая половина — серверы. Толку от хорошего протокола на перегруженном
+            сервере мало. Поэтому смотрите на три вещи: количество серверов и локаций
+            (десятки, а не штуки), ширину каналов (гигабиты) и безлимит трафика.
+          </p>
+          <blockquote>
+            Capybara VPN: VLESS + 38 локаций + больше сотни серверов с каналами
+            до 10 Гбит/с. Протокол уже выбран и настроен — вам ничего делать не нужно.
+          </blockquote>
+
+          <h2>Нужно ли в этом разбираться</h2>
+          <p>
+            Нет. Вы открываете <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram-бота</a>
+            или <a href={site.browserUrl} target="_blank" rel="noopener noreferrer">браузерную версию</a>,
+            выбираете локацию — и пользуетесь. VLESS работает внутри, незаметно.
+            А проверить всё можно бесплатно: первый день и 10 ГБ на тест, карта не нужна.
+          </p>
+        </div>
+
+        <GuideCta />
+        <Related current={`${b}/vless/`} />
+      </article>
+    </main>
+    <Footer />
+    <MobileCta />
+    <Consent />
+  </div>
+</BaseLayout>

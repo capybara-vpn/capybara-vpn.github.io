@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import Consent from '../components/Consent.astro';
+import Related from '../components/Related.astro';
+import GuideCta from '../components/GuideCta.astro';
+import { site } from '../data/site';
+
+const title = 'Тарифы Capybara VPN: 30, 90 и 180 дней — что выбрать';
+const description =
+  'Тарифы Capybara VPN: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Безлимит, оплата картой и СБП, первый день бесплатно.';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  author: { '@type': 'Organization', name: 'Capybara VPN' },
+  about: 'Тарифы VPN-сервиса Capybara VPN',
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/tarify/" showFaq={false}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <div id="top">
+    <Header />
+    <main id="main">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+        <nav class="reveal text-[13px] text-[#6b7684]" aria-label="Хлебные крошки">
+          <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+          <span aria-hidden="true"> → </span>
+          <span class="text-[#9aa6b2]">Тарифы</span>
+        </nav>
+        <p class="eyebrow reveal mt-6">Гид · Тарифы</p>
+        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
+          Тарифы Capybara VPN: 30, 90 или 180 дней
+        </h1>
+        <p class="lead reveal mt-4 text-[16.5px]">
+          Три тарифа без мелкого шрифта. Везде — безлимитный трафик, VLESS,
+          38 локаций, оплата картой и через СБП. А перед любым тарифом —
+          бесплатный день на тест.
+        </p>
+
+        <div class="guide-body reveal mt-8">
+          <table>
+            <thead>
+              <tr><th>Срок</th><th>Цена</th><th>Скидка</th><th>В месяц</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>30 дней</strong></td><td>249 ₽</td><td>—</td><td>249 ₽</td></tr>
+              <tr><td><strong>90 дней</strong></td><td>672 ₽</td><td>−10%</td><td>224 ₽</td></tr>
+              <tr><td><strong>180 дней</strong></td><td>1195 ₽</td><td>−20%</td><td>≈199 ₽</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Какой тариф выбрать</h2>
+          <p>
+            <strong>Не уверены</strong> — начните с бесплатного дня (10 ГБ на тест,
+            карта не нужна), потом берите 30 дней за 249 ₽. Так вы проверите скорость
+            и стабильность именно на своём интернете.
+          </p>
+          <p>
+            <strong>Уже пользуетесь и довольны</strong> — 90 дней за 672 ₽: скидка 10%,
+            экономия 75 ₽, три месяца не думаете о продлении.
+          </p>
+          <p>
+            <strong>Остаётесь надолго</strong> — 180 дней за 1195 ₽: максимальная скидка 20%,
+            месяц выходит около 199 ₽ вместо 249 ₽, экономия 299 ₽.
+          </p>
+
+          <h2>Что входит во все тарифы</h2>
+          <ul>
+            <li>Безлимитный трафик — видео, звонки и работа без ограничений</li>
+            <li>Протокол VLESS и 38 локаций на выбор</li>
+            <li>Работа на iOS, Android, Windows, macOS, Linux, TV и роутерах</li>
+            <li>Поддержка в Telegram — отвечают живые люди</li>
+          </ul>
+
+          <blockquote>
+            Один тариф действует на 1 устройство. Оплата картой или через СБП,
+            подписка активируется сразу после оплаты.
+          </blockquote>
+
+          <h2>А если не понравится</h2>
+          <p>
+            Начните с бесплатного дня — это ни к чему не обязывает. По правилам сервиса
+            предусмотрен возврат: напишите в поддержку с номером платежа, и вам подскажут,
+            что возможно в вашей ситуации. Полные условия — на странице
+            <a href={site.browserUrl} target="_blank" rel="noopener noreferrer">браузерной версии сервиса</a>.
+          </p>
+        </div>
+
+        <GuideCta />
+        <Related current={`${b}/tarify/`} />
+      </article>
+    </main>
+    <Footer />
+    <MobileCta />
+    <Consent />
+  </div>
+</BaseLayout>

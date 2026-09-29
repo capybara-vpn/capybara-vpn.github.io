@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import Consent from '../components/Consent.astro';
+import Related from '../components/Related.astro';
+import GuideCta from '../components/GuideCta.astro';
+import { site } from '../data/site';
+
+const title = 'Capybara VPN на Windows: настройка на ПК и ноутбук';
+const description =
+  'Как подключить Capybara VPN на Windows: установка один раз, дальше в один клик. Первый день бесплатно, от 249 ₽.';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: 'Откройте capybara-vpn.github.io.' },
+    { '@type': 'HowToStep', name: 'Выберите вход', text: 'Нажмите «Открыть в Telegram» или «Открыть в браузере».' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Выберите Windows: 1 день бесплатно, без карты.' },
+    { '@type': 'HowToStep', name: 'Подключитесь', text: 'Поставьте приложение, выберите локацию и включите соединение.' },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/windows/" showFaq={false}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <div id="top">
+    <Header />
+    <main id="main">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+        <nav class="reveal text-[13px] text-[#6b7684]" aria-label="Хлебные крошки">
+          <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+          <span aria-hidden="true"> → </span>
+          <span class="text-[#9aa6b2]">Windows</span>
+        </nav>
+        <p class="eyebrow reveal mt-6">Гид · Windows</p>
+        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
+          Capybara VPN на Windows: ПК и ноутбук
+        </h1>
+        <p class="lead reveal mt-4 text-[16.5px]">
+          Настройка один раз — дальше соединение в один клик вместе с утренним
+          включением компьютера.
+        </p>
+
+        <div class="guide-body reveal mt-8">
+          <h2>Шаг 1. Откройте сайт сервиса</h2>
+          <p>
+            Перейдите на <a href={`${b}/`}>capybara-vpn.github.io</a>.
+          </p>
+
+          <h2>Шаг 2. Выберите, где начать</h2>
+          <p>
+            Нажмите <strong>«Открыть в Telegram»</strong> или
+            <strong>«Открыть в браузере»</strong>.
+          </p>
+
+          <h2>Шаг 3. Заберите пробный период</h2>
+          <p>
+            Выберите устройство <strong>Windows</strong>: первый день — бесплатно,
+            карта не нужна. Поставьте приложение по короткой инструкции.
+          </p>
+
+          <h2>Шаг 4. Включите и работайте</h2>
+          <p>
+            Выберите локацию из 38 и включите соединение. Каналы до 10 Гбит/с держат
+            видеозвонки, файлы и стриминг без просадок.
+          </p>
+
+          <blockquote>
+            Один тариф покрывает и компьютер, и телефон, и телевизор. Понравилось
+            за пробный день — берите 90 дней за 672 ₽ или 180 дней за 1195 ₽.
+          </blockquote>
+        </div>
+
+        <GuideCta />
+        <Related current={`${b}/windows/`} />
+      </article>
+    </main>
+    <Footer />
+    <MobileCta />
+    <Consent />
+  </div>
+</BaseLayout>

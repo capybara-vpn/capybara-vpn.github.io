@@ -1,0 +1,39 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<div class="reveal hairline relative mt-12 overflow-hidden rounded-3xl bg-gradient-to-b from-[#60a1a3]/14 to-transparent p-7 text-center sm:p-10">
+  <p class="display text-2xl text-white sm:text-3xl">Попробуйте Capybara сегодня</p>
+  <p class="lead mx-auto mt-3 max-w-md text-[15px]">
+    Первый день — бесплатно, без карты. Подключение за пару минут.
+  </p>
+  <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+    <a
+      href={site.telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary px-6 py-3.5 text-[15px]"
+      data-cta
+      data-placement="guide"
+      data-destination="telegram"
+      aria-label="Открыть Capybara VPN в Telegram"
+    >
+      <Icon name="telegram" class="h-5 w-5" />
+      Открыть в Telegram
+    </a>
+    <a
+      href={site.browserUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-ghost px-6 py-3.5 text-[15px]"
+      data-cta
+      data-placement="guide"
+      data-destination="browser"
+      aria-label="Открыть Capybara VPN в браузере"
+    >
+      <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
+      Открыть в браузере
+    </a>
+  </div>
+</div>

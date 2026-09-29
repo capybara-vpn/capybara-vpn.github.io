@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import Consent from '../components/Consent.astro';
+import Related from '../components/Related.astro';
+import GuideCta from '../components/GuideCta.astro';
+import { site } from '../data/site';
+
+const title = 'Capybara VPN на iOS: настройка на iPhone и iPad за 5 минут';
+const description =
+  'Как подключить Capybara VPN на iPhone и iPad: 4 шага, 5 минут, первый день бесплатно. Тарифы от 249 ₽.';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: 'Откройте capybara-vpn.github.io в Safari.' },
+    { '@type': 'HowToStep', name: 'Выберите вход', text: 'Нажмите «Открыть в Telegram» или «Открыть в браузере».' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Выберите iOS: 1 день бесплатно, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Подключитесь', text: 'Следуйте инструкции, выберите локацию и включите соединение.' },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/ios/" showFaq={false}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <div id="top">
+    <Header />
+    <main id="main">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+        <nav class="reveal text-[13px] text-[#6b7684]" aria-label="Хлебные крошки">
+          <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+          <span aria-hidden="true"> → </span>
+          <span class="text-[#9aa6b2]">iOS</span>
+        </nav>
+        <p class="eyebrow reveal mt-6">Гид · iOS</p>
+        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
+          Capybara VPN на iPhone и iPad за 5 минут
+        </h1>
+        <p class="lead reveal mt-4 text-[16.5px]">
+          Настройка, с которой справится даже тот, кто «не дружит с техникой»:
+          четыре шага, первый день бесплатно, карта не нужна.
+        </p>
+
+        <div class="guide-body reveal mt-8">
+          <h2>Шаг 1. Откройте сайт сервиса</h2>
+          <p>
+            Перейдите на <a href={`${b}/`}>capybara-vpn.github.io</a> в Safari.
+            Ничего скачивать заранее не нужно.
+          </p>
+
+          <h2>Шаг 2. Выберите, где начать</h2>
+          <p>
+            Две кнопки: <strong>«Открыть в Telegram»</strong> — если удобен мессенджер,
+            и <strong>«Открыть в браузере»</strong> — если проще без него.
+            Оба пути ведут к одной подписке.
+          </p>
+
+          <h2>Шаг 3. Заберите пробный период</h2>
+          <p>
+            Выберите устройство <strong>iOS</strong>: первый день — бесплатно,
+            вы получаете 10 ГБ трафика на тест. Следуйте короткой инструкции —
+            профиль установится сам.
+          </p>
+
+          <h2>Шаг 4. Включите и проверьте</h2>
+          <p>
+            Выберите локацию из 38 и включите соединение. Проверьте скорость на видео
+            и звонках — так вы сразу почувствуете разницу.
+          </p>
+
+          <blockquote>
+            Понравилось — выбирайте тариф: 30 дней за 249 ₽, 90 дней за 672 ₽
+            или 180 дней за 1195 ₽. Вопросы — в поддержку через Telegram.
+          </blockquote>
+        </div>
+
+        <GuideCta />
+        <Related current={`${b}/ios/`} />
+      </article>
+    </main>
+    <Footer />
+    <MobileCta />
+    <Consent />
+  </div>
+</BaseLayout>

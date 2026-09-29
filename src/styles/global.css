@@ -311,6 +311,84 @@ section {
   pointer-events: none;
 }
 
+/* ---------- guide articles ---------- */
+.guide-body {
+  color: var(--color-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.guide-body > * + * {
+  margin-top: 1.1em;
+}
+.guide-body h2 {
+  color: var(--color-cream);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-size: 24px;
+  line-height: 1.25;
+  margin-top: 2em !important;
+}
+.guide-body h3 {
+  color: var(--color-cream);
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 1.6em !important;
+}
+.guide-body strong {
+  color: var(--color-cream);
+  font-weight: 600;
+}
+.guide-body a {
+  color: var(--color-teal-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.guide-body a:hover {
+  color: #fff;
+}
+.guide-body ul, .guide-body ol {
+  padding-left: 1.3em;
+  display: grid;
+  gap: 0.45em;
+}
+.guide-body ul {
+  list-style: disc;
+}
+.guide-body ol {
+  list-style: decimal;
+}
+.guide-body blockquote {
+  border-left: 2px solid var(--color-teal);
+  padding: 0.2em 0 0.2em 1em;
+  color: var(--color-cream);
+}
+.guide-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  margin-top: 1.4em !important;
+}
+.guide-body th, .guide-body td {
+  text-align: left;
+  padding: 0.7em 0.9em;
+  border-bottom: 1px solid var(--color-line);
+}
+.guide-body th {
+  color: var(--color-cream);
+  font-weight: 600;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.guide-body code {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  padding: 0.1em 0.4em;
+  font-size: 0.9em;
+  color: var(--color-cream);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .orbit-slow, .orbit-rev, .floaty, .floaty-2, .floaty-3, .glow-pulse, .rail-track {
