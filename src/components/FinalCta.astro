@@ -14,6 +14,7 @@ const logoSrc = `${b}/logo-96.png`;
   <div class="reveal relative mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:py-32">
     <img
       src={logoSrc}
+      srcset={`${b}/logo-320.png 2x`}
       alt="Логотип Capybara VPN"
       width="120"
       height="120"
@@ -37,7 +38,7 @@ const logoSrc = `${b}/logo-96.png`;
         data-cta
         data-placement="final"
         data-destination="telegram"
-        aria-label="Открыть Capybara VPN в Telegram"
+        aria-label="Открыть Capybara VPN в Telegram из финального блока"
       >
         <Icon name="telegram" class="h-5 w-5" />
         Открыть в Telegram
@@ -50,7 +51,7 @@ const logoSrc = `${b}/logo-96.png`;
         data-cta
         data-placement="final"
         data-destination="browser"
-        aria-label="Открыть Capybara VPN в браузере"
+        aria-label="Открыть Capybara VPN в браузере из финального блока"
       >
         <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
         Открыть в браузере

@@ -26,7 +26,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
           class:list={[
             'reveal card-lift relative flex flex-col rounded-3xl p-7 sm:p-8',
             p.featured
-              ? 'border border-[#60a1a3]/45 bg-gradient-to-b from-[#60a1a3]/16 to-[#12151c] shadow-[0_30px_80px_-30px_rgba(96,161,163,0.5)] lg:-my-3 lg:py-11'
+              ? 'border max-lg:order-first border-[#60a1a3]/45 bg-gradient-to-b from-[#60a1a3]/16 to-[#12151c] shadow-[0_30px_80px_-30px_rgba(96,161,163,0.5)] lg:-my-3 lg:py-11'
               : 'glass',
           ]}
           style={`--reveal-delay:${i * 90}ms`}
@@ -39,7 +39,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
           )}
           <div class="flex items-center justify-between">
             <h3 class="text-[15px] font-semibold uppercase tracking-[0.12em] text-[#9aa6b2]">
-              {p.days} {p.days === 30 ? 'день' : p.days === 90 ? 'дней' : 'дней'}
+              {p.days} дней
             </h3>
             {p.discount > 0 ? (
               <span class="rounded-full border border-[#60a1a3]/40 bg-[#60a1a3]/12 px-3 py-1 text-[13px] font-bold text-[#8fc3c4]">

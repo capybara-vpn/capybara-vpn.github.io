@@ -1,12 +1,13 @@
 ---
 import '../styles/global.css';
-import { site } from '../data/site';
+import { site, faqs } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
   canonicalPath?: string;
   showFaq?: boolean;
+  ogType?: 'website' | 'article';
 }
 
 const {
@@ -14,6 +15,7 @@ const {
   description = site.seo.description,
   canonicalPath = '/',
   showFaq = true,
+  ogType = 'website',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL ?? '/';
@@ -42,6 +44,13 @@ const jsonLdAll = [
     url: site.siteUrl,
     logo: `${origin}${withBase('logo.png')}`,
     sameAs: [site.telegramUrl],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      url: 'https://t.me/capybara_support',
+      email: 'info@capybara.press',
+      availableLanguage: 'ru',
+    },
   },
   {
     '@context': 'https://schema.org',
@@ -110,119 +119,12 @@ const jsonLdAll = [
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Что такое Capybara VPN?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Capybara VPN — сервис для спокойного и быстрого доступа в интернет. Подключение занимает пару минут через Telegram-бота или прямо в браузере, без сложных настроек.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Это вообще законно?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Да. VPN — это технология шифрования трафика, она легальна и используется банками, корпорациями и обычными пользователями для защиты данных.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Сколько стоит подписка?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: '30 дней — 249 ₽, 90 дней — 672 ₽ со скидкой 10%, 180 дней — 1195 ₽ со скидкой 20%. Каждый тариф включает безлимитный трафик.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Есть ли пробный период?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Да. Первый день — бесплатно, без привязки карты: 10 ГБ трафика на тест. Проверьте скорость и стабильность, затем выберите тариф.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Сколько устройств можно подключить?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'В каждый тариф включено 1 устройство. Нужно больше — докупите дополнительные слоты за доплату прямо в сервисе.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Точно ли не сохраняются логи?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Мы не храним историю посещений, IP-адреса и DNS-запросы. Серверы работают в режиме RAM-only без долговременных логов.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Как оплатить из России?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Доступны популярные способы оплаты: карты, СБП и другие провайдеры, подключённые к сервису.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Можно ли вернуть деньги?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Да, предусмотрен простой возврат в рамках правил сервиса. Обратитесь в поддержку с номером платежа.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Есть ли ограничения по трафику?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Нет. Во всех тарифах трафик безлимитный.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Как подключиться?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Выберите тариф, откройте Capybara VPN в Telegram или в браузере и следуйте короткой инструкции. Обычно подключение занимает несколько минут.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Какие платформы поддерживаются?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'iOS, Android, Windows, macOS, Linux и TV. Интерфейс управления — Telegram-бот или браузерная версия, а подключение настраивается на вашем устройстве.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Что такое VLESS?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Современный протокол подключения, который использует Capybara VPN. На практике для вас это значит: быстрое соединение без ручной настройки конфигов — всё уже подготовлено в сервисе.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Что если не работает на каком-то сайте?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Напишите в поддержку — подскажем рабочую локацию или протокол. Обычно помогает смена сервера или обновление подписки.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Где доступна поддержка?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Поддержка работает через Telegram. Если что-то не подключается или есть вопрос по тарифу — напишите, помогут.',
-        },
-      },
-    ],
+          ...faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        ],
   },
 ];
 // FAQPage matches the homepage FAQ; guides carry their own Article/HowTo
@@ -247,7 +149,7 @@ const jsonLd = jsonLdAll.filter(
     <meta name="theme-color" content={site.themeColor} />
     <meta name="color-scheme" content="dark" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Capybara VPN" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:title" content={title} />
@@ -278,7 +180,7 @@ const jsonLd = jsonLdAll.filter(
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <slot name="head" />
-    <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}</style></noscript>
+    <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}#consent-manage{display:none!important}</style></noscript>
   </head>
   <body class="noise min-h-screen antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>

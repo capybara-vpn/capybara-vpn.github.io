@@ -41,7 +41,7 @@ const logoSrc = `${b}/logo-320.png`;
           data-cta
           data-placement="hero"
           data-destination="telegram"
-          aria-label="Открыть Capybara VPN в Telegram"
+          aria-label="Открыть Capybara VPN в Telegram с главного экрана"
         >
           <Icon name="telegram" class="h-5 w-5" />
           Открыть в Telegram
@@ -54,7 +54,7 @@ const logoSrc = `${b}/logo-320.png`;
           data-cta
           data-placement="hero"
           data-destination="browser"
-          aria-label="Открыть Capybara VPN в браузере"
+          aria-label="Открыть Capybara VPN в браузере с главного экрана"
         >
           <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
           Открыть в браузере
@@ -82,7 +82,8 @@ const logoSrc = `${b}/logo-320.png`;
     </div>
 
     <!-- Visual composition -->
-    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" role="img" aria-label="Логотип Capybara VPN в световой композиции">
+    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center">
+      <div role="img" aria-label="Логотип Capybara VPN в световой композиции" class="contents">
       <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] max-sm:h-[300px] max-sm:w-[300px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
 
       <!-- orbit rings -->
@@ -115,7 +116,7 @@ const logoSrc = `${b}/logo-320.png`;
         <Icon name="bolt" class="h-4 w-4 text-[#8fc3c4]" />
         VLESS
       </div>
-      <div class="floaty-2 glass absolute right-0 top-24 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:right-0" aria-hidden="true">
+      <div class="floaty-2 glass absolute right-0 top-24 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white max-[359px]:hidden sm:right-0" aria-hidden="true">
         <Icon name="server" class="h-4 w-4 text-[#8fc3c4]" />
         100+ серверов
       </div>
@@ -123,9 +124,11 @@ const logoSrc = `${b}/logo-320.png`;
         <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
         38 локаций
       </div>
-      <div class="floaty glass absolute right-2 bottom-6 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:right-6" style="animation-delay:2s" aria-hidden="true">
+      <div class="floaty glass absolute right-2 bottom-6 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white max-[359px]:hidden sm:right-6" style="animation-delay:2s" aria-hidden="true">
         <Icon name="gauge" class="h-4 w-4 text-[#8fc3c4]" />
         10 Гбит/с
+      </div>
+
       </div>
 
       <!-- price hint -->
