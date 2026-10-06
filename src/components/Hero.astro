@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 
 const base = import.meta.env.BASE_URL ?? '/';
 const b = base.endsWith('/') ? base.slice(0, -1) : base;
-const logoSrc = `${b}/logo.png`;
+const logoSrc = `${b}/logo-320.png`;
 ---
 
 <section id="hero" class="relative overflow-hidden pt-[148px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
@@ -61,28 +61,28 @@ const logoSrc = `${b}/logo.png`;
         </a>
       </div>
 
-      <p data-hero-in class="mt-4 text-[13px] leading-relaxed text-[#6b7684]">
+      <p data-hero-in class="mt-4 text-[13px] leading-relaxed text-[#8b98a5]">
         1 день бесплатно, без карты · Подключение за пару минут · Поддержка в Telegram
       </p>
 
-      <dl data-hero-in class="mt-7 grid max-w-lg grid-cols-3 gap-3">
-        <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
-          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Протокол</dt>
+      <dl data-hero-in class="mt-7 grid max-w-lg grid-cols-3 gap-2 sm:gap-3">
+        <div class="hairline rounded-2xl bg-white/[0.03] px-2 py-3 sm:px-3.5">
+          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5]">Протокол</dt>
           <dd class="mt-1 text-[15px] font-semibold text-white">{facts.protocol}</dd>
         </div>
-        <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
-          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Локации</dt>
+        <div class="hairline rounded-2xl bg-white/[0.03] px-2 py-3 sm:px-3.5">
+          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5]">Локации</dt>
           <dd class="mt-1 text-[15px] font-semibold text-white">{facts.locationsLabel}</dd>
         </div>
-        <div class="hairline rounded-2xl bg-white/[0.03] px-3.5 py-3">
-          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b7684]">Каналы</dt>
+        <div class="hairline rounded-2xl bg-white/[0.03] px-2 py-3 sm:px-3.5">
+          <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5]">Каналы</dt>
           <dd class="mt-1 text-[15px] font-semibold text-white">до {facts.speed}</dd>
         </div>
       </dl>
     </div>
 
     <!-- Visual composition -->
-    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" aria-label="Логотип Capybara VPN в световой композиции">
+    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" role="img" aria-label="Логотип Capybara VPN в световой композиции">
       <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
 
       <!-- orbit rings -->

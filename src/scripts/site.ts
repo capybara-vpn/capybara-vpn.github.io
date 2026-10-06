@@ -1,14 +1,8 @@
 /**
  * Lightweight client behaviour: header, reveals, analytics (consent-aware),
  * mobile CTA visibility, cursor glow, FAQ tracking.
- * No framework. Motion is used sparingly for hero entrance + counters.
+ * No framework, no animation libraries: entrance motion is CSS + IntersectionObserver.
  */
-import { animate, inView } from 'motion';
-
-const GA_ID = (document.querySelector('meta[name="ga-id"]')?.getAttribute('content') ||
-  (window as unknown as { __GA_ID?: string }).__GA_ID ||
-  '') as string;
-
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function track(name: string, params: Record<string, string> = {}) {
@@ -48,25 +42,31 @@ if ('IntersectionObserver' in window && !reduced) {
   revealEls.forEach((el) => el.classList.add('is-visible'));
 }
 
-/* ---------- hero entrance (motion, sparingly) ---------- */
-if (!reduced) {
-  const heroBits = document.querySelectorAll<HTMLElement>('[data-hero-in]');
+/* ---------- hero entrance (CSS transition triggered by observer) ---------- */
+const heroBits = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-in]'));
+if (!reduced && 'IntersectionObserver' in window) {
+  const hio = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const el = e.target as HTMLElement;
+        hio.unobserve(el);
+        el.style.transitionDelay = `${0.06 * Number(el.dataset.heroIndex || '0')}s`;
+        el.classList.add('hero-in');
+      }
+    },
+    { threshold: 0.2 }
+  );
   heroBits.forEach((el, i) => {
-    el.style.opacity = '0';
-    inView(
-      el,
-      () => {
-        animate(
-          el,
-          { opacity: [0, 1], y: [22, 0] },
-          { duration: 0.7, delay: 0.06 * i, easing: [0.22, 1, 0.36, 1] }
-        );
-      },
-      { amount: 0.2 }
-    );
+    el.dataset.heroIndex = `${i}`;
+    hio.observe(el);
   });
+} else {
+  heroBits.forEach((el) => el.classList.add('hero-in'));
+}
 
-  // Animated price numbers in pricing (subtle count-up, once)
+/* ---------- animated price numbers (subtle count-up, once) ---------- */
+{
   const nums = document.querySelectorAll<HTMLElement>('[data-count]');
   if (!reduced && 'IntersectionObserver' in window) {
     const nio = new IntersectionObserver(
@@ -91,10 +91,6 @@ if (!reduced) {
     );
     nums.forEach((n) => nio.observe(n));
   }
-} else {
-  document.querySelectorAll<HTMLElement>('[data-hero-in]').forEach((el) => {
-    el.style.opacity = '1';
-  });
 }
 
 /* ---------- CTA click tracking (never blocks navigation) ---------- */
@@ -151,19 +147,6 @@ if (mobileCta && 'IntersectionObserver' in window) {
     { threshold: 0.15 }
   );
   if (finalCta) hideForFinal.observe(finalCta);
-
-  // Hide while hero is fully out of reach on large screens (CSS already hides on md+)
-  let lastY = window.scrollY;
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (finalCta?.getBoundingClientRect && finalCta.getBoundingClientRect().top < window.innerHeight) return;
-      const y = window.scrollY;
-      // keep visible; only auto-hide on fast upward? No — keep simple: always visible on mobile
-      lastY = y;
-    },
-    { passive: true }
-  );
 }
 
 /* ---------- cursor-follow ambient glow (desktop, fine pointer only) ---------- */
@@ -189,19 +172,34 @@ if (glow && !reduced && window.matchMedia('(pointer: fine)').matches) {
   );
 }
 
-/* ---------- consent + GA4 lazy load ---------- */
+/* ---------- consent + GA4 lazy load (library only after consent) ---------- */
 const CONSENT_KEY = 'capybara-consent-v1';
+const CONSENT_TTL_MS = 180 * 24 * 60 * 60 * 1000; // re-ask twice a year
 const banner = document.getElementById('consent');
 let gaConfigured = false;
+
+function loadGtag(id: string) {
+  if (document.querySelector('script[data-gtag]')) return;
+  const s = document.createElement('script');
+  s.async = true;
+  s.dataset.gtag = '1';
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+  s.onload = () => {
+    try {
+      const gtag = (window as unknown as { gtag: (...a: unknown[]) => void }).gtag;
+      gtag('js', new Date());
+      gtag('config', id);
+    } catch {
+      /* noop */
+    }
+  };
+  document.head.appendChild(s);
+}
 
 function configureGA(id: string) {
   if (gaConfigured || !id || id.includes('XXXX')) return;
   gaConfigured = true;
-  try {
-    (window as unknown as { gtag: (...a: unknown[]) => void }).gtag('config', id);
-  } catch {
-    /* noop */
-  }
+  loadGtag(id);
 }
 
 function applyConsent(value: 'granted' | 'denied') {
@@ -223,13 +221,31 @@ function applyConsent(value: 'granted' | 'denied') {
   }
 }
 
-const stored = (() => {
+function readStoredConsent(): 'granted' | 'denied' | null {
   try {
-    return localStorage.getItem(CONSENT_KEY);
+    const raw = localStorage.getItem(CONSENT_KEY);
+    if (raw === 'granted' || raw === 'denied') return raw; // legacy plain values
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { v?: unknown; ts?: unknown };
+    if ((parsed.v === 'granted' || parsed.v === 'denied') && typeof parsed.ts === 'number') {
+      if (Date.now() - parsed.ts < CONSENT_TTL_MS) return parsed.v;
+      localStorage.removeItem(CONSENT_KEY); // expired — ask again
+    }
+    return null;
   } catch {
     return null;
   }
-})();
+}
+
+function writeStoredConsent(value: 'granted' | 'denied') {
+  try {
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: value, ts: Date.now() }));
+  } catch {
+    /* noop */
+  }
+}
+
+const stored = readStoredConsent();
 
 if (stored === 'granted' || stored === 'denied') {
   banner?.classList.add('hidden');
@@ -239,23 +255,21 @@ if (stored === 'granted' || stored === 'denied') {
 }
 
 document.getElementById('consent-accept')?.addEventListener('click', () => {
-  try {
-    localStorage.setItem(CONSENT_KEY, 'granted');
-  } catch {
-    /* noop */
-  }
+  writeStoredConsent('granted');
   applyConsent('granted');
   banner?.classList.add('hidden');
   track('consent_granted', {});
 });
 document.getElementById('consent-decline')?.addEventListener('click', () => {
-  try {
-    localStorage.setItem(CONSENT_KEY, 'denied');
-  } catch {
-    /* noop */
-  }
+  writeStoredConsent('denied');
   applyConsent('denied');
   banner?.classList.add('hidden');
+});
+// Keyboard users must be able to dismiss the banner: Esc = decline.
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && banner && !banner.classList.contains('hidden')) {
+    document.getElementById('consent-decline')?.click();
+  }
 });
 document.getElementById('consent-manage')?.addEventListener('click', () => {
   try {

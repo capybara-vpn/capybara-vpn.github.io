@@ -29,13 +29,15 @@ const origin = new URL(site.siteUrl).origin;
 const abs = (p: string) => `${origin}${withBase(p)}`;
 
 const pageUrl = `${origin}${withBase(canonicalPath)}`;
-const ogImage = abs('og/og-image.png');
+const ogImage = abs('og/og-image.jpg');
 const gaId = site.gaId;
+const orgId = `${site.siteUrl}/#organization`;
 
 const jsonLdAll = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': orgId,
     name: 'Capybara VPN',
     url: site.siteUrl,
     logo: `${origin}${withBase('logo.png')}`,
@@ -55,7 +57,7 @@ const jsonLdAll = [
     serviceType: 'VPN',
     url: pageUrl,
     description: description,
-    provider: { '@type': 'Organization', name: 'Capybara VPN' },
+    provider: { '@id': orgId },
     areaServed: 'RU',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -188,6 +190,38 @@ const jsonLdAll = [
           text: 'Выберите тариф, откройте Capybara VPN в Telegram или в браузере и следуйте короткой инструкции. Обычно подключение занимает несколько минут.',
         },
       },
+      {
+        '@type': 'Question',
+        name: 'Какие платформы поддерживаются?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'iOS, Android, Windows, macOS, Linux и TV. Интерфейс управления — Telegram-бот или браузерная версия, а подключение настраивается на вашем устройстве.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Что такое VLESS?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Современный протокол подключения, который использует Capybara VPN. На практике для вас это значит: быстрое соединение без ручной настройки конфигов — всё уже подготовлено в сервисе.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Что если не работает на каком-то сайте?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Напишите в поддержку — подскажем рабочую локацию или протокол. Обычно помогает смена сервера или обновление подписки.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Где доступна поддержка?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Поддержка работает через Telegram. Если что-то не подключается или есть вопрос по тарифу — напишите, помогут.',
+        },
+      },
     ],
   },
 ];
@@ -205,6 +239,9 @@ const jsonLd = jsonLdAll.filter(
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={site.seo.keywords.join(', ')} />
+    <meta name="author" content="Capybara VPN" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href={pageUrl} />
     <meta name="robots" content={canonicalPath === '/404' ? 'noindex, follow' : 'index, follow'} />
     <meta name="theme-color" content={site.themeColor} />
@@ -220,11 +257,13 @@ const jsonLd = jsonLdAll.filter(
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
+    <meta property="og:image:type" content="image/jpeg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
 
     <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
     <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
@@ -232,17 +271,14 @@ const jsonLd = jsonLdAll.filter(
     <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('manifest.webmanifest')} />
 
-    <link rel="preload" as="image" href={withBase('logo.png')} fetchpriority="high" />
-
-    <!-- Google tag: library loads always (detectable by GA verification),
-         but Consent Mode defaults to denied (see body script), so no data
-         is collected until the visitor grants analytics consent. -->
-    {!gaId.includes('XXXX') && (
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
-    )}
+    <!-- GA4 library is injected only after analytics consent is granted
+         (see configureGA in src/scripts/site.ts), so no request leaves
+         the browser before the visitor agrees. Consent Mode still
+         defaults to denied below. -->
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <slot name="head" />
+    <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}</style></noscript>
   </head>
   <body class="noise min-h-screen antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>

@@ -13,12 +13,16 @@ import FinalCta from '../components/FinalCta.astro';
 import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
+
+const base = import.meta.env.BASE_URL ?? '/';
+const b = base.endsWith('/') ? base.slice(0, -1) : base;
 ---
 
 <BaseLayout canonicalPath="/">
+  <link rel="preload" slot="head" as="image" href={`${b}/logo-320.png`} fetchpriority="high" />
   <div id="top">
     <Header />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <Hero />
       <TrustStrip />
       <ProblemSolution />

@@ -15,12 +15,12 @@ const guides = [
 
 const base = import.meta.env.BASE_URL ?? '/';
 const b = base.endsWith('/') ? base.slice(0, -1) : base;
-const withBase = (p: string) => `${b}${p}`.replace(/\/$/, '');
-const items = guides.filter((g) => withBase(g.href) !== current.replace(/\/$/, ''));
+const withBase = (p: string) => `${b}${p}`;
+const items = guides.filter((g) => withBase(g.href) !== current);
 ---
 
 <nav class="reveal mt-14" aria-label="Читайте также">
-  <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#6b7684]">Читайте также</p>
+  <h2 class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8b98a5]">Читайте также</h2>
   <ul class="mt-4 grid gap-3 sm:grid-cols-2">
     {
       items.slice(0, 4).map((g) => (
@@ -31,7 +31,7 @@ const items = guides.filter((g) => withBase(g.href) !== current.replace(/\/$/, '
           >
             <span>
               <span class="block text-[15px] font-semibold tracking-tight text-white">{g.title}</span>
-              <span class="mt-0.5 block text-[13px] text-[#6b7684]">{g.note}</span>
+              <span class="mt-0.5 block text-[13px] text-[#8b98a5]">{g.note}</span>
             </span>
             <span class="text-[#8fc3c4] transition-transform group-hover:translate-x-1" aria-hidden="true">
               →

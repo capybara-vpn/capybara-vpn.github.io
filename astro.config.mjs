@@ -20,7 +20,16 @@ export default defineConfig({
   site: SITE_ORIGIN,
   base: BASE,
   trailingSlash: 'never',
-  integrations: [sitemap()],
+  // Sitemap URLs must match canonicals (guides use trailing slashes).
+  // Source: @astrojs/sitemap v3 `serialize` (see node_modules/@astrojs/sitemap/dist/schema.js).
+  integrations: [
+    sitemap({
+      serialize: (item) => ({
+        ...item,
+        url: item.url.endsWith('/') ? item.url : `${item.url}/`,
+      }),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

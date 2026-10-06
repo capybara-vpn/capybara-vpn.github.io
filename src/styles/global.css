@@ -8,7 +8,7 @@
   --color-ink-3: #1a1f2a;
   --color-cream: #f2f4f3;
   --color-muted: #9aa6b2;
-  --color-faint: #6b7684;
+  --color-faint: #8b98a5;
   --color-teal: #60a1a3;
   --color-teal-soft: #8fc3c4;
   --color-teal-deep: #3c6f71;
@@ -17,7 +17,13 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 88px;
+  scroll-padding-top: 104px;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 196px;
+  }
 }
 
 body {
@@ -118,7 +124,6 @@ body {
 .btn:focus-visible, a:focus-visible, summary:focus-visible, button:focus-visible {
   outline: 2px solid #8fc3c4;
   outline-offset: 3px;
-  border-radius: 12px;
 }
 
 /* ---------- background decor ---------- */
@@ -173,6 +178,23 @@ body {
 .floaty-3 { animation: floaty 8s ease-in-out 0.6s infinite; }
 .glow-pulse { animation: pulse-glow 7s ease-in-out infinite; }
 
+/* ---------- hero entrance (JS adds .hero-in via IntersectionObserver) ---------- */
+[data-hero-in] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-hero-in].hero-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-in] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ---------- reveal ---------- */
 .reveal {
   opacity: 0;
@@ -192,7 +214,8 @@ body {
 .rail-track {
   animation: rail 36s linear infinite;
 }
-.rail:hover .rail-track {
+.rail:hover .rail-track,
+.rail:focus-within .rail-track {
   animation-play-state: paused;
 }
 
@@ -262,7 +285,16 @@ details.faq[open] .faq-body {
   box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.7);
 }
 
+/* horizontal mobile sub-nav: fade the trailing edge as a scroll affordance */
+#site-header .overflow-x-auto {
+  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+}
+
 /* ---------- misc ---------- */
+[data-count] {
+  font-variant-numeric: tabular-nums;
+}
 .skip-link {
   position: absolute;
   left: 16px;
@@ -277,14 +309,6 @@ details.faq[open] .faq-body {
 }
 .skip-link:focus {
   top: 12px;
-}
-
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
-#hero, #final {
-  content-visibility: visible;
 }
 
 #cursor-glow {

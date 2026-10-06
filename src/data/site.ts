@@ -24,10 +24,6 @@ export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io/capybar
   ''
 );
 
-// Astro base is configured in astro.config.mjs via ASTRO_BASE env.
-// Keep in sync for canonical / sitemap / OG absolute URLs.
-export const SITE_BASE = '/';
-
 export const GA_ID = 'G-FHS5BR8L5J';
 
 export const site = {
@@ -129,8 +125,8 @@ export const facts = {
 } as const;
 
 export const nav = [
-  { href: '#pricing', label: 'Тарифы' },
-  { href: '#benefits', label: 'Возможности' },
-  { href: '#how', label: 'Как это работает' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '/#pricing', label: 'Тарифы' },
+  { href: '/#benefits', label: 'Возможности' },
+  { href: '/#how', label: 'Как это работает' },
+  { href: '/#faq', label: 'FAQ' },
 ] as const;
