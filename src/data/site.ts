@@ -9,17 +9,17 @@ export const TELEGRAM_URL =
 export const BROWSER_URL =
   'https://capybaravpn.app/partner/p1_RR66EINZM499Lk-RNN4';
 
-// Public site origin + base. Change once before deploy.
+// Public site origin + base. Production is the user site root.
+// Change once before deploy.
 // Local dev: http://localhost:4321
-// GitHub Pages project: https://<username>.github.io/<repo>
-// Custom domain: https://your-domain.com
+// GitHub Pages user site: https://capybara-vpn.github.io (base '/')
 // Overridable at build time via SITE_URL env (see .github/workflows/deploy.yml).
 // biome-ignore lint: env access is intentional here
 const ENV_SITE_URL =
   (typeof import.meta !== 'undefined' &&
     (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.SITE_URL) ||
   (typeof process !== 'undefined' ? process.env?.SITE_URL : undefined);
-export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io/capybara-landing').replace(
+export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io').replace(
   /\/$/,
   ''
 );

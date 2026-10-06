@@ -18,6 +18,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 104px;
+  overflow-x: clip;
 }
 
 @media (max-width: 768px) {
@@ -215,7 +216,8 @@ body {
   animation: rail 36s linear infinite;
 }
 .rail:hover .rail-track,
-.rail:focus-within .rail-track {
+.rail:focus-within .rail-track,
+.rail:active .rail-track {
   animation-play-state: paused;
 }
 

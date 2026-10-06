@@ -258,12 +258,14 @@ document.getElementById('consent-accept')?.addEventListener('click', () => {
   writeStoredConsent('granted');
   applyConsent('granted');
   banner?.classList.add('hidden');
+  returnFocusToManage();
   track('consent_granted', {});
 });
 document.getElementById('consent-decline')?.addEventListener('click', () => {
   writeStoredConsent('denied');
   applyConsent('denied');
   banner?.classList.add('hidden');
+  returnFocusToManage();
 });
 // Keyboard users must be able to dismiss the banner: Esc = decline.
 document.addEventListener('keydown', (e) => {
@@ -271,6 +273,27 @@ document.addEventListener('keydown', (e) => {
     document.getElementById('consent-decline')?.click();
   }
 });
+
+// Focus trap while the banner is open + return focus to the Cookie button on close.
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab' || !banner || banner.classList.contains('hidden')) return;
+  const items = Array.from(banner.querySelectorAll<HTMLElement>('button, a[href]')).filter(
+    (el) => !el.hasAttribute('disabled')
+  );
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
+function returnFocusToManage() {
+  document.getElementById('consent-manage')?.focus();
+}
 document.getElementById('consent-manage')?.addEventListener('click', () => {
   try {
     localStorage.removeItem(CONSENT_KEY);

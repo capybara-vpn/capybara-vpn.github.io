@@ -13,6 +13,8 @@ import FinalCta from '../components/FinalCta.astro';
 import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 
 const base = import.meta.env.BASE_URL ?? '/';
 const b = base.endsWith('/') ? base.slice(0, -1) : base;
@@ -20,6 +22,8 @@ const b = base.endsWith('/') ? base.slice(0, -1) : base;
 
 <BaseLayout canonicalPath="/">
   <link rel="preload" slot="head" as="image" href={`${b}/logo-320.png`} fetchpriority="high" />
+  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
+  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">

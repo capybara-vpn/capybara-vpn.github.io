@@ -3,11 +3,10 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 // Deployment: single source is SITE_URL (origin + optional base path).
-// - Project site:  SITE_URL=https://<user>.github.io/<repo>   (+ ASTRO_BASE=/<repo>/,
-//                   workflow sets both automatically via actions/configure-pages)
-// - Custom domain: SITE_URL=https://your-domain.com            (+ ASTRO_BASE=/)
-// - Local default below matches the placeholder production URL.
-const FULL = (process.env.SITE_URL ?? 'https://capybara-vpn.github.io/capybara-landing').replace(
+// Production is the GitHub user site at the root: SITE_URL=https://capybara-vpn.github.io
+// (+ ASTRO_BASE=/, workflow sets both automatically via actions/configure-pages).
+// Local default below matches the production root URL.
+const FULL = (process.env.SITE_URL ?? 'https://capybara-vpn.github.io').replace(
   /\/$/,
   ''
 );

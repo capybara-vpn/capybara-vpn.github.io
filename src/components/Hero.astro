@@ -7,10 +7,10 @@ const b = base.endsWith('/') ? base.slice(0, -1) : base;
 const logoSrc = `${b}/logo-320.png`;
 ---
 
-<section id="hero" class="relative overflow-hidden pt-[148px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
+<section id="hero" class="relative overflow-hidden pt-[200px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
   <!-- ambient background -->
-  <div class="ambient left-1/2 top-[-320px] h-[560px] w-[900px] -translate-x-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
-  <div class="ambient right-[-180px] top-[30%] h-[420px] w-[420px] bg-[#3c6f71]/14" aria-hidden="true"></div>
+  <div class="ambient left-1/2 top-[-320px] h-[560px] w-[min(900px,100vw)] -translate-x-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
+  <div class="ambient right-[-180px] top-[30%] h-[420px] w-[min(420px,120vw)] bg-[#3c6f71]/14 max-sm:right-0 max-sm:w-[280px]" aria-hidden="true"></div>
   <div class="dotgrid absolute inset-0 opacity-60" aria-hidden="true"></div>
   <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#60a1a3]/50 to-transparent" aria-hidden="true"></div>
 
@@ -83,17 +83,17 @@ const logoSrc = `${b}/logo-320.png`;
 
     <!-- Visual composition -->
     <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" role="img" aria-label="Логотип Capybara VPN в световой композиции">
-      <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
+      <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] max-sm:h-[300px] max-sm:w-[300px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
 
       <!-- orbit rings -->
-      <div class="orbit-slow absolute h-[420px] w-[420px] rounded-full border border-dashed border-white/12 sm:h-[480px] sm:w-[480px]" aria-hidden="true">
+      <div class="orbit-slow absolute h-[420px] w-[420px] rounded-full border border-dashed border-white/12 max-sm:h-[300px] max-sm:w-[300px] sm:h-[480px] sm:w-[480px]" aria-hidden="true">
         <span class="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-[#8fc3c4] shadow-[0_0_18px_rgba(143,195,196,0.9)]"></span>
       </div>
-      <div class="orbit-rev absolute h-[330px] w-[330px] rounded-full border border-white/10 sm:h-[380px] sm:w-[380px]" aria-hidden="true">
+      <div class="orbit-rev absolute h-[330px] w-[330px] rounded-full border border-white/10 max-sm:h-[240px] max-sm:w-[240px] sm:h-[380px] sm:w-[380px]" aria-hidden="true">
         <span class="absolute top-1/2 -right-1 h-2 w-2 -translate-y-1/2 rounded-full bg-white/70"></span>
         <span class="absolute bottom-8 left-10 h-1.5 w-1.5 rounded-full bg-[#60a1a3]"></span>
       </div>
-      <div class="absolute h-[250px] w-[250px] rounded-full border border-[#60a1a3]/25" aria-hidden="true"></div>
+      <div class="absolute h-[250px] w-[250px] rounded-full border border-[#60a1a3]/25 max-sm:h-[200px] max-sm:w-[200px]" aria-hidden="true"></div>
 
       <!-- logo core -->
       <div class="relative">
@@ -111,11 +111,11 @@ const logoSrc = `${b}/logo-320.png`;
       </div>
 
       <!-- floating chips -->
-      <div class="floaty glass absolute -left-1 top-8 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:left-0" aria-hidden="true">
+      <div class="floaty glass absolute left-0 top-8 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:left-0" aria-hidden="true">
         <Icon name="bolt" class="h-4 w-4 text-[#8fc3c4]" />
         VLESS
       </div>
-      <div class="floaty-2 glass absolute -right-1 top-24 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:right-0" aria-hidden="true">
+      <div class="floaty-2 glass absolute right-0 top-24 flex items-center gap-2 rounded-2xl px-3.5 py-2.5 text-[13px] font-semibold text-white sm:right-0" aria-hidden="true">
         <Icon name="server" class="h-4 w-4 text-[#8fc3c4]" />
         100+ серверов
       </div>
