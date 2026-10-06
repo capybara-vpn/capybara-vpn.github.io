@@ -90,6 +90,22 @@ const jsonLdAll = [
   },
   {
     '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Capybara VPN',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: ['iOS', 'Android', 'Windows', 'macOS', 'Linux'],
+    inLanguage: 'ru',
+    url: site.siteUrl,
+    offers: {
+      '@type': 'Offer',
+      price: '249',
+      priceCurrency: 'RUB',
+      availability: 'https://schema.org/InStock',
+      url: site.browserUrl,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
       {

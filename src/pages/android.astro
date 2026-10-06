@@ -28,10 +28,19 @@ const articleLd = {
     { '@type': 'HowToStep', name: 'Подключитесь', text: 'Поставьте приложение по инструкции и включите соединение.' },
   ],
 };
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Android', item: `${site.siteUrl}/android/` },
+  ],
+};
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/android/" showFaq={false}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
   <div id="top">
     <Header />
     <main id="main">

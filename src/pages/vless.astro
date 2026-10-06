@@ -24,10 +24,19 @@ const articleLd = {
   author: { '@type': 'Organization', name: 'Capybara VPN' },
   about: 'Протокол VLESS',
 };
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'VLESS', item: `${site.siteUrl}/vless/` },
+  ],
+};
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/vless/" showFaq={false}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
   <div id="top">
     <Header />
     <main id="main">
