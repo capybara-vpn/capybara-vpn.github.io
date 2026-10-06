@@ -23,6 +23,8 @@ export default defineConfig({
   // Source: @astrojs/sitemap v3 `serialize` (see node_modules/@astrojs/sitemap/dist/schema.js).
   integrations: [
     sitemap({
+      // Text endpoints are not pages — keep them out of the sitemap.
+      filter: (page) => !page.endsWith('.txt'),
       serialize: (item) => ({
         ...item,
         url: item.url.endsWith('/') ? item.url : `${item.url}/`,
