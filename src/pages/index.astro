@@ -16,8 +16,7 @@ import Consent from '../components/Consent.astro';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
+import { b } from '../lib/url';
 ---
 
 <BaseLayout canonicalPath="/">

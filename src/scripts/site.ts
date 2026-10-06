@@ -21,7 +21,21 @@ const onScrollHeader = () => {
   header?.classList.toggle('is-scrolled', window.scrollY > 12);
 };
 onScrollHeader();
-window.addEventListener('scroll', onScrollHeader, { passive: true });
+{
+  // rAF-throttled: at most one header update per frame.
+  let headerRaf = 0;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (headerRaf) return;
+      headerRaf = requestAnimationFrame(() => {
+        headerRaf = 0;
+        onScrollHeader();
+      });
+    },
+    { passive: true }
+  );
+}
 
 /* ---------- reveal on scroll ---------- */
 const revealEls = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
@@ -133,7 +147,18 @@ const onScrollDepth = () => {
     }
   }
 };
-window.addEventListener('scroll', onScrollDepth, { passive: true });
+let depthRaf = 0;
+window.addEventListener(
+  'scroll',
+  () => {
+    if (depthRaf) return;
+    depthRaf = requestAnimationFrame(() => {
+      depthRaf = 0;
+      onScrollDepth();
+    });
+  },
+  { passive: true }
+);
 
 /* ---------- mobile sticky CTA visibility ---------- */
 const mobileCta = document.getElementById('mobile-cta');

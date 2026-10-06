@@ -2,8 +2,7 @@
 import { site, facts } from '../data/site';
 import Icon from './Icon.astro';
 
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
+import { b } from '../lib/url';
 const logoSrc = `${b}/logo-320.png`;
 ---
 
@@ -36,7 +35,7 @@ const logoSrc = `${b}/logo-320.png`;
         <a
           href={site.telegramUrl}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel="noopener noreferrer sponsored nofollow"
           class="btn btn-primary px-7 py-4 text-[15.5px]"
           data-cta
           data-placement="hero"
@@ -49,7 +48,7 @@ const logoSrc = `${b}/logo-320.png`;
         <a
           href={site.browserUrl}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel="noopener noreferrer sponsored nofollow"
           class="btn btn-ghost px-7 py-4 text-[15.5px]"
           data-cta
           data-placement="hero"

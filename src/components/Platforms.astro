@@ -1,7 +1,8 @@
 ---
 import Icon from './Icon.astro';
+import type { IconName } from '../lib/icon';
 
-const platforms = [
+const platforms: { name: string; icon: IconName; note: string }[] = [
   { name: 'iOS', icon: 'phone', note: 'iPhone · iPad' },
   { name: 'Android', icon: 'phone', note: 'смартфоны · планшеты' },
   { name: 'Windows', icon: 'grid', note: 'ПК · ноутбуки' },
@@ -30,7 +31,7 @@ const platforms = [
         platforms.map((p) => (
           <li class="card-lift glass flex flex-col items-center gap-1.5 rounded-2xl px-3 py-6 text-center">
             <span class="icon-wrap flex h-11 w-11 items-center justify-center rounded-xl border border-[#60a1a3]/25 bg-[#60a1a3]/10 text-[#8fc3c4]">
-              <Icon name={p.icon as never} class="h-5.5 w-5.5" />
+              <Icon name={p.icon} class="h-5.5 w-5.5" />
             </span>
             <h3 class="mt-2 text-[15px] font-semibold text-white">{p.name}</h3>
             <span class="text-[12px] text-[#8b98a5]">{p.note}</span>

@@ -3,11 +3,11 @@
 **Capybara VPN** — спокойный и удобный VPN-сервис. Выбираете тариф, открываете Telegram или браузер — и просто пользуетесь. Без сложных настроек и длинных инструкций.
 
 <p>
-  <a href="https://capybara-vpn.github.io/">
+  <a href="https://t.me/capybaravpnbot?start=partner_p1_RR66EINZM499Lk-RNN4">
     <img src="https://img.shields.io/badge/Telegram-Открыть_Capybara-60A1A3?style=for-the-badge&logo=telegram&logoColor=white" alt="Открыть Capybara VPN в Telegram" />
   </a>
   &nbsp;
-  <a href="https://capybara-vpn.github.io/">
+  <a href="https://capybaravpn.app/partner/p1_RR66EINZM499Lk-RNN4">
     <img src="https://img.shields.io/badge/Браузер-Открыть_Capybara-12151C?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Открыть Capybara VPN в браузере" />
   </a>
 </p>
@@ -70,8 +70,8 @@
 
 Подключение за пару минут, тарифы от 249 ₽:
 
-- **Telegram:** https://capybara-vpn.github.io/
-- **Браузер:** https://capybara-vpn.github.io/
+- **Telegram:** https://t.me/capybaravpnbot?start=partner_p1_RR66EINZM499Lk-RNN4
+- **Браузер:** https://capybaravpn.app/partner/p1_RR66EINZM499Lk-RNN4
 
 © Capybara VPN. Все права защищены.
 

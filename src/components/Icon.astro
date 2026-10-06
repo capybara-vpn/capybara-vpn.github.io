@@ -1,23 +1,8 @@
 ---
+import type { IconName } from '../lib/icon';
+
 interface Props {
-  name:
-    | 'telegram'
-    | 'globe'
-    | 'bolt'
-    | 'server'
-    | 'device'
-    | 'browser'
-    | 'arrow'
-    | 'check'
-    | 'chevron'
-    | 'eye'
-    | 'gauge'
-    | 'phone'
-    | 'laptop'
-    | 'grid'
-    | 'terminal'
-    | 'tv'
-    | 'card';
+  name: IconName;
   class?: string;
 }
 const { name, class: cls = 'h-5 w-5' } = Astro.props;

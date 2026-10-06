@@ -2,9 +2,8 @@
 import { site, nav } from '../data/site';
 import Icon from './Icon.astro';
 
-const base = import.meta.env.BASE_URL ?? '/';
-const logoSrc = `${base.endsWith('/') ? base.slice(0, -1) : base}/logo-96.png`;
-const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`;
+import { b, withBase } from '../lib/url';
+const logoSrc = `${b}/logo-96.png`;
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50">
@@ -17,7 +16,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
   </div>
 
   <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6" aria-label="Основная навигация">
-    <a href={wb("/#top")} class="flex items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
+    <a href={withBase("/#top")} class="flex items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
       <img
         src={logoSrc}
         alt=""
@@ -34,7 +33,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
       {
         nav.map((n) => (
           <a
-            href={wb(n.href)}
+            href={withBase(n.href)}
             class="text-[14px] font-medium text-[#9aa6b2] transition-colors hover:text-white"
           >
             {n.label}
@@ -45,7 +44,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
 
     <div class="flex items-center gap-2">
       <a
-        href={wb("/#pricing")}
+        href={withBase("/#pricing")}
         class="btn btn-ghost hidden px-4 py-2 text-[13.5px] sm:inline-flex"
         aria-label="Перейти к тарифам"
       >
@@ -54,7 +53,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
       <a
         href={site.telegramUrl}
         target="_blank"
-        rel="noopener noreferrer sponsored"
+        rel="noopener noreferrer sponsored nofollow"
         class="btn btn-primary px-4 py-2 text-[13.5px] sm:px-5 sm:py-2.5 sm:text-sm"
         data-cta
         data-placement="header"
@@ -72,7 +71,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
     <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 text-[13px] font-medium text-[#9aa6b2]" tabindex="0" role="region" aria-label="Навигация по разделам">
       {
         nav.map((n) => (
-          <a href={wb(n.href)} class="whitespace-nowrap py-2 transition-colors hover:text-white">
+          <a href={withBase(n.href)} class="whitespace-nowrap py-2 transition-colors hover:text-white">
             {n.label}
           </a>
         ))

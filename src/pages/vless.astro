@@ -1,21 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import MobileCta from '../components/MobileCta.astro';
-import Consent from '../components/Consent.astro';
-import Related from '../components/Related.astro';
-import GuideCta from '../components/GuideCta.astro';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
+import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
+import { b } from '../lib/url';
 
 const title = 'Что такое VLESS: протокол Capybara VPN простыми словами';
 const description =
   'VLESS — современный протокол VPN: быстрый, стабильный, устойчивый к блокировкам. Объясняем просто + где он уже настроен.';
-
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -42,38 +32,21 @@ const breadcrumbLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/vless/" showFaq={false} ogType="article">
-  <meta property="article:published_time" content="2026-09-29" slot="head" />
-  <meta property="article:modified_time" content="2026-10-06" slot="head" />
-  <meta property="article:author" content="Capybara VPN" slot="head" />
-  <meta property="article:section" content="Технологии" slot="head" />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
-  <div id="top">
-    <Header />
-    <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[196px] pb-8 sm:px-6 sm:pt-[150px]">
-        <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
-          <ol class="flex flex-wrap items-center gap-2">
-            <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
-              <span aria-hidden="true"> → </span>
-            </li>
-            <li><span class="text-[#9aa6b2]" aria-current="page">VLESS</span></li>
-          </ol>
-        </nav>
-        <p class="eyebrow reveal mt-6">Гид · Технологии</p>
-        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
-          Что такое VLESS — простыми словами
-        </h1>
-        <p class="lead reveal mt-4 text-[16.5px]">
-          VLESS — современный протокол подключения, на котором работает Capybara VPN.
-          Именно он отвечает за то, что видео не виснет, а соединение не отваливается вечером.
-        </p>
-
-        <div class="guide-body reveal mt-8">
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/vless/"
+  crumbName="VLESS"
+  eyebrow="Гид · Технологии"
+  heading="Что такое VLESS — простыми словами"
+  lead="VLESS — современный протокол подключения, на котором работает Capybara VPN. Именно он отвечает за то, что видео не виснет, а соединение не отваливается вечером."
+  guidePath="/vless/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Технологии"
+  datePublished="2026-09-29"
+  dateModified="2026-10-06"
+>
           <h2>Зачем вообще нужен протокол</h2>
           <p>
             VPN — это не волшебство, а договорённость: как ваше устройство упаковывает
@@ -86,7 +59,7 @@ const breadcrumbLd = {
           <ul>
             <li><strong>Скорость.</strong> Минимальные накладные расходы: там, где старые протоколы режут скорость вдвое, VLESS держит почти полную.</li>
             <li><strong>Стабильность.</strong> Соединение не рвётся и не «умирает» в час пик.</li>
-            <li><strong>Устойчивость.</strong> Трафик выглядит как обычный, его сложнее детектить и резать.</li>
+            <li><strong>Устойчивость.</strong> Трафик выглядит как обычный, его сложнее детектить и резать — соединение держится даже при белых списках.</li>
           </ul>
 
           <h2>Протокол — это половина дела</h2>
@@ -102,19 +75,9 @@ const breadcrumbLd = {
 
           <h2>Нужно ли в этом разбираться</h2>
           <p>
-            Нет. Вы открываете <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer sponsored">Telegram-бота</a>
-            или <a href={site.browserUrl} target="_blank" rel="noopener noreferrer sponsored">браузерную версию</a>,
+            Нет. Вы открываете <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer sponsored nofollow">Telegram-бота</a>
+            или <a href={site.browserUrl} target="_blank" rel="noopener noreferrer sponsored nofollow">браузерную версию</a>,
             выбираете локацию — и пользуетесь. VLESS работает внутри, незаметно.
             А проверить всё можно бесплатно: первый день и 10 ГБ на тест, карта не нужна.
           </p>
-        </div>
-
-        <GuideCta />
-        <Related current={`${b}/vless/`} />
-      </article>
-    </main>
-    <Footer />
-    <MobileCta />
-    <Consent />
-  </div>
-</BaseLayout>
+</GuideLayout>

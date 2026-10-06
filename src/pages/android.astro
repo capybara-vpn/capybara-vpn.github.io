@@ -1,21 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import MobileCta from '../components/MobileCta.astro';
-import Consent from '../components/Consent.astro';
-import Related from '../components/Related.astro';
-import GuideCta from '../components/GuideCta.astro';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
+import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
+import { b } from '../lib/url';
 
 const title = 'Capybara VPN на Android: настройка за 5 минут';
 const description =
   'Как подключить Capybara VPN на Android: 4 шага, первый день бесплатно, тарифы от 249 ₽. Без сложных настроек.';
-
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
 const host = new URL(site.siteUrl).hostname;
 
 const articleLd = {
@@ -50,38 +40,21 @@ const breadcrumbLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/android/" showFaq={false} ogType="article">
-  <meta property="article:published_time" content="2026-09-29" slot="head" />
-  <meta property="article:modified_time" content="2026-10-06" slot="head" />
-  <meta property="article:author" content="Capybara VPN" slot="head" />
-  <meta property="article:section" content="Инструкции" slot="head" />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
-  <div id="top">
-    <Header />
-    <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[196px] pb-8 sm:px-6 sm:pt-[150px]">
-        <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
-          <ol class="flex flex-wrap items-center gap-2">
-            <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
-              <span aria-hidden="true"> → </span>
-            </li>
-            <li><span class="text-[#9aa6b2]" aria-current="page">Android</span></li>
-          </ol>
-        </nav>
-        <p class="eyebrow reveal mt-6">Гид · Android</p>
-        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
-          Capybara VPN на Android за 5 минут
-        </h1>
-        <p class="lead reveal mt-4 text-[16.5px]">
-          Смартфон или планшет: от открытия сайта до рабочего интернета —
-          четыре шага и около пяти минут.
-        </p>
-
-        <div class="guide-body reveal mt-8">
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/android/"
+  crumbName="Android"
+  eyebrow="Гид · Android"
+  heading="Capybara VPN на Android за 5 минут"
+  lead="Смартфон или планшет: от открытия сайта до рабочего интернета — четыре шага и около пяти минут."
+  guidePath="/android/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструкции"
+  datePublished="2026-09-29"
+  dateModified="2026-10-06"
+>
           <h2>Шаг 1. Откройте сайт сервиса</h2>
           <p>
             Перейдите на <a href={`${b}/`}>сайт Capybara VPN</a> в браузере телефона.
@@ -112,14 +85,4 @@ const breadcrumbLd = {
             Дальше — тарифы: 30 дней за 249 ₽, 90 дней за 672 ₽,
             180 дней за 1195 ₽.
           </blockquote>
-        </div>
-
-        <GuideCta />
-        <Related current={`${b}/android/`} />
-      </article>
-    </main>
-    <Footer />
-    <MobileCta />
-    <Consent />
-  </div>
-</BaseLayout>
+</GuideLayout>

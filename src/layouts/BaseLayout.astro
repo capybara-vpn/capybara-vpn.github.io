@@ -18,12 +18,7 @@ const {
   ogType = 'website',
 } = Astro.props;
 
-const base = import.meta.env.BASE_URL ?? '/';
-const withBase = (p: string) => {
-  const b = base.endsWith('/') ? base.slice(0, -1) : base;
-  const path = p.startsWith('/') ? p : `/${p}`;
-  return `${b}${path}` || '/';
-};
+import { withBase } from '../lib/url';
 
 // site.siteUrl is the full public URL (origin + base). Derive origin here so
 // asset URLs never get a doubled base path (withBase already includes it).

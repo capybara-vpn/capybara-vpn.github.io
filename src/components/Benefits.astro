@@ -1,7 +1,8 @@
 ---
 import Icon from './Icon.astro';
+import type { IconName } from '../lib/icon';
 
-const cards = [
+const cards: { icon: IconName; title: string; text: string; metric: string }[] = [
   {
     icon: 'gauge',
     title: 'Скорость без нервов',
@@ -62,7 +63,7 @@ const cards = [
           style={`--reveal-delay:${(i % 3) * 90}ms`}
         >
           <span class="icon-wrap flex h-12 w-12 items-center justify-center rounded-2xl border border-[#60a1a3]/30 bg-[#60a1a3]/12 text-[#8fc3c4]">
-            <Icon name={c.icon as never} class="h-6 w-6" />
+            <Icon name={c.icon} class="h-6 w-6" />
           </span>
           <h3 class="mt-5 text-[19px] font-semibold tracking-tight text-white">{c.title}</h3>
           <p class="mt-2.5 text-[14.5px] leading-relaxed text-[#9aa6b2]">{c.text}</p>

@@ -8,8 +8,7 @@ import { site } from '../data/site';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
+import { b } from '../lib/url';
 ---
 
 <BaseLayout
@@ -27,10 +26,10 @@ const b = base.endsWith('/') ? base.slice(0, -1) : base;
     <p class="lead mt-4">Зато есть быстрый VPN от 249 ₽. Вернёмся к главному?</p>
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
       <a href={`${b}/`} class="btn btn-primary px-6 py-3.5">На главную</a>
-      <a href={site.browserUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored">
+      <a href={site.browserUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored nofollow">
         Открыть в браузере
       </a>
-      <a href={site.telegramUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored">
+      <a href={site.telegramUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored nofollow">
         Открыть в Telegram
       </a>
     </div>

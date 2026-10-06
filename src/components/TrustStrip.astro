@@ -1,8 +1,9 @@
 ---
 import { facts } from '../data/site';
 import Icon from './Icon.astro';
+import type { IconName } from '../lib/icon';
 
-const items = [
+const items: { icon: IconName; title: string; note: string }[] = [
   { icon: 'bolt', title: facts.protocol, note: 'современный протокол' },
   { icon: 'globe', title: facts.locationsLabel, note: 'на выбор' },
   { icon: 'server', title: facts.serversLabel, note: 'инфраструктура' },
@@ -21,7 +22,7 @@ const items = [
             {items.map((it) => (
               <div role={dup === 0 ? 'listitem' : undefined} class="flex items-center gap-3 px-7 py-4">
                 <span class="flex h-9 w-9 items-center justify-center rounded-full border border-[#60a1a3]/30 bg-[#60a1a3]/10 text-[#8fc3c4]">
-                  <Icon name={it.icon as never} class="h-4.5 w-4.5" />
+                  <Icon name={it.icon} class="h-4.5 w-4.5" />
                 </span>
                 <span class="leading-tight">
                   <span class="block text-[14.5px] font-semibold text-white">{it.title}</span>

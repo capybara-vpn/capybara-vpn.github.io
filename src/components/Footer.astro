@@ -3,9 +3,7 @@ import { site } from '../data/site';
 import Icon from './Icon.astro';
 
 const year = new Date().getFullYear();
-const base = import.meta.env.BASE_URL ?? '/';
-const b = base.endsWith('/') ? base.slice(0, -1) : base;
-const withBase = (p: string) => `${b}${p}`;
+import { b, withBase } from '../lib/url';
 const logoSrc = `${b}/logo-96.png`;
 ---
 
@@ -24,7 +22,7 @@ const logoSrc = `${b}/logo-96.png`;
         <a
           href={site.telegramUrl}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel="noopener noreferrer sponsored nofollow"
           class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
           data-cta
           data-placement="footer"
@@ -37,7 +35,7 @@ const logoSrc = `${b}/logo-96.png`;
         <a
           href={site.browserUrl}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel="noopener noreferrer sponsored nofollow"
           class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
           data-cta
           data-placement="footer"
