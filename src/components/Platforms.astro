@@ -1,6 +1,5 @@
 ---
 import Icon from './Icon.astro';
-import { facts } from '../data/site';
 
 const platforms = [
   { name: 'iOS', icon: 'phone', note: 'iPhone · iPad' },
@@ -9,6 +8,7 @@ const platforms = [
   { name: 'macOS', icon: 'laptop', note: 'Mac' },
   { name: 'Linux', icon: 'terminal', note: 'десктоп' },
   { name: 'TV', icon: 'tv', note: 'Smart TV' },
+  { name: 'Роутер', icon: 'server', note: 'Wi-Fi роутер' },
 ] as const;
 ---
 
@@ -21,11 +21,11 @@ const platforms = [
       </h2>
       <p class="lead mt-4 text-[16px]">
         Один сервис — знакомая среда везде. Купить VPN можно и для телефона, и для
-        компьютера: iOS, Android, Windows, macOS, Linux и TV.
+        компьютера: iOS, Android, Windows, macOS, Linux, TV и роутеры.
       </p>
     </div>
 
-    <ul class="reveal mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" aria-label="Поддерживаемые платформы">
+    <ul class="reveal mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7" aria-label="Поддерживаемые платформы">
       {
         platforms.map((p) => (
           <li class="card-lift glass flex flex-col items-center gap-1.5 rounded-2xl px-3 py-6 text-center">

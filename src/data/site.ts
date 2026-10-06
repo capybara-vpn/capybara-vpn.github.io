@@ -29,7 +29,6 @@ export const GA_ID = ENV_GA_ID || 'G-FHS5BR8L5J';
 
 export const site = {
   brand: 'Capybara VPN',
-  shortName: 'Capybara',
   lang: 'ru',
   siteUrl: SITE_URL,
   telegramUrl: TELEGRAM_URL,
@@ -37,10 +36,10 @@ export const site = {
   gaId: GA_ID,
   themeColor: '#0b0e14',
   logo: {
-    src: 'logo.png',
+    src: 'logo-320.png',
     alt: 'Capybara VPN — логотип капибары',
-    width: 640,
-    height: 640,
+    width: 320,
+    height: 320,
   },
   seo: {
     title: 'Capybara VPN — быстрый VPN от 249 ₽ для всех устройств',
@@ -104,7 +103,7 @@ export const plans: Plan[] = [
     devices: 1,
     traffic: 'Безлим',
     per30: 199,
-    per30Label: '≈199 ₽ / 30 дней',
+    per30Label: 'около 199 ₽ / 30 дней',
     savings: 299,
     featured: true,
   },
@@ -121,7 +120,7 @@ export const facts = {
   speedNote: 'каналы до 10 Гбит/с',
   traffic: 'Безлим',
   devicesPerPlan: '1 устройство / тариф',
-  platforms: ['iOS', 'Android', 'Windows', 'macOS', 'Linux', 'TV'] as const,
+  platforms: ['iOS', 'Android', 'Windows', 'macOS', 'Linux', 'TV', 'Роутер'] as const,
   support: 'Поддержка в Telegram',
 } as const;
 
@@ -146,7 +145,7 @@ export const faqs = [
   },
   {
     q: 'Сколько устройств можно подключить?',
-    a: 'В каждый тариф включено 1 устройство. Нужно больше — докупите дополнительные слоты за доплату прямо в сервисе: точная цена видна перед оплатой. Сервис работает на iOS, Android, Windows, macOS, Linux и TV.',
+    a: 'В каждый тариф включено 1 устройство. Нужно больше — докупите дополнительные слоты за доплату прямо в сервисе: точная цена видна перед оплатой. Сервис работает на iOS, Android, Windows, macOS, Linux, TV и роутерах.',
   },
   {
     q: 'Точно ли не сохраняются логи?',

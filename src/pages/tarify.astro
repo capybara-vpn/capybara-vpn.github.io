@@ -23,10 +23,11 @@ const articleLd = {
   headline: title,
   description: description,
   inLanguage: 'ru',
-  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
   image: `${site.siteUrl}/og/og-image.jpg`,
   mainEntityOfPage: `${site.siteUrl}/tarify/`,
-  author: { '@type': 'Organization', name: 'Capybara VPN' },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
   dateModified: '2026-10-06',
   about: 'Тарифы VPN-сервиса Capybara VPN',
@@ -46,18 +47,18 @@ const breadcrumbLd = {
   <meta property="article:modified_time" content="2026-10-06" slot="head" />
   <meta property="article:author" content="Capybara VPN" slot="head" />
   <meta property="article:section" content="Тарифы" slot="head" />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[196px] pb-8 sm:px-6 sm:pt-[150px]">
         <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
-          <ol class="flex items-center gap-2">
+          <ol class="flex flex-wrap items-center gap-2">
             <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
               <span aria-hidden="true"> → </span>
             </li>
             <li><span class="text-[#9aa6b2]" aria-current="page">Тарифы</span></li>
@@ -74,7 +75,7 @@ const breadcrumbLd = {
         </p>
 
         <div class="guide-body reveal mt-8">
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Сравнение тарифов">
           <table>
             <thead>
               <tr><th>Срок</th><th>Цена</th><th>Скидка</th><th>В месяц</th></tr>
@@ -82,7 +83,7 @@ const breadcrumbLd = {
             <tbody>
               <tr><td><strong>30 дней</strong></td><td>249 ₽</td><td>—</td><td>249 ₽</td></tr>
               <tr><td><strong>90 дней</strong></td><td>672 ₽</td><td>−10%</td><td>224 ₽</td></tr>
-              <tr><td><strong>180 дней</strong></td><td>1195 ₽</td><td>−20%</td><td>≈199 ₽</td></tr>
+              <tr><td><strong>180 дней</strong></td><td>1195 ₽</td><td>−20%</td><td>около 199 ₽</td></tr>
             </tbody>
           </table>
           </div>
@@ -106,7 +107,7 @@ const breadcrumbLd = {
           <ul>
             <li>Безлимитный трафик — видео, звонки и работа без ограничений</li>
             <li>Протокол VLESS и 38 локаций на выбор</li>
-            <li>Работа на iOS, Android, Windows, macOS, Linux и TV</li>
+            <li>Работа на iOS, Android, Windows, macOS, Linux, TV и роутерах</li>
             <li>Поддержка в Telegram — отвечают живые люди</li>
           </ul>
 
@@ -120,7 +121,7 @@ const breadcrumbLd = {
             Начните с бесплатного дня — это ни к чему не обязывает. По правилам сервиса
             предусмотрен возврат: напишите в поддержку с номером платежа, и вам подскажут,
             что возможно в вашей ситуации. Полные условия — на странице
-            <a href={site.browserUrl} target="_blank" rel="noopener noreferrer">браузерной версии сервиса</a>.
+            <a href={site.browserUrl} target="_blank" rel="noopener noreferrer sponsored">браузерной версии сервиса</a>.
           </p>
         </div>
 

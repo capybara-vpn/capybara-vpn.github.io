@@ -15,7 +15,7 @@ const logoSrc = `${b}/logo-96.png`;
     <img
       src={logoSrc}
       srcset={`${b}/logo-320.png 2x`}
-      alt="Логотип Capybara VPN"
+      alt={site.logo.alt}
       width="120"
       height="120"
       loading="lazy"
@@ -26,14 +26,14 @@ const logoSrc = `${b}/logo-96.png`;
       Попробуйте Capybara сегодня
     </h2>
     <p class="lead mt-4 max-w-xl text-[16px]">
-      Тариф от 249 ₽, подключение за пару минут, безлим уже внутри.
+      Тарифы от 249 ₽, подключение за пару минут, безлим уже внутри.
       Выберите, где удобнее начать.
     </p>
     <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
       <a
         href={site.telegramUrl}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer sponsored"
         class="btn btn-primary px-8 py-4 text-[16px]"
         data-cta
         data-placement="final"
@@ -46,7 +46,7 @@ const logoSrc = `${b}/logo-96.png`;
       <a
         href={site.browserUrl}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer sponsored"
         class="btn btn-ghost px-8 py-4 text-[16px]"
         data-cta
         data-placement="final"

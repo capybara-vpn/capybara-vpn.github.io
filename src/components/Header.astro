@@ -54,7 +54,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
       <a
         href={site.telegramUrl}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer sponsored"
         class="btn btn-primary px-4 py-2 text-[13.5px] sm:px-5 sm:py-2.5 sm:text-sm"
         data-cta
         data-placement="header"
@@ -69,7 +69,7 @@ const wb = (p: string) => `${base.endsWith('/') ? base.slice(0, -1) : base}${p}`
 
   <!-- compact mobile nav -->
   <nav class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
-    <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 text-[13px] font-medium text-[#9aa6b2]">
+    <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 text-[13px] font-medium text-[#9aa6b2]" tabindex="0" role="region" aria-label="Навигация по разделам">
       {
         nav.map((n) => (
           <a href={wb(n.href)} class="whitespace-nowrap py-2 transition-colors hover:text-white">

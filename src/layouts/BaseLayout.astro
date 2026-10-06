@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, faqs } from '../data/site';
+import { site, faqs, plans } from '../data/site';
 
 interface Props {
   title?: string;
@@ -42,7 +42,7 @@ const jsonLdAll = [
     '@id': orgId,
     name: 'Capybara VPN',
     url: site.siteUrl,
-    logo: `${origin}${withBase('logo.png')}`,
+    logo: `${origin}${withBase(site.logo.src)}`,
     sameAs: [site.telegramUrl],
   },
   {
@@ -64,32 +64,14 @@ const jsonLdAll = [
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Тарифы Capybara VPN',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          name: 'Capybara VPN — 30 дней',
-          price: '249',
-          priceCurrency: 'RUB',
-          availability: 'https://schema.org/InStock',
-          url: site.browserUrl,
-        },
-        {
-          '@type': 'Offer',
-          name: 'Capybara VPN — 90 дней',
-          price: '672',
-          priceCurrency: 'RUB',
-          availability: 'https://schema.org/InStock',
-          url: site.browserUrl,
-        },
-        {
-          '@type': 'Offer',
-          name: 'Capybara VPN — 180 дней',
-          price: '1195',
-          priceCurrency: 'RUB',
-          availability: 'https://schema.org/InStock',
-          url: site.browserUrl,
-        },
-      ],
+      itemListElement: plans.map((p) => ({
+        '@type': 'Offer',
+        name: `Capybara VPN — ${p.days} дней`,
+        price: `${p.price}`,
+        priceCurrency: 'RUB',
+        availability: 'https://schema.org/InStock',
+        url: site.browserUrl,
+      })),
     },
   },
   {
@@ -102,7 +84,7 @@ const jsonLdAll = [
     url: site.siteUrl,
     offers: {
       '@type': 'Offer',
-      price: '249',
+      price: `${plans[0].price}`,
       priceCurrency: 'RUB',
       availability: 'https://schema.org/InStock',
       url: site.browserUrl,
@@ -153,6 +135,8 @@ const jsonLd = jsonLdAll.filter(
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
     <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <link rel="alternate" type="text/plain" title="Capybara VPN — кратко для ИИ" href={withBase('llms.txt')} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -171,11 +155,11 @@ const jsonLd = jsonLdAll.filter(
          the browser before the visitor agrees. Consent Mode still
          defaults to denied below. -->
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\u003c')} />
     <slot name="head" />
     <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}#consent-manage{display:none!important}</style></noscript>
   </head>
-  <body class="noise min-h-screen antialiased">
+  <body class="noise min-h-screen min-h-dvh antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>
     <div id="cursor-glow" aria-hidden="true"></div>
     <slot />

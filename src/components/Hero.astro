@@ -36,7 +36,7 @@ const logoSrc = `${b}/logo-320.png`;
         <a
           href={site.telegramUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer sponsored"
           class="btn btn-primary px-7 py-4 text-[15.5px]"
           data-cta
           data-placement="hero"
@@ -49,7 +49,7 @@ const logoSrc = `${b}/logo-320.png`;
         <a
           href={site.browserUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer sponsored"
           class="btn btn-ghost px-7 py-4 text-[15.5px]"
           data-cta
           data-placement="hero"
@@ -100,13 +100,13 @@ const logoSrc = `${b}/logo-320.png`;
         <div class="absolute -inset-8 rounded-full bg-gradient-to-b from-[#60a1a3]/30 to-transparent blur-2xl" aria-hidden="true"></div>
         <img
           src={logoSrc}
-          alt="Логотип Capybara VPN — капибара"
+          alt={site.logo.alt}
           width="320"
           height="320"
           class="relative h-[220px] w-[220px] rounded-full object-cover shadow-[0_30px_90px_-20px_rgba(96,161,163,0.55)] ring-1 ring-white/20 sm:h-[280px] sm:w-[280px]"
           loading="eager"
           fetchpriority="high"
-          decoding="async"
+          decoding="sync"
         />
       </div>
 

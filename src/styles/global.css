@@ -92,7 +92,6 @@ body {
   letter-spacing: -0.01em;
   border-radius: 999px;
   transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.2s ease;
-  will-change: transform;
 }
 
 .btn:active {
@@ -122,7 +121,7 @@ body {
   transform: translateY(-1px);
 }
 
-.btn:focus-visible, a:focus-visible, summary:focus-visible, button:focus-visible {
+.btn:focus-visible, a:focus-visible, summary:focus-visible, button:focus-visible, div[tabindex]:focus-visible {
   outline: 2px solid #8fc3c4;
   outline-offset: 3px;
 }
@@ -293,7 +292,15 @@ details.faq[open] .faq-body {
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
 }
 
-/* ---------- misc ---------- */
+/* forced-colors (Windows High Contrast): gradient text would vanish — fall back to CanvasText */
+@media (forced-colors: active) {
+  .bg-clip-text.text-transparent,
+  .display.text-transparent {
+    background: none;
+    color: CanvasText;
+    -webkit-text-stroke: 0;
+  }
+}
 [data-count] {
   font-variant-numeric: tabular-nums;
 }
@@ -419,6 +426,9 @@ details.faq[open] .faq-body {
   html { scroll-behavior: auto; }
   .orbit-slow, .orbit-rev, .floaty, .floaty-2, .floaty-3, .glow-pulse, .rail-track {
     animation: none !important;
+  }
+  .rail {
+    overflow-x: auto;
   }
   .reveal {
     opacity: 1;

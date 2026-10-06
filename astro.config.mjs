@@ -18,13 +18,13 @@ export default defineConfig({
   output: 'static',
   site: SITE_ORIGIN,
   base: BASE,
-  trailingSlash: 'never',
+  trailingSlash: 'always',
   // Sitemap URLs must match canonicals (guides use trailing slashes).
   // Source: @astrojs/sitemap v3 `serialize` (see node_modules/@astrojs/sitemap/dist/schema.js).
   integrations: [
     sitemap({
-      // Text endpoints are not pages — keep them out of the sitemap.
-      filter: (page) => !page.endsWith('.txt'),
+      // Text endpoints are not pages, /404 must never be indexed — keep them out.
+      filter: (page) => !page.endsWith('.txt') && !page.includes('/404'),
       serialize: (item) => ({
         ...item,
         url: item.url.endsWith('/') ? item.url : `${item.url}/`,

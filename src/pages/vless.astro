@@ -23,10 +23,11 @@ const articleLd = {
   headline: title,
   description: description,
   inLanguage: 'ru',
-  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
   image: `${site.siteUrl}/og/og-image.jpg`,
   mainEntityOfPage: `${site.siteUrl}/vless/`,
-  author: { '@type': 'Organization', name: 'Capybara VPN' },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
   dateModified: '2026-10-06',
   about: 'Протокол VLESS',
@@ -46,18 +47,18 @@ const breadcrumbLd = {
   <meta property="article:modified_time" content="2026-10-06" slot="head" />
   <meta property="article:author" content="Capybara VPN" slot="head" />
   <meta property="article:section" content="Технологии" slot="head" />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[196px] pb-8 sm:px-6 sm:pt-[150px]">
         <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
-          <ol class="flex items-center gap-2">
+          <ol class="flex flex-wrap items-center gap-2">
             <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
               <span aria-hidden="true"> → </span>
             </li>
             <li><span class="text-[#9aa6b2]" aria-current="page">VLESS</span></li>
@@ -95,14 +96,14 @@ const breadcrumbLd = {
             (десятки, а не штуки), ширину каналов (гигабиты) и безлимит трафика.
           </p>
           <blockquote>
-            Capybara VPN: VLESS + 38 локаций + больше сотни серверов с каналами
+            Capybara VPN: VLESS + 38 локаций + 100+ серверов с каналами
             до 10 Гбит/с. Протокол уже выбран и настроен — вам ничего делать не нужно.
           </blockquote>
 
           <h2>Нужно ли в этом разбираться</h2>
           <p>
-            Нет. Вы открываете <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram-бота</a>
-            или <a href={site.browserUrl} target="_blank" rel="noopener noreferrer">браузерную версию</a>,
+            Нет. Вы открываете <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer sponsored">Telegram-бота</a>
+            или <a href={site.browserUrl} target="_blank" rel="noopener noreferrer sponsored">браузерную версию</a>,
             выбираете локацию — и пользуетесь. VLESS работает внутри, незаметно.
             А проверить всё можно бесплатно: первый день и 10 ГБ на тест, карта не нужна.
           </p>

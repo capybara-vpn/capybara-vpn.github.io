@@ -24,7 +24,9 @@ const articleLd = {
   name: title,
   description: description,
   inLanguage: 'ru',
-  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   image: `${site.siteUrl}/og/og-image.jpg`,
   mainEntityOfPage: `${site.siteUrl}/android/`,
   datePublished: '2026-09-29',
@@ -53,18 +55,18 @@ const breadcrumbLd = {
   <meta property="article:modified_time" content="2026-10-06" slot="head" />
   <meta property="article:author" content="Capybara VPN" slot="head" />
   <meta property="article:section" content="Инструкции" slot="head" />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
   <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[170px] pb-8 sm:px-6 sm:pt-[150px]">
+      <article class="relative mx-auto max-w-3xl px-4 pt-[196px] pb-8 sm:px-6 sm:pt-[150px]">
         <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
-          <ol class="flex items-center gap-2">
+          <ol class="flex flex-wrap items-center gap-2">
             <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="transition-colors hover:text-white">Главная</a>
+              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
               <span aria-hidden="true"> → </span>
             </li>
             <li><span class="text-[#9aa6b2]" aria-current="page">Android</span></li>
@@ -82,7 +84,7 @@ const breadcrumbLd = {
         <div class="guide-body reveal mt-8">
           <h2>Шаг 1. Откройте сайт сервиса</h2>
           <p>
-            Перейдите на <a href={`${b}/`}>{host}</a> в браузере телефона.
+            Перейдите на <a href={`${b}/`}>сайт Capybara VPN</a> в браузере телефона.
           </p>
 
           <h2>Шаг 2. Выберите, где начать</h2>

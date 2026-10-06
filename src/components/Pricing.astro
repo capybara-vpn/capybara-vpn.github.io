@@ -26,7 +26,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
           class:list={[
             'reveal card-lift relative flex flex-col rounded-3xl p-7 sm:p-8',
             p.featured
-              ? 'border max-lg:order-first border-[#60a1a3]/45 bg-gradient-to-b from-[#60a1a3]/16 to-[#12151c] shadow-[0_30px_80px_-30px_rgba(96,161,163,0.5)] lg:-my-3 lg:py-11'
+              ? 'border border-[#60a1a3]/45 bg-gradient-to-b from-[#60a1a3]/16 to-[#12151c] shadow-[0_30px_80px_-30px_rgba(96,161,163,0.5)] lg:-my-3 lg:py-11'
               : 'glass',
           ]}
           style={`--reveal-delay:${i * 90}ms`}
@@ -52,7 +52,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
             )}
           </div>
 
-          <p class="display mt-4 text-[46px] text-white" data-count={p.price}>
+          <p class="display mt-4 whitespace-nowrap text-[46px] text-white" data-count={p.price}>
             {fmt(p.price)}
           </p>
           <p class="mt-1 text-[13.5px] text-[#8b98a5]">
@@ -82,7 +82,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
           <a
             href={site.browserUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer sponsored"
             class:list={['btn mt-7 w-full px-6 py-3.5 text-[15px]', p.featured ? 'btn-primary' : 'btn-ghost']}
             data-cta
             data-placement="pricing"
@@ -107,7 +107,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
       <a
         href={site.telegramUrl}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer sponsored"
         class="btn btn-primary px-6 py-3.5 text-[15px]"
         data-cta
         data-placement="pricing"
@@ -120,7 +120,7 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
       <a
         href={site.browserUrl}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer sponsored"
         class="btn btn-ghost px-6 py-3.5 text-[15px]"
         data-cta
         data-placement="pricing"

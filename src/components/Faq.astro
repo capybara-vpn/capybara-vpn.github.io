@@ -21,7 +21,7 @@ import { faqs } from '../data/site';
       faqs.map((f, i) => (
         <details class="faq reveal group" style={`--reveal-delay:${Math.min(i, 4) * 60}ms`}>
           <summary class="flex items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
-            <span class="text-[15.5px] font-semibold tracking-tight text-white">{f.q}</span>
+            <span role="heading" aria-level="3" class="text-[15.5px] font-semibold tracking-tight text-white">{f.q}</span>
             <span class="chev flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8fc3c4]">
               <Icon name="chevron" class="h-4 w-4" />
             </span>

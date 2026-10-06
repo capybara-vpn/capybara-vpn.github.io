@@ -45,7 +45,7 @@ const AI_BOTS = [
   'YandexBot',
   'YandexAdditional',
   'YandexAdditionalBot',
-  'bingbot',
+  'Bingbot',
   'BingPreview',
 ] as const;
 

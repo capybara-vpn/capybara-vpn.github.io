@@ -13,9 +13,9 @@ const guides = [
     note: 'сравнение 30/90/180 дней, что входит, возврат',
   },
   { path: '/vless/', title: 'Что такое VLESS', note: 'протокол простыми словами' },
-  { path: '/ios/', title: 'Настройка на iOS', note: '' },
-  { path: '/android/', title: 'Настройка на Android', note: '' },
-  { path: '/windows/', title: 'Настройка на Windows', note: '' },
+  { path: '/ios/', title: 'Настройка на iOS', note: 'iPhone и iPad' },
+  { path: '/android/', title: 'Настройка на Android', note: 'смартфоны и планшеты' },
+  { path: '/windows/', title: 'Настройка на Windows', note: 'ПК и ноутбуки' },
 ] as const;
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
@@ -42,7 +42,7 @@ export async function GET() {
     `- Серверы: ${facts.servers} серверов, ${facts.locations} локаций, каналы до ${facts.speed}`,
     '- Трафик: безлимитный во всех тарифах',
     `- Устройства: ${facts.devicesPerPlan}; дополнительные слоты докупаются за доплату в сервисе`,
-    `- Платформы: ${[...facts.platforms].join(', ')}`,
+    `- Платформы: ${[...facts.platforms].join(', ')} (пошаговые инструкции на сайте: iOS, Android, Windows)`,
     '- Управление: Telegram-бот или браузерная версия',
     '- Пробный период: первый день бесплатно, без привязки карты (10 ГБ трафика на тест)',
     '- Оплата из России: карты, СБП и другие подключённые провайдеры',
@@ -61,11 +61,11 @@ export async function GET() {
     '',
     '## Частые вопросы (кратко)',
     '',
-    ...faqs.map((f) => `- ${f.q} ${f.a}`),
+    ...faqs.map((f) => `- Q: ${f.q} A: ${f.a}`),
     '',
   ];
 
   return new Response(lines.join('\n'), {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });
 }

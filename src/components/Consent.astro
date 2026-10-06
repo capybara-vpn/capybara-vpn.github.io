@@ -4,7 +4,7 @@ import { site } from '../data/site';
 
 <div
   id="consent"
-  class="hidden fixed bottom-20 left-3 z-[70] max-w-[min(320px,calc(100vw-7rem))] rounded-2xl border border-white/12 bg-[#12151c]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6 md:left-6"
+  class="hidden fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-3 z-[70] max-w-[min(320px,calc(100vw-7rem))] rounded-2xl border border-white/12 bg-[#12151c]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6 md:left-6"
   role="dialog"
   aria-modal="true"
   aria-live="polite"
@@ -25,7 +25,7 @@ import { site } from '../data/site';
   <span id="ga-id" class="hidden" aria-hidden="true">{site.gaId}</span>
 </div>
 
-<div class="fixed bottom-20 right-3 z-[70] md:bottom-6 md:right-6">
+<div class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-3 z-[70] md:bottom-6 md:right-6">
   <button
     id="consent-manage"
     type="button"

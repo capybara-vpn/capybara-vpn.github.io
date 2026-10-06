@@ -24,7 +24,7 @@ const logoSrc = `${b}/logo-96.png`;
         <a
           href={site.telegramUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer sponsored"
           class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
           data-cta
           data-placement="footer"
@@ -37,7 +37,7 @@ const logoSrc = `${b}/logo-96.png`;
         <a
           href={site.browserUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer sponsored"
           class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
           data-cta
           data-placement="footer"
@@ -77,5 +77,5 @@ const logoSrc = `${b}/logo-96.png`;
     </div>
   </div>
   <!-- spacer so mobile sticky bar never covers footer content -->
-  <div class="h-[76px] md:hidden" aria-hidden="true"></div>
+  <div class="h-[calc(76px+env(safe-area-inset-bottom))] md:hidden" aria-hidden="true"></div>
 </footer>

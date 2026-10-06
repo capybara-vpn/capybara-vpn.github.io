@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
 import { site } from '../data/site';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 
 const base = import.meta.env.BASE_URL ?? '/';
 const b = base.endsWith('/') ? base.slice(0, -1) : base;
@@ -16,14 +18,19 @@ const b = base.endsWith('/') ? base.slice(0, -1) : base;
   canonicalPath="/404"
   showFaq={false}
 >
+  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
+  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
   <Header />
-  <main id="main" tabindex="-1" class="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-6 text-center">
+  <main id="main" tabindex="-1" class="mx-auto flex min-h-screen min-h-dvh max-w-xl flex-col items-center justify-center px-6 text-center">
     <p class="eyebrow">404</p>
     <h1 class="display mt-4 text-5xl text-white">Такой страницы нет</h1>
     <p class="lead mt-4">Зато есть быстрый VPN от 249 ₽. Вернёмся к главному?</p>
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
       <a href={`${b}/`} class="btn btn-primary px-6 py-3.5">На главную</a>
-      <a href={site.telegramUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer">
+      <a href={site.browserUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored">
+        Открыть в браузере
+      </a>
+      <a href={site.telegramUrl} class="btn btn-ghost px-6 py-3.5" target="_blank" rel="noopener noreferrer sponsored">
         Открыть в Telegram
       </a>
     </div>
