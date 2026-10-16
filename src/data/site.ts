@@ -7,7 +7,7 @@ export const TELEGRAM_URL =
   'https://t.me/capybaravpnbot?start=partner_p1_RR66EINZM499Lk-RNN4';
 
 export const BROWSER_URL =
-  'https://capybaravpn.app/partner/p1_RR66EINZM499Lk-RNN4';
+  'https://capybara.black/partner/p1_RR66EINZM499Lk-RNN4';
 
 // Public site origin + base. Production is the user site root.
 // Change once before deploy.
