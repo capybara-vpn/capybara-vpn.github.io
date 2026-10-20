@@ -7,6 +7,7 @@ const title = 'Бесплатный день Capybara VPN: 10 ГБ без кар
 const description =
   'Как получить бесплатный день в Capybara VPN: 10 ГБ трафика, карта не нужна. Что входит в пробный период и как проверить сервис перед покупкой тарифа.';
 const host = new URL(site.siteUrl).hostname;
+const ogImage = '/og/probny-den.jpg';
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -17,7 +18,7 @@ const articleLd = {
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/probny-den/`,
   datePublished: '2026-10-20',
   dateModified: '2026-10-20',
@@ -54,6 +55,7 @@ const breadcrumbLd = {
   articleSection="Пробный период"
   datePublished="2026-10-20"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
   <h2>Что входит в пробный период</h2>
   <p>

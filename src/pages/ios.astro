@@ -7,6 +7,7 @@ const title = 'Capybara VPN на iOS: настройка на iPhone и iPad з�
 const description =
   'Как подключить Capybara VPN на iPhone и iPad: 4 шага, 5 минут, первый день бесплатно. Тарифы от 249 ₽.';
 const host = new URL(site.siteUrl).hostname;
+const ogImage = '/og/ios.jpg';
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -17,7 +18,7 @@ const articleLd = {
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/ios/`,
   datePublished: '2026-09-29',
   dateModified: '2026-10-20',
@@ -54,6 +55,7 @@ const breadcrumbLd = {
   articleSection="Инструкции"
   datePublished="2026-09-29"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
           <h2>Шаг 1. Откройте сайт сервиса</h2>
           <p>

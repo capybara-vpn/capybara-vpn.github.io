@@ -7,6 +7,8 @@ const title = 'Что такое VPN: как работает и что меня
 const description =
   'Что такое VPN простыми словами: как шифруется трафик, что видят сайты и провайдер, а что не меняется. Коротко и без маркетинговых обещаний.';
 
+const ogImage = '/og/chto-takoe-vpn.jpg';
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -15,7 +17,7 @@ const articleLd = {
   inLanguage: 'ru',
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/chto-takoe-vpn/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-10-20',
@@ -45,6 +47,7 @@ const breadcrumbLd = {
   articleSection="Основы"
   datePublished="2026-10-20"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
   <h2>Одна картинка вместо тысячи слов</h2>
   <p>

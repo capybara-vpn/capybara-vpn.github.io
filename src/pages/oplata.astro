@@ -7,6 +7,7 @@ const title = 'Как оплатить Capybara VPN: карты, СБП и та�
 const description =
   'Как оплатить Capybara VPN из России: банковские карты, СБП и другие провайдеры. Тарифы 30, 90 и 180 дней, первый день бесплатно, возврат через поддержку.';
 const host = new URL(site.siteUrl).hostname;
+const ogImage = '/og/oplata.jpg';
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -17,7 +18,7 @@ const articleLd = {
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/oplata/`,
   datePublished: '2026-10-20',
   dateModified: '2026-10-20',
@@ -54,6 +55,7 @@ const breadcrumbLd = {
   articleSection="Оплата"
   datePublished="2026-10-20"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
   <h2>Сначала бесплатный день</h2>
   <p>

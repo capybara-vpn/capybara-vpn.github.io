@@ -6,6 +6,8 @@ const title = 'Тарифы Capybara VPN: 30, 90 и 180 дней — что вы
 const description =
   'Тарифы Capybara VPN: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Безлимит, оплата картой и СБП, первый день бесплатно.';
 
+const ogImage = '/og/tarify.jpg';
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -14,7 +16,7 @@ const articleLd = {
   inLanguage: 'ru',
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/tarify/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
@@ -45,6 +47,7 @@ const breadcrumbLd = {
   articleSection="Тарифы"
   datePublished="2026-09-29"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
           <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Сравнение тарифов">
           <table>

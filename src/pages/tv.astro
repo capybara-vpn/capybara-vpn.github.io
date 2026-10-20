@@ -7,6 +7,7 @@ const title = 'Capybara VPN на телевизоре: как подключит
 const description =
   'Как подключить Capybara VPN на Smart TV и Android TV: два рабочих способа, первый день бесплатно. Без установки на телевизор.';
 const host = new URL(site.siteUrl).hostname;
+const ogImage = '/og/tv.jpg';
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -17,7 +18,7 @@ const articleLd = {
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/tv/`,
   datePublished: '2026-10-20',
   dateModified: '2026-10-20',
@@ -54,6 +55,7 @@ const breadcrumbLd = {
   articleSection="Инструкции"
   datePublished="2026-10-20"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
   <h2>Способ 1. Настроить на самом телевизоре</h2>
   <p>

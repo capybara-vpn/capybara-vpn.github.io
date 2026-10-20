@@ -6,6 +6,8 @@ const title = 'Что такое VLESS: протокол Capybara VPN прост
 const description =
   'VLESS — современный протокол VPN: быстрый, стабильный, устойчивый к блокировкам. Объясняем просто + где он уже настроен.';
 
+const ogImage = '/og/vless.jpg';
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -14,7 +16,7 @@ const articleLd = {
   inLanguage: 'ru',
   publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
     logo: `${site.siteUrl}/logo-320.png` },
-  image: `${site.siteUrl}/og/og-image.jpg`,
+  image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/vless/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
@@ -45,6 +47,7 @@ const breadcrumbLd = {
   articleSection="Технологии"
   datePublished="2026-09-29"
   dateModified="2026-10-20"
+  ogImage={ogImage}
 >
           <h2>Зачем вообще нужен протокол</h2>
           <p>
