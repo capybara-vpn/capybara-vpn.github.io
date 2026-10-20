@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import type { IconName } from '../lib/icon';
+import { guides } from '../data/guides';
 
 const platforms: { name: string; icon: IconName; note: string }[] = [
   { name: 'iOS', icon: 'phone', note: 'iPhone · iPad' },
@@ -44,5 +45,21 @@ const platforms: { name: string; icon: IconName; note: string }[] = [
       Важно: выбранный тариф действует на <strong class="font-semibold text-white">1 устройство</strong>.
       Нужно больше — докупите дополнительные слоты за доплату в сервисе.
     </p>
+
+    <nav
+      class="reveal mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[13px] text-[#8b98a5]"
+      aria-label="Инструкции по настройке"
+    >
+      <span class="text-[#8b98a5]">Инструкции:</span>
+      {
+        guides
+          .filter((g) => g.short)
+          .map((g) => (
+            <a href={g.href} class="transition-colors hover:text-white">
+              {g.short}
+            </a>
+          ))
+      }
+    </nav>
   </div>
 </section>
