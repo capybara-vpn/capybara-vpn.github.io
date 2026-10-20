@@ -11,12 +11,12 @@ const logoSrc = `${b}/logo-96.png`;
   <div class="border-b border-white/8 bg-[#0b0e14]/80">
     <p class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-[12.5px] leading-snug text-[#9aa6b2]">
       <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#60a1a3]" aria-hidden="true"></span>
-      <span>Capybara VPN — спокойный VPN с подпиской от 249 ₽. Подключение через Telegram или браузер.</span>
+      <span class="hidden sm:inline">Capybara VPN — спокойный VPN с подпиской от 249 ₽. </span>Подключение через Telegram или браузер.
     </p>
   </div>
 
   <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6" aria-label="Основная навигация">
-    <a href={withBase("/#top")} class="flex items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
+    <a href={withBase("/#top")} class="flex shrink-0 items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
       <img
         src={logoSrc}
         alt=""
@@ -26,7 +26,7 @@ const logoSrc = `${b}/logo-96.png`;
         loading="eager"
         decoding="async"
       />
-      <span class="text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
+      <span class="whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
     </a>
 
     <div class="hidden items-center gap-7 lg:flex">
@@ -61,14 +61,15 @@ const logoSrc = `${b}/logo-96.png`;
         aria-label="Открыть Capybara VPN в Telegram из шапки сайта"
       >
         <Icon name="telegram" class="h-4 w-4" />
-        <span>Открыть в Telegram</span>
+        <span class="sm:hidden">Telegram</span>
+        <span class="hidden sm:inline">Открыть в Telegram</span>
       </a>
     </div>
   </nav>
 
   <!-- compact mobile nav -->
   <nav class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
-    <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2 text-[13px] font-medium text-[#9aa6b2]" tabindex="0" role="region" aria-label="Навигация по разделам">
+    <div class="mx-auto flex max-w-6xl items-center gap-4 overflow-x-auto px-3.5 py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:px-4 sm:text-[13px]" tabindex="0" role="region" aria-label="Навигация по разделам">
       {
         nav.map((n) => (
           <a href={withBase(n.href)} class="whitespace-nowrap py-2 transition-colors hover:text-white">

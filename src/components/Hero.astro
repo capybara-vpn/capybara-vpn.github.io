@@ -6,7 +6,7 @@ import { b } from '../lib/url';
 const logoSrc = `${b}/logo-320.png`;
 ---
 
-<section id="hero" class="relative overflow-hidden pt-[200px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
+<section id="hero" class="relative overflow-hidden pt-[168px] pb-14 sm:pt-[156px] lg:pt-[168px] lg:pb-20">
   <!-- ambient background -->
   <div class="ambient left-1/2 top-[-320px] h-[560px] w-[min(900px,100vw)] -translate-x-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
   <div class="ambient right-[-180px] top-[30%] h-[420px] w-[min(420px,120vw)] bg-[#3c6f71]/14 max-sm:right-0 max-sm:w-[280px]" aria-hidden="true"></div>
@@ -31,32 +31,34 @@ const logoSrc = `${b}/logo-320.png`;
         открываете Telegram или браузер — и просто пользуетесь. Без сложных настроек.
       </p>
 
-      <div data-hero-in class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div data-hero-in class="mt-7 flex flex-row items-center gap-3 sm:mt-7 sm:gap-3">
         <a
           href={site.telegramUrl}
           target="_blank"
           rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-primary px-7 py-4 text-[15.5px]"
+          class="btn btn-primary flex-1 px-4 py-3.5 text-[14.5px] sm:flex-none sm:px-7 sm:py-4 sm:text-[15.5px]"
           data-cta
           data-placement="hero"
           data-destination="telegram"
           aria-label="Открыть Capybara VPN в Telegram с главного экрана"
         >
           <Icon name="telegram" class="h-5 w-5" />
-          Открыть в Telegram
+          <span class="sm:hidden">Telegram</span>
+          <span class="hidden sm:inline">Открыть в Telegram</span>
         </a>
         <a
           href={site.browserUrl}
           target="_blank"
           rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-ghost px-7 py-4 text-[15.5px]"
+          class="btn btn-ghost flex-1 px-4 py-3.5 text-[14.5px] sm:flex-none sm:px-7 sm:py-4 sm:text-[15.5px]"
           data-cta
           data-placement="hero"
           data-destination="browser"
           aria-label="Открыть Capybara VPN в браузере с главного экрана"
         >
           <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
-          Открыть в браузере
+          <span class="sm:hidden">Браузер</span>
+          <span class="hidden sm:inline">Открыть в браузере</span>
         </a>
       </div>
 

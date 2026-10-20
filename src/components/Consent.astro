@@ -2,30 +2,38 @@
 import { site } from '../data/site';
 ---
 
+<!--
+  Consent is a NON-MODAL, single-row bar pinned to the bottom of the viewport.
+  The old floating card (bottom-left, 235px tall on mobile) covered both hero
+  CTAs and the mobile sticky bar, so a phone visitor could not reach the
+  primary action. This bar never overlaps the hero CTAs, sits below the
+  mobile sticky bar, and hides that bar while a choice is pending.
+-->
 <div
   id="consent"
-  class="hidden fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-3 z-[70] max-w-[min(320px,calc(100vw-7rem))] rounded-2xl border border-white/12 bg-[#12151c]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6 md:left-6"
-  role="dialog"
-  aria-modal="true"
-  aria-live="polite"
+  class="fixed inset-x-0 bottom-0 z-[70] hidden border-t border-white/10 bg-[#0b0e14]/95 px-3 py-2 backdrop-blur-xl sm:px-4"
+  role="region"
   aria-label="Настройка аналитики"
 >
-  <p class="text-[13.5px] font-semibold text-white">Аналитика — на ваш выбор</p>
-  <p class="mt-1.5 text-[12.5px] leading-relaxed text-[#9aa6b2]">
-    Используем GA4 только для улучшения страницы. До согласия сбор отключён.
-  </p>
-  <div class="mt-3 flex gap-2">
-    <button id="consent-accept" type="button" class="btn btn-primary flex-1 px-3 py-2.5 text-[13px]">
-      Разрешить
-    </button>
-    <button id="consent-decline" type="button" class="btn btn-ghost flex-1 px-3 py-2.5 text-[13px]">
-      Не сейчас
-    </button>
+  <div class="mx-auto flex max-w-4xl items-center gap-3">
+    <p class="min-w-0 flex-1 text-[12.5px] leading-snug text-[#9aa6b2] sm:text-[13.5px]">
+      Аналитика — на ваш выбор.
+      <span class="sr-only sm:not-sr-only">Используем GA4 только для улучшения страницы; до согласия сбор отключён.</span>
+    </p>
+    <div class="flex shrink-0 gap-2">
+      <button id="consent-accept" type="button" class="btn btn-primary px-3 py-2 text-[12.5px] sm:text-[13px]">
+        Разрешить
+      </button>
+      <button id="consent-decline" type="button" class="btn btn-ghost px-3 py-2 text-[12.5px] sm:text-[13px]">
+        Не сейчас
+      </button>
+    </div>
   </div>
-  <span id="ga-id" class="hidden" aria-hidden="true">{site.gaId}</span>
 </div>
 
-<div class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-3 z-[70] md:bottom-6 md:right-6">
+<!-- Re-open the analytics choice. Only shown once a choice has been made,
+     so it never competes with the bar above for the same corner. -->
+<div id="consent-manage-wrap" class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-3 z-[70] hidden md:bottom-6 md:right-6">
   <button
     id="consent-manage"
     type="button"
@@ -35,3 +43,4 @@ import { site } from '../data/site';
     Cookie
   </button>
 </div>
+<span id="ga-id" class="hidden" aria-hidden="true">{site.gaId}</span>

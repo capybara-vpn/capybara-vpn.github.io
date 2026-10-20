@@ -152,7 +152,7 @@ const jsonLd = jsonLdAll.filter(
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\u003c')} />
     <slot name="head" />
-    <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}#consent-manage{display:none!important}</style></noscript>
+    <noscript><style>.reveal,[data-hero-in]{opacity:1!important;transform:none!important}#consent-manage-wrap{display:none!important}</style></noscript>
   </head>
   <body class="noise min-h-screen min-h-dvh antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>

@@ -272,50 +272,66 @@ function writeStoredConsent(value: 'granted' | 'denied') {
 
 const stored = readStoredConsent();
 
+/**
+ * Show or hide the consent bar.
+ * The bar is a non-modal region: it never traps focus, so the page stays
+ * fully usable while the choice is pending.
+ */
+function setBannerVisible(visible: boolean) {
+  banner?.classList.toggle('hidden', !visible);
+  // The mobile sticky CTA and the consent bar would fight for the same
+  // bottom strip of the screen, so the sticky bar steps aside while the
+  // choice is pending.
+  document.documentElement.classList.toggle('has-consent', visible);
+  // The "Cookie" pill only makes sense once a choice has been made.
+  document.getElementById('consent-manage-wrap')?.classList.toggle('hidden', visible);
+}
+
+function declineConsent(event: string) {
+  writeStoredConsent('denied');
+  applyConsent('denied');
+  setBannerVisible(false);
+  returnFocusToManage();
+  track(event, {});
+}
+
 if (stored === 'granted' || stored === 'denied') {
-  banner?.classList.add('hidden');
+  setBannerVisible(false);
   applyConsent(stored);
 } else {
-  banner?.classList.remove('hidden');
+  setBannerVisible(true);
 }
 
 document.getElementById('consent-accept')?.addEventListener('click', () => {
   writeStoredConsent('granted');
   applyConsent('granted');
-  banner?.classList.add('hidden');
+  setBannerVisible(false);
   returnFocusToManage();
   track('consent_granted', {});
 });
 document.getElementById('consent-decline')?.addEventListener('click', () => {
-  writeStoredConsent('denied');
-  applyConsent('denied');
-  banner?.classList.add('hidden');
-  returnFocusToManage();
+  declineConsent('consent_declined');
 });
 // Keyboard users must be able to dismiss the banner: Esc = decline.
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && banner && !banner.classList.contains('hidden')) {
-    document.getElementById('consent-decline')?.click();
+    declineConsent('consent_escape');
   }
 });
+// Tapping the page itself dismisses the bar as "not now" — the choice stays
+// available through the Cookie pill.
+document.addEventListener(
+  'click',
+  (e) => {
+    if (!banner || banner.classList.contains('hidden')) return;
+    const t = e.target as Node | null;
+    if (!t || banner.contains(t)) return;
+    if (document.getElementById('consent-manage')?.contains(t)) return;
+    declineConsent('consent_dismissed');
+  },
+  true
+);
 
-// Focus trap while the banner is open + return focus to the Cookie button on close.
-document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Tab' || !banner || banner.classList.contains('hidden')) return;
-  const items = Array.from(banner.querySelectorAll<HTMLElement>('button, a[href]')).filter(
-    (el) => !el.hasAttribute('disabled')
-  );
-  if (!items.length) return;
-  const first = items[0];
-  const last = items[items.length - 1];
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault();
-    first.focus();
-  }
-});
 function returnFocusToManage() {
   document.getElementById('consent-manage')?.focus();
 }
@@ -325,7 +341,9 @@ document.getElementById('consent-manage')?.addEventListener('click', () => {
   } catch {
     /* noop */
   }
-  banner?.classList.remove('hidden');
+  setBannerVisible(true);
+  // Keep the keyboard where the user is: the first control of the bar.
+  document.getElementById('consent-accept')?.focus();
 });
 
 export {};

@@ -20,13 +20,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 104px;
+    /* Matches the fixed header height (99px) plus a small gap. */
+    scroll-padding-top: 112px;
     overflow-x: clip;
   }
 
-  @media (max-width: 768px) {
+  /* Below 1024px the header carries the extra sub-nav row (147px). */
+  @media (max-width: 1023px) {
     html {
-      scroll-padding-top: 196px;
+      scroll-padding-top: 164px;
     }
   }
 
@@ -436,14 +438,14 @@ details.faq[open] .faq-body {
 
 }
 
-/* ---------- state overrides (unlayered) ----------
-   Interactive states must beat base utilities — `.icon-wrap` carries a
-   `text-[#8fc3c4]` utility, and the utilities layer outranks the
-   components layer regardless of specificity. Unlayered rules outrank
-   every layer, so hover/focus states still apply. These rules never set
-   `display`, so they cannot resurrect the hidden-vs-.btn bug. */
+/* ---------- state overrides (unlayered) ---------- */
 .card-lift:hover .icon-wrap {
   color: #a8d8d9;
+}
+/* The consent bar owns the bottom strip of the screen while the analytics
+   choice is pending, so the mobile sticky CTA steps aside. */
+html.has-consent #mobile-cta {
+  display: none;
 }
 
 /* Reduced-motion overrides stay unlayered so they outrank every layered

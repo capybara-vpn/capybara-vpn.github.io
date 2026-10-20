@@ -192,6 +192,6 @@ export const faqs = [
 export const nav = [
   { href: '/#pricing', label: 'Тарифы' },
   { href: '/#benefits', label: 'Возможности' },
-  { href: '/#how', label: 'Как это работает' },
+  { href: '/#how', label: 'Как работает' },
   { href: '/#faq', label: 'FAQ' },
 ] as const;
