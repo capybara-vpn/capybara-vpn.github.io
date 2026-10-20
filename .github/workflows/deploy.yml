@@ -60,3 +60,41 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      # IndexNow: tells Bing / Yandex / other engines that the URLs changed
+      # right after the deploy, instead of waiting for the next crawl.
+      - name: Notify IndexNow
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          ORIGIN="https://capybaravpn.top"
+          KEY="$(curl -fsS "$ORIGIN/indexnow-key.txt" || true)"
+          if [ -z "$KEY" ]; then
+            echo "IndexNow: ключ недоступен, пропускаем"
+            exit 0
+          fi
+          URLS="$(curl -fsS "$ORIGIN/sitemap-0.xml" \
+            | grep -o '<loc>[^<]*</loc>' \
+            | sed 's|<loc>||;s|</loc>||' || true)"
+          if [ -z "$URLS" ]; then
+            echo "IndexNow: sitemap пуст, пропускаем"
+            exit 0
+          fi
+          node -e '
+            const urls = process.argv[1].split("\n").filter(Boolean);
+            const body = {
+              host: "capybaravpn.top",
+              key: process.argv[2],
+              keyLocation: "https://capybaravpn.top/indexnow-key.txt",
+              urlList: urls,
+            };
+            fetch("https://api.indexnow.org/indexnow", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            })
+              .then(async (r) => {
+                console.log(`IndexNow: ${r.status} ${r.statusText} (${urls.length} URL)`);
+                if (r.status >= 400) console.log(await r.text());
+              })
+              .catch((e) => console.log("IndexNow: ошибка", e.message));
+          ' "$URLS" "$KEY"
