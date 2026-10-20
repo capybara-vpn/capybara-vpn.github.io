@@ -99,16 +99,19 @@ const logoSrc = `${b}/logo-320.png`;
       <!-- logo core -->
       <div class="relative">
         <div class="absolute -inset-8 rounded-full bg-gradient-to-b from-[#60a1a3]/30 to-transparent blur-2xl" aria-hidden="true"></div>
-        <img
-          src={logoSrc}
-          alt={site.logo.alt}
-          width="320"
-          height="320"
-          class="relative h-[220px] w-[220px] rounded-full object-cover shadow-[0_30px_90px_-20px_rgba(96,161,163,0.55)] ring-1 ring-white/20 sm:h-[280px] sm:w-[280px]"
-          loading="eager"
-          fetchpriority="high"
-          decoding="sync"
-        />
+        <picture class="block">
+          <source srcset={`${b}/logo-320.webp`} type="image/webp" />
+          <img
+            src={logoSrc}
+            alt={site.logo.alt}
+            width="320"
+            height="320"
+            class="relative h-[220px] w-[220px] rounded-full object-cover shadow-[0_30px_90px_-20px_rgba(96,161,163,0.55)] ring-1 ring-white/20 sm:h-[280px] sm:w-[280px]"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          />
+        </picture>
       </div>
 
       <!-- floating chips -->

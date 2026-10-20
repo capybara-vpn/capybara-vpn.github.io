@@ -157,6 +157,8 @@ const jsonLd = jsonLdAll.filter(
 
     <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32.png')} />
     <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
+    <!-- The primary CTA opens Telegram: warm the connection up front. -->
+    <link rel="preconnect" href="https://t.me" crossorigin />
     <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('manifest.webmanifest')} />
 
