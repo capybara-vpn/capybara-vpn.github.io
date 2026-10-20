@@ -4,6 +4,7 @@ export type IconName =
   | 'globe'
   | 'bolt'
   | 'server'
+  | 'router'
   | 'device'
   | 'browser'
   | 'arrow'
