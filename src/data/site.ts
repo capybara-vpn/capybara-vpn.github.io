@@ -9,17 +9,17 @@ export const TELEGRAM_URL =
 export const BROWSER_URL =
   'https://capybara.black/partner/p1_RR66EINZM499Lk-RNN4';
 
-// Public site origin + base. Production is the user site root.
+// Public site origin + base. Production is the custom domain root.
 // Change once before deploy.
 // Local dev: http://localhost:4321
-// GitHub Pages user site: https://capybara-vpn.github.io (base '/')
+// Custom domain: https://capybaravpn.top (base '/')
 // Overridable at build time via SITE_URL env (see .github/workflows/deploy.yml).
 // biome-ignore lint: env access is intentional here
 const ENV_SITE_URL =
   (typeof import.meta !== 'undefined' &&
     (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.SITE_URL) ||
   (typeof process !== 'undefined' ? process.env?.SITE_URL : undefined);
-export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io').replace(
+export const SITE_URL = (ENV_SITE_URL || 'https://capybaravpn.top').replace(
   /\/$/,
   ''
 );

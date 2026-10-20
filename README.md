@@ -32,9 +32,9 @@
 Во всех тарифах — безлимитный трафик. Оплата картой, СБП и другими способами.
 
 <p>
-  <a href="https://capybara-vpn.github.io/"><b>Подключить в Telegram</b></a>
+  <a href="https://capybaravpn.top/"><b>Подключить в Telegram</b></a>
   ·
-  <a href="https://capybara-vpn.github.io/"><b>Подключить в браузере</b></a>
+  <a href="https://capybaravpn.top/"><b>Подключить в браузере</b></a>
 </p>
 
 ## Как подключиться
@@ -89,7 +89,7 @@
 
 **Оплата:** картой и через СБП. Поддержка — в Telegram.
 
-Начать: https://capybara-vpn.github.io/
+Начать: https://capybaravpn.top/
 
 ---
 
