@@ -21,6 +21,7 @@ const {
 } = Astro.props;
 
 import { withBase } from '../lib/url';
+import { fontFaces, fontUrls } from '../lib/fonts';
 
 // site.siteUrl is the full public URL (origin + base). Derive origin here so
 // asset URLs never get a doubled base path (withBase already includes it).
@@ -111,6 +112,9 @@ const jsonLd = jsonLdAll.filter(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <style is:inline set:html={fontFaces} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.latin} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.cyrillic} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={site.seo.keywords.join(', ')} />

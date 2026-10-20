@@ -13,8 +13,6 @@ import FinalCta from '../components/FinalCta.astro';
 import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 
 import { b } from '../lib/url';
 ---
@@ -22,8 +20,6 @@ import { b } from '../lib/url';
 <BaseLayout canonicalPath="/">
   <meta name="yandex-verification" content="c08638124232cfdc" slot="head" />
   <link rel="preload" slot="head" as="image" href={`${b}/logo-320.png`} fetchpriority="high" />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">

@@ -6,8 +6,6 @@ import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
 import Related from '../components/Related.astro';
 import GuideCta from '../components/GuideCta.astro';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
 import { b } from '../lib/url';
 
 interface Props {
@@ -49,8 +47,6 @@ const {
   <meta property="article:author" content="Capybara VPN" slot="head" />
   <meta property="article:section" content={articleSection} slot="head" />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interLatin} />
-  <link rel="preload" slot="head" as="font" type="font/woff2" crossorigin href={interCyrillic} />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
   <div id="top">
     <Header />
