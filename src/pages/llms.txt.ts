@@ -3,8 +3,12 @@ import { guides } from '../data/guides';
 
 /**
  * Machine-readable service summary for AI crawlers (GEO).
- * Generated at build time from src/data/site.ts — URLs always match
- * the deployed SITE_URL, facts can never drift from the landing.
+ *
+ * Built to the llms.txt v2 spec (llmstxt.org): H1 with the site name, a
+ * blockquote summary, an optional details block, and then H2 sections that
+ * are "file lists" — every item is a markdown hyperlink with an optional
+ * note. The links point at the .md version of each page, which the spec
+ * recommends for agent-friendly content.
  */
 const guideNotes: Record<string, string> = {
   '/tarify/': 'сравнение 30/90/180 дней, что входит, возврат',
@@ -30,50 +34,44 @@ const guideNotes: Record<string, string> = {
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
 
+/** Markdown version of a page: /ios/ -> /ios.md */
+const mdUrl = (path: string) => `${site.siteUrl}${path.replace(/\/$/, '')}.md`;
+
 export async function GET() {
   const url = site.siteUrl;
+
   const tariffLines = plans.map((p) => {
     const per30 = p.per30Label.replace('≈', 'около ');
     const tail = p.discount > 0 ? `скидка ${p.discount}%, экономия ${fmtPrice(p.savings)}, ${per30}` : per30;
-    return `- ${p.days} дней — ${fmtPrice(p.price)} (${tail})`;
+    return `- [${p.days} дней — ${fmtPrice(p.price)}](${mdUrl('/tarify/')}): ${tail}, безлимитный трафик, 1 устройство`;
   });
 
   const lines = [
     '# Capybara VPN',
     '',
-    '> Capybara VPN — VPN-сервис для спокойного и быстрого доступа в интернет.',
-    '> Подключение за пару минут через Telegram-бота или прямо в браузере, без сложных настроек.',
-    `> Официальный сайт: ${url}/`,
-    `> Полный текст сайта одним файлом: ${url}/llms-full.txt`,
+    '> Capybara VPN — VPN-сервис для спокойного и быстрого доступа в интернет. Подключение за пару минут через Telegram-бота или прямо в браузере, без сложных настроек.',
     '',
-    '## Факты о сервисе',
+    `Capybara VPN — VPN-сервис: протокол ${facts.protocol}, ${facts.locations} локаций, ${facts.servers} серверов, каналы до ${facts.speed}. Трафик безлимитный во всех тарифах, ${facts.devicesPerPlan} (дополнительные слоты докупаются за доплату в сервисе). Тарифы: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Пробный период: первый день бесплатно, 10 ГБ трафика, карта не нужна. Оплата из России: карты, СБП и другие провайдеры. Управление — Telegram-бот или браузерная версия. Сервис заявляет, что не хранит историю посещений, IP-адреса и DNS-запросы (серверы работают в режиме RAM-only). ${facts.support}. Возврат предусмотрен в рамках правил сервиса — обратитесь в поддержку с номером платежа.`,
     '',
-    '- Название: Capybara VPN',
-    `- Протокол: ${facts.protocol} (уже выбран и настроен, ничего делать не нужно)`,
-    `- Серверы: ${facts.servers} серверов, ${facts.locations} локаций, каналы до ${facts.speed}`,
-    '- Трафик: безлимитный во всех тарифах',
-    `- Устройства: ${facts.devicesPerPlan}; дополнительные слоты докупаются за доплату в сервисе`,
-    `- Платформы: ${[...facts.platforms].join(', ')} (пошаговые инструкции на сайте: iOS, Android, Windows)`,
-    '- Управление: Telegram-бот или браузерная версия',
-    '- Пробный период: первый день бесплатно, без привязки карты (10 ГБ трафика на тест)',
-    '- Оплата из России: карты, СБП и другие подключённые провайдеры',
-    '- Логи: сервис заявляет, что не хранит историю посещений, IP-адреса и DNS-запросы (RAM-only серверы)',
-    `- ${facts.support}`,
-    '- Возврат: предусмотрен в рамках правил сервиса (обратиться в поддержку с номером платежа)',
+    '## Страницы',
+    '',
+    `- [Главная](${mdUrl('/')}): тарифы, возможности, как это работает, FAQ`,
+    ...guides.map(
+      (g) => `- [${g.title}](${mdUrl(g.href)})${guideNotes[g.href] ? `: ${guideNotes[g.href]}` : ''}`
+    ),
     '',
     '## Тарифы',
     '',
     ...tariffLines,
-    `- Подробнее: ${url}/tarify/`,
     '',
-    '## Страницы',
+    '## Частые вопросы',
     '',
-    '- Главная: тарифы, возможности, как это работает, FAQ',
-    ...guides.map((g) => `- ${g.title}: ${url}${g.href}${guideNotes[g.href] ? ` — ${guideNotes[g.href]}` : ''}`),
+    ...faqs.map((f) => `- [${f.q}](${mdUrl('/')}): ${f.a}`),
     '',
-    '## Частые вопросы (кратко)',
+    '## Служебные файлы',
     '',
-    ...faqs.map((f) => `- Q: ${f.q} A: ${f.a}`),
+    `- [Полный текст сайта](${url}/llms-full.txt): весь сайт одним markdown-файлом`,
+    `- [Карта сайта](${url}/sitemap-index.xml): 20 страниц с датами изменения`,
     '',
   ];
 

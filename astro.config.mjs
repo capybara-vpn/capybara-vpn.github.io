@@ -84,6 +84,13 @@ const LLMS_PAGES = [
   ['linux/index.html', 'Настройка на Linux'],
   ['tv/index.html', 'Настройка на TV'],
   ['router/index.html', 'VPN на роутере'],
+  ['bezopasnost-vpn/index.html', 'Безопасность и приватность'],
+  ['kak-vybrat-lokaciyu/index.html', 'Как выбрать локацию'],
+  ['proverka-skorosti/index.html', 'Как проверить скорость'],
+  ['dlya-novichkov/index.html', 'Первый раз с VPN'],
+  ['ne-rabotaet/index.html', 'Что делать, если не работает'],
+  ['neskolko-ustroystv/index.html', 'Несколько устройств'],
+  ['telegram-ili-brauzer/index.html', 'Telegram или браузер'],
 ];
 
 function htmlToMarkdown(html) {
@@ -133,14 +140,33 @@ function llmsFullPlugin() {
           '',
           '> Capybara VPN — VPN-сервис: VLESS, 38 локаций, 100+ серверов, каналы до 10 Гбит/с.',
           '> Тарифы: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Первый день бесплатно (10 ГБ).',
-          `> Официальный сайт: ${FULL}/`,
+          '',
+          `Официальный сайт: [capybaravpn.top](${FULL}/)`,
+          `Краткая сводка: [llms.txt](${FULL}/llms.txt)`,
+          `Тарифы: [30, 90 и 180 дней](${FULL}/tarify.md)`,
+          `Инструкции: [iOS](${FULL}/ios.md), [Android](${FULL}/android.md), [Windows](${FULL}/windows.md), [macOS](${FULL}/macos.md), [Linux](${FULL}/linux.md), [TV](${FULL}/tv.md), [роутер](${FULL}/router.md)`,
           '',
         ];
         for (const [file, title] of LLMS_PAGES) {
           try {
             const html = await readFile(path.join(dir.pathname, file), 'utf8');
             const md = htmlToMarkdown(html);
-            if (md) chunks.push(`\n---\n\n# ${title}\n`, md, '');
+            if (!md) continue;
+            // Markdown-версия страницы по тому же URL-пути (/ios/ -> /ios.md):
+            // агенты читают их напрямую, как рекомендует спецификация llms.txt.
+            const slug = file.replace(/index\.html$/, '').replace(/\/$/, '');
+            const mdName = slug ? `${slug}.md` : 'index.md';
+            await writeFile(
+              path.join(dir.pathname, mdName),
+              `# ${title}\n\n${md}\n`,
+              'utf8'
+            );
+            chunks.push(
+              `\n---\n\n## ${title}\n`,
+              `Источник: [${title}](${FULL}/${mdName})\n`,
+              md,
+              ''
+            );
           } catch {
             logger.warn(`llms-full: не удалось прочитать ${file}`);
           }
