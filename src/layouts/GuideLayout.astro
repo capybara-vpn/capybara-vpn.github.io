@@ -24,6 +24,8 @@ interface Props {
   dateModified: string;
   /** Path (without base) of the social preview image for this guide. */
   ogImage?: string;
+  /** One-sentence direct answer, shown right under the lead. */
+  summary?: string;
 }
 
 const {
@@ -41,6 +43,7 @@ const {
   datePublished,
   dateModified,
   ogImage = 'og/og-image.jpg',
+  summary,
 } = Astro.props;
 ---
 
@@ -71,6 +74,15 @@ const {
         <p class="lead reveal mt-4 text-[16.5px]">
           {lead}
         </p>
+
+        {
+          summary && (
+            <aside class="reveal mt-6 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8fc3c4]">Коротко</p>
+              <p class="mt-1.5 text-[15px] leading-relaxed text-[#c6d4d4]">{summary}</p>
+            </aside>
+          )
+        }
 
         <div class="guide-body reveal mt-8">
           <slot />

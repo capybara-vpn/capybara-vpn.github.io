@@ -58,6 +58,93 @@ function lastmodFor(pathname) {
   return value;
 }
 
+/**
+ * llms-full.txt — the whole site as markdown, so an AI crawler can ingest
+ * every guide in one request instead of fetching 13 pages. Built from the
+ * rendered HTML, which keeps it in sync with the site by construction.
+ */
+const LLMS_PAGES = [
+  ['index.html', 'Главная'],
+  ['tarify/index.html', 'Тарифы подробно'],
+  ['vless/index.html', 'Что такое VLESS'],
+  ['chto-takoe-vpn/index.html', 'Что такое VPN'],
+  ['probny-den/index.html', 'Бесплатный день'],
+  ['oplata/index.html', 'Как оплатить'],
+  ['ios/index.html', 'Настройка на iOS'],
+  ['android/index.html', 'Настройка на Android'],
+  ['windows/index.html', 'Настройка on Windows'],
+  ['macos/index.html', 'Настройка на macOS'],
+  ['linux/index.html', 'Настройка на Linux'],
+  ['tv/index.html', 'Настройка на TV'],
+  ['router/index.html', 'VPN на роутере'],
+];
+
+function htmlToMarkdown(html) {
+  // Only the page content: the header, footer, sticky CTA and consent bar
+  // are navigation chrome and would only dilute the text for a model.
+  const main = html.match(/<main\b[\s\S]*?<\/main>/i);
+  const body = main ? main[0] : html;
+  return body
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
+    .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n')
+    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n')
+    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n')
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '\n- $1')
+    .replace(/<td[^>]*>([\s\S]*?)<\/td>/gi, ' | $1')
+    .replace(/<tr[^>]*>/gi, '\n')
+    .replace(/<\/(p|div|ul|ol|section|article|blockquote|table|tr)>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&mdash;/g, '—')
+    .replace(/&laquo;/g, '«')
+    .replace(/&raquo;/g, '»')
+    .replace(/&middot;/g, '·')
+    .replace(/&hellip;/g, '…')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/ *\n */g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function llmsFullPlugin() {
+  return {
+    name: 'llms-full-txt',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const { readFile, writeFile } = await import('node:fs/promises');
+        const path = await import('node:path');
+        const chunks = [
+          '# Capybara VPN — полный текст сайта',
+          '',
+          '> Capybara VPN — VPN-сервис: VLESS, 38 локаций, 100+ серверов, каналы до 10 Гбит/с.',
+          '> Тарифы: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Первый день бесплатно (10 ГБ).',
+          `> Официальный сайт: ${FULL}/`,
+          '',
+        ];
+        for (const [file, title] of LLMS_PAGES) {
+          try {
+            const html = await readFile(path.join(dir.pathname, file), 'utf8');
+            const md = htmlToMarkdown(html);
+            if (md) chunks.push(`\n---\n\n# ${title}\n`, md, '');
+          } catch {
+            logger.warn(`llms-full: не удалось прочитать ${file}`);
+          }
+        }
+        await writeFile(path.join(dir.pathname, 'llms-full.txt'), chunks.join('\n'), 'utf8');
+        logger.info('llms-full.txt готов');
+      },
+    },
+  };
+}
+
 export default defineConfig({
   output: 'static',
   site: SITE_ORIGIN,
@@ -86,6 +173,7 @@ export default defineConfig({
         };
       },
     }),
+    llmsFullPlugin(),
   ],
   vite: {
     plugins: [tailwindcss()],
