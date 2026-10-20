@@ -6,11 +6,18 @@ interface Props {
 const { current } = Astro.props;
 
 const guides = [
+  { href: '/chto-takoe-vpn/', title: 'Что такое VPN', note: 'простыми словами' },
   { href: '/tarify/', title: 'Тарифы Capybara VPN', note: '30, 90 и 180 дней' },
+  { href: '/probny-den/', title: 'Бесплатный день', note: '10 ГБ без карты' },
+  { href: '/oplata/', title: 'Как оплатить', note: 'карты, СБП, возврат' },
   { href: '/vless/', title: 'Что такое VLESS', note: 'протокол простыми словами' },
   { href: '/ios/', title: 'Настройка на iOS', note: 'iPhone и iPad' },
   { href: '/android/', title: 'Настройка на Android', note: 'смартфоны и планшеты' },
   { href: '/windows/', title: 'Настройка на Windows', note: 'ПК и ноутбуки' },
+  { href: '/macos/', title: 'Настройка на macOS', note: 'MacBook и iMac' },
+  { href: '/linux/', title: 'Настройка на Linux', note: 'Ubuntu, Debian и другие' },
+  { href: '/tv/', title: 'Настройка на TV', note: 'Smart TV и Android TV' },
+  { href: '/router/', title: 'VPN на роутере', note: 'для всей домашней сети' },
 ];
 
 import { withBase } from '../lib/url';

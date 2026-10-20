@@ -1,0 +1,107 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Бесплатный день Capybara VPN: 10 ГБ без карты на тест';
+const description =
+  'Как получить бесплатный день в Capybara VPN: 10 ГБ трафика, карта не нужна. Что входит в пробный период и как проверить сервис перед покупкой тарифа.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/probny-den/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT3M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '0' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сервис', text: `Откройте ${host} через Telegram-бот или браузер.` },
+    { '@type': 'HowToStep', name: 'Выберите устройство', text: 'Укажите, на каком устройстве будете тестировать.' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Первый день бесплатно: 10 ГБ трафика, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Проверьте', text: 'Включите соединение и проверьте скорость и стабильность.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Бесплатный день', item: `${site.siteUrl}/probny-den/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/probny-den/"
+  crumbName="Бесплатный день"
+  eyebrow="Гид · Пробный период"
+  heading="Сначала бесплатный день: 10 ГБ без карты"
+  lead="Проверить сервис можно до того, как вы потратите деньги. Карта не нужна, первый день бесплатно."
+  guidePath="/probny-den/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Пробный период"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Что входит в пробный период</h2>
+  <p>
+    Первый день бесплатно, без привязки карты: вы получаете <strong>10 ГБ
+    трафика</strong> на тест. Этого хватает, чтобы оценить сервис на своих
+    устройствах и на своём интернете, а не по описанию.
+  </p>
+
+  <h2>Шаг 1. Откройте сервис</h2>
+  <p>
+    Зайдите на <a href={`${b}/`}>сайт Capybara VPN</a> и откройте его через
+    Telegram-бот или в браузере. Дальше вы указываете своё устройство и
+    получаете подключение.
+  </p>
+
+  <h2>Шаг 2. Укажите устройство</h2>
+  <p>
+    Сервис поддерживает iOS, Android, Windows, macOS, Linux, TV и роутеры. Выберите
+    то, с которого планируете начать: в примерах это <a href={`${b}/ios/`}>iOS</a>,
+    <a href={`${b}/android/`}>Android</a>, <a href={`${b}/windows/`}>Windows</a>,
+    <a href={`${b}/macos/`}>macOS</a>, <a href={`${b}/linux/`}>Linux</a>,
+    <a href={`${b}/tv/`}>TV</a> или <a href={`${b}/router/`}>роутер</a>.
+  </p>
+
+  <h2>Шаг 3. Заберите пробный период</h2>
+  <p>
+    Следуйте короткой инструкции: профиль установится сам, вручную ничего
+    настраивать не нужно. Подключение работает по протоколу
+    <a href={`${b}/vless/`}>VLESS</a>, локаций — 38.
+  </p>
+
+  <h2>Шаг 4. Проверьте, а не гадайте</h2>
+  <p>
+    Откройте видео, загрузите файл, проверьте загрузку в приложении, которым
+    пользуетесь каждый день. Если какая-то локация работает нестабильно,
+    переключитесь на другую — их 38, выбор есть.
+  </p>
+
+  <h2>Что дальше</h2>
+  <p>
+    Если сервис подошёл, выберите тариф: 30 дней за 249 ₽, 90 дней за 672 ₽ или
+    180 дней за 1195 ₽. Оплата — картами, СБП и другими провайдерами, подробности
+    в гайде <a href={`${b}/oplata/`}>про оплату</a>.
+  </p>
+
+  <blockquote>
+    Пробный период начинается сразу после подключения и длится один день с
+    момента активации. Тариф включает 1 устройство: дополнительные слоты
+    докупаются в сервисе.
+  </blockquote>
+</GuideLayout>

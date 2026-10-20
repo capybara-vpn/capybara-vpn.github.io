@@ -15,6 +15,17 @@ function track(name: string, params: Record<string, string> = {}) {
   }
 }
 
+/** Same events for Yandex Metrika (no-op until the counter is loaded). */
+function trackYm(name: string, params: Record<string, string> = {}) {
+  try {
+    const ym = (window as unknown as { ym?: (...a: unknown[]) => void }).ym;
+    const id = document.documentElement.dataset.ymId;
+    if (typeof ym === 'function' && id) ym(id, 'event', name, params);
+  } catch {
+    /* noop */
+  }
+}
+
 /* ---------- header ---------- */
 const header = document.getElementById('site-header');
 const onScrollHeader = () => {
@@ -100,6 +111,11 @@ document.querySelectorAll<HTMLAnchorElement>('a[data-cta]').forEach((a) => {
     // alias events required by spec
     const alias = `${a.dataset.placement || 'x'}_${a.dataset.destination || 'y'}_click`;
     track(alias, { ...(a.dataset.tariff ? { tariff: a.dataset.tariff as string } : {}) });
+    trackYm('cta_click', {
+      placement: a.dataset.placement || 'unknown',
+      destination: a.dataset.destination || 'unknown',
+      ...(a.dataset.tariff ? { tariff: a.dataset.tariff } : {}),
+    });
   });
 });
 
@@ -209,6 +225,29 @@ function configureGA(id: string) {
   loadGtag(id);
 }
 
+/* ---------- Yandex Metrika (same consent gate as GA4) ---------- */
+function loadMetrika(id: string) {
+  if (!id || document.querySelector('script[data-ym]')) return;
+  const s = document.createElement('script');
+  s.async = true;
+  s.dataset.ym = '1';
+  s.src = 'https://mc.yandex.ru/metrika/tag.js';
+  s.onload = () => {
+    try {
+      const ym = (window as unknown as { ym?: (...a: unknown[]) => void }).ym;
+      ym?.(id, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true,
+      });
+    } catch {
+      /* noop */
+    }
+  };
+  document.head.appendChild(s);
+}
+
 function applyConsent(value: 'granted' | 'denied') {
   try {
     (window as unknown as { gtag: (...a: unknown[]) => void }).gtag('consent', 'update', {
@@ -225,6 +264,8 @@ function applyConsent(value: 'granted' | 'denied') {
       document.documentElement.dataset.gaId ||
       (document.getElementById('ga-id')?.textContent?.trim() ?? '');
     if (id) configureGA(id);
+    const ymId = document.documentElement.dataset.ymId || '';
+    if (ymId) loadMetrika(ymId);
   }
 }
 

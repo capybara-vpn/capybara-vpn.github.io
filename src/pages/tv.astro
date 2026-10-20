@@ -1,0 +1,93 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Capybara VPN на телевизоре: как подключить Smart TV и Android TV';
+const description =
+  'Как подключить Capybara VPN на Smart TV и Android TV: два рабочих способа, первый день бесплатно. Без установки на телевизор.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/tv/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT5M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: `Откройте ${host} в браузере.` },
+    { '@type': 'HowToStep', name: 'Выберите устройство', text: 'Укажите TV: 1 день бесплатно, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Получите 10 ГБ трафика на тест и следуйте инструкции.' },
+    { '@type': 'HowToStep', name: 'Включите', text: 'Выберите локацию и включите соединение.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'TV', item: `${site.siteUrl}/tv/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/tv/"
+  crumbName="TV"
+  eyebrow="Гид · TV"
+  heading="VPN на телевизоре: Smart TV и Android TV"
+  lead="У телевизора два пути: настроить прямо на нём или один раз на роутере. Разбираем оба."
+  guidePath="/tv/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструкции"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Способ 1. Настроить на самом телевизоре</h2>
+  <p>
+    Подходит для Android TV и для телевизоров с другими системами, где есть
+    встроенный VPN-клиент. Откройте <a href={`${b}/`}>сайт Capybara VPN</a> с
+    телевизора, выберите устройство <strong>TV</strong> и следуйте инструкции:
+    сервис выдаст параметры подключения, их останется внести в настройки сети
+    телевизора.
+  </p>
+
+  <h2>Способ 2. Настроить на роутере</h2>
+  <p>
+    Обычный телевизор без VPN-клиента так не умеет. В этом случае соединение
+    поднимается на роутере, а телевизор просто работает в той же сети. Пошагово:
+    <a href={`${b}/router/`}>гайд про роутер</a>.
+  </p>
+
+  <h2>Что учитывать</h2>
+  <p>
+    Телевизор обычно работает по сети, а не по VPN-приложению: если в сети нет
+    роутера с настроенным подключением, придётся ставить клиент прямо на
+    телевизор. Первый день бесплатно, поэтому проверить оба варианта можно без
+    риска: 10 ГБ трафика на тест.
+  </p>
+
+  <h2>Как выбрать локацию</h2>
+  <p>
+    Локаций <strong>38</strong>, скорость зависит от канала и нагрузки. Если
+    конкретная локация работает нестабильно, переключитесь на другую или
+    напишите в поддержку: там подскажут рабочую.
+  </p>
+
+  <blockquote>
+    Тариф включает 1 устройство. Нужно больше: докупите дополнительные слоты
+    прямо в сервисе. Тарифы — от 249 ₽.
+  </blockquote>
+</GuideLayout>

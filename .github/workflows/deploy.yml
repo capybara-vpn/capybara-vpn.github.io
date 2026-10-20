@@ -40,6 +40,9 @@ jobs:
           # Optional repo variable; when empty the build uses the default
           # measurement id from src/data/site.ts.
           GA_ID: ${{ vars.GA_ID }}
+          # Optional Yandex Metrika counter id; empty = the counter is not
+          # loaded at all.
+          YM_ID: ${{ vars.YM_ID }}
           # NOTE: if you use a custom domain, set SITE_URL to https://your-domain.com
           # and ASTRO_BASE to / (see README).
 

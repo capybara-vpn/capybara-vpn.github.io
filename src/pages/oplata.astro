@@ -1,0 +1,108 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Как оплатить Capybara VPN: карты, СБП и тарифы от 249 ₽';
+const description =
+  'Как оплатить Capybara VPN из России: банковские карты, СБП и другие провайдеры. Тарифы 30, 90 и 180 дней, первый день бесплатно, возврат через поддержку.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/oplata/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT3M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сервис', text: `Откройте ${host} через Telegram-бот или браузерную версию.` },
+    { '@type': 'HowToStep', name: 'Выберите тариф', text: '30, 90 или 180 дней: 249 ₽, 672 ₽ или 1195 ₽.' },
+    { '@type': 'HowToStep', name: 'Выберите способ оплаты', text: 'Банковская карта, СБП или другой подключённый провайдер.' },
+    { '@type': 'HowToStep', name: 'Подтвердите оплату', text: 'После оплаты подписка активируется сразу.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Оплата', item: `${site.siteUrl}/oplata/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/oplata/"
+  crumbName="Оплата"
+  eyebrow="Гид · Оплата"
+  heading="Как оплатить подписку"
+  lead="Карты, СБП и другие провайдеры. Перед оплатой можно забрать бесплатный день и проверить сервис без риска."
+  guidePath="/oplata/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Оплата"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Сначала бесплатный день</h2>
+  <p>
+    Оплачивать сразу не обязательно. В сервисе есть пробный период: первый день
+    бесплатно, 10 ГБ трафика на тест, карта не нужна. За это время можно
+    проверить скорость и стабильность на своих устройствах. Подробнее — в гайде
+    <a href={`${b}/probny-den/`}>про бесплатный день</a>.
+  </p>
+
+  <h2>Шаг 1. Откройте сервис</h2>
+  <p>
+    Зайдите на <a href={`${b}/`}>сайт Capybara VPN</a> и нажмите
+    <strong>«Открыть в Telegram»</strong> или <strong>«Открыть в браузере»</strong>.
+    Это два входа в один сервис, тарифы и подписка у них общие.
+  </p>
+
+  <h2>Шаг 2. Выберите тариф</h2>
+  <p>
+    Всего три варианта, во всех безлимитный трафик:
+  </p>
+  <ul>
+    <li><strong>30 дней — 249 ₽</strong>, это 249 ₽ за 30 дней;</li>
+    <li><strong>90 дней — 672 ₽</strong>, скидка 10%, экономия 75 ₽, это 224 ₽ за 30 дней;</li>
+    <li><strong>180 дней — 1195 ₽</strong>, скидка 20%, экономия 299 ₽, около 199 ₽ за 30 дней.</li>
+  </ul>
+  <p>Подробное сравнение — на странице <a href={`${b}/tarify/`}>про тарифы</a>.</p>
+
+  <h2>Шаг 3. Выберите способ оплаты</h2>
+  <p>
+    Доступны популярные способы: банковские карты, СБП и другие провайдеры,
+    подключённые к сервису. Актуальный список показывается прямо на шаге оплаты.
+  </p>
+
+  <h2>Шаг 4. Подтвердите оплату</h2>
+  <p>
+    После оплаты подписка активируется сразу, а таймер можно посмотреть в сервисе.
+    Один тариф действует на <strong>1 устройство</strong>: если нужно больше,
+    дополнительные слоты докупаются прямо в сервисе, и точная цена видна до
+    оплаты.
+  </p>
+
+  <h2>Если нужно вернуть деньги</h2>
+  <p>
+    Возврат предусмотрен в рамках правил сервиса. Напишите в поддержку через
+    Telegram и приложите номер платежа: так быстрее разберутся.
+  </p>
+
+  <blockquote>
+    Нужны ответы по тарифам и оплате? Поддержка работает через Telegram —
+    <a href={`${b}/#faq`}>все частые вопросы собраны на главной</a>.
+  </blockquote>
+</GuideLayout>

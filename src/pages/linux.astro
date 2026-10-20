@@ -1,0 +1,96 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Capybara VPN на Linux: настройка на компьютере за 5 минут';
+const description =
+  'Как подключить Capybara VPN на Linux: 4 шага, 5 минут, первый день бесплатно. Подходит для Ubuntu, Debian, Fedora и других дистрибутивов.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/linux/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT5M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: `Откройте ${host} в браузере.` },
+    { '@type': 'HowToStep', name: 'Выберите вход', text: 'Нажмите «Открыть в Telegram» или «Открыть в браузере».' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Выберите Linux: 1 день бесплатно, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Подключитесь', text: 'Следуйте инструкции, выберите локацию и включите соединение.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Linux', item: `${site.siteUrl}/linux/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/linux/"
+  crumbName="Linux"
+  eyebrow="Гид · Linux"
+  heading="Capybara VPN на Linux за 5 минут"
+  lead="Для Ubuntu, Debian, Fedora и других дистрибутивов. Никаких конфигов вручную: подключение забирается из сервиса, дальше всё по инструкции."
+  guidePath="/linux/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструкции"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Шаг 1. Откройте сайт сервиса</h2>
+  <p>
+    Зайдите на <a href={`${b}/`}>сайт Capybara VPN</a> из любого браузера на
+    компьютере. Дистрибутив при этом не важен: дальше вы укажете, что подключать
+    нужно именно Linux.
+  </p>
+
+  <h2>Шаг 2. Выберите, где начать</h2>
+  <p>
+    Две кнопки: <strong>«Открыть в Telegram»</strong>, если удобнее в мессенджере,
+    и <strong>«Открыть в браузере»</strong> — если проще без него. Оба пути ведут
+    к одной подписке.
+  </p>
+
+  <h2>Шаг 3. Заберите пробный период</h2>
+  <p>
+    Выберите устройство <strong>Linux</strong>: первый день бесплатно, вы получаете
+    10 ГБ трафика на тест. Дальше сервис сам выдаёт то, что нужно вашей системе.
+  </p>
+
+  <h2>Шаг 4. Включите и проверьте</h2>
+  <p>
+    Выберите локацию из 38 и включите соединение. Проверить связь можно на любом
+    сайте, а скорость — на загрузке файла или видео.
+  </p>
+
+  <h2>Если в доме несколько устройств</h2>
+  <p>
+    Подключать VPN на каждом компьютере отдельно не обязательно. Настройка на
+    роутере выводит в сеть весь домашний трафик: телефоны, телевизор и ноутбуки
+    будут работать без отдельной настройки. Как это сделать — в гайде
+    <a href={`${b}/router/`}>про роутер</a>.
+  </p>
+
+  <blockquote>
+    Понравилось — выбирайте тариф: 30 дней за 249 ₽, 90 дней за 672 ₽ или
+    180 дней за 1195 ₽. Вопросы — в поддержку через Telegram.
+  </blockquote>
+</GuideLayout>

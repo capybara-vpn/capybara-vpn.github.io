@@ -1,0 +1,110 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Capybara VPN на роутере: как подключить домашние устройства сразу';
+const description =
+  'Как подключить Capybara VPN на роутере: 4 шага, один раз для всей домашней сети. Телефоны, ноутбуки и телевизор без отдельной настройки.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/router/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT10M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: `Откройте ${host} в браузере на компьютере.` },
+    { '@type': 'HowToStep', name: 'Выберите роутер', text: 'В списке устройств укажите роутер: 1 день бесплатно, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Возьмите настройку', text: 'Сервис выдаёт параметры подключения для вашего роутера.' },
+    { '@type': 'HowToStep', name: 'Внесите их в роутер', text: 'Вставьте параметры в настройки роутера и включите соединение.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Роутер', item: `${site.siteUrl}/router/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/router/"
+  crumbName="Роутер"
+  eyebrow="Гид · Роутер"
+  heading="VPN на роутере: один раз для всей домашней сети"
+  lead="Самый удобный вариант, когда в доме несколько устройств. Настраивается один раз, дальше весь домашний трафик идёт через VPN."
+  guidePath="/router/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструкции"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Что меняется при настройке на роутере</h2>
+  <p>
+    Обычно VPN подключают на каждом устройстве отдельно: на телефоне, на ноутбуке,
+    на планшете. Если настроить его на роутере, соединение поднимается один раз
+    на всю домашнюю сеть, а устройства пользуются им автоматически.
+  </p>
+  <p>
+    Второй плюс: не нужно ничего устанавливать на телевизоре, планшете или
+    гостевом устройстве. Подробнее про телевизоры — в гайде
+    <a href={`${b}/tv/`}>про Smart TV</a>.
+  </p>
+
+  <h2>Шаг 1. Откройте сайт сервиса</h2>
+  <p>
+    Зайдите на <a href={`${b}/`}>сайт Capybara VPN</a> с компьютера, который
+    подключён к той же сети, что и роутер.
+  </p>
+
+  <h2>Шаг 2. Выберите роутер</h2>
+  <p>
+    В списке устройств укажите <strong>роутер</strong>. Первый день бесплатно,
+    карта не нужна: вы получаете 10 ГБ трафика на тест.
+  </p>
+
+  <h2>Шаг 3. Заберите параметры подключения</h2>
+  <p>
+    Сервис выдаёт всё, что нужно для настройки: адрес сервера, порт, ключ и
+    параметры шифрования. Дальше остаётся перенести их в настройки роутера.
+  </p>
+
+  <h2>Шаг 4. Внесите их в роутер и включите</h2>
+  <p>
+    Откройте панель управления роутера, найдите раздел с VPN-подключениями
+    (у разных моделей он называется по-разному), выберите тот же протокол, что
+    указал сервис, и вставьте параметры. Сохраните настройки и включите соединение.
+  </p>
+
+  <h2>Что делать, если роутер не поддерживает VPN</h2>
+  <p>
+    Часть бытовых роутеров умеет только базовые режимы. В таком случае проще
+    подключить VPN на устройствах по отдельности: на телефоне это
+    <a href={`${b}/android/`}>Android</a> или <a href={`${b}/ios/`}>iOS</a>, на
+    компьютере — <a href={`${b}/windows/`}>Windows</a>, <a href={`${b}/macos/`}>macOS</a>
+    или <a href={`${b}/linux/`}>Linux</a>. Если нужна помощь с настройкой, напишите
+    в поддержку через Telegram.
+  </p>
+
+  <blockquote>
+    Тариф включает 1 устройство. Нужно больше: докупите дополнительные слоты
+    прямо в сервисе, точная цена видна до оплаты. Тарифы — от 249 ₽, первый день
+    бесплатно.
+  </blockquote>
+</GuideLayout>

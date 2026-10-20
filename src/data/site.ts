@@ -30,6 +30,12 @@ export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io').repla
 const ENV_GA_ID = typeof process !== 'undefined' ? process.env?.GA_ID : undefined;
 export const GA_ID = ENV_GA_ID || 'G-FHS5BR8L5J';
 
+// Yandex Metrika counter id. Empty means "not configured": the loader is
+// never injected and no request is made. Set the YM_ID repo variable to
+// enable it.
+const ENV_YM_ID = typeof process !== 'undefined' ? process.env?.YM_ID : undefined;
+export const YM_ID = ENV_YM_ID || '';
+
 export const site = {
   brand: 'Capybara VPN',
   lang: 'ru',
@@ -37,6 +43,7 @@ export const site = {
   telegramUrl: TELEGRAM_URL,
   browserUrl: BROWSER_URL,
   gaId: GA_ID,
+  ymId: YM_ID,
   themeColor: '#0b0e14',
   logo: {
     src: 'logo-320.png',

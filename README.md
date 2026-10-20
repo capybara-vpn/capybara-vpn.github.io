@@ -90,3 +90,40 @@
 **Оплата:** картой и через СБП. Поддержка — в Telegram.
 
 Начать: https://capybara-vpn.github.io/
+
+---
+
+## Разработка и деплой
+
+```bash
+npm ci
+npm run dev        # http://localhost:4321
+npm run build      # статика в dist/
+npm run preview    # предпросмотр собранного dist/
+npx astro check    # типы + шаблоны (должен быть 0 errors)
+```
+
+Деплой: push в `main` → GitHub Actions (`ubuntu-latest`) → GitHub Pages.
+
+### Переменные сборки
+
+| Переменная | Где задаётся | Назначение |
+| --- | --- | --- |
+| `SITE_URL` | workflow (автоматически) | публичный адрес сайта. Из него берутся canonical, sitemap, `llms.txt`, `robots.txt` и `manifest` |
+| `ASTRO_BASE` | workflow (автоматически) | базовый путь, для user-site это `/` |
+| `GA_ID` | repo variable | ID счётчика GA4; если пусто — берётся значение по умолчанию из `src/data/site.ts` |
+| `YM_ID` | repo variable | ID счётчика Яндекс.Метрики; если пусто — счётчик не подключается вовсе |
+
+Счётчики грузятся **только после согласия** пользователя на аналитику.
+
+### Переход на свой домен
+
+Сайт собран так, что адрес не зашит в код: достаточно задать `SITE_URL`.
+
+1. Купить домен и добавить его в репозиторий: **Settings → Pages → Custom domain**.
+2. Для репозитория `capybara-vpn/capybara-vpn.github.io` создать файл `public/CNAME` с содержимым домена.
+3. Убедиться, что в `astro.config.mjs` `BASE` остаётся `/`, а `SITE_URL` указывает на новый домен. `actions/configure-pages` подставит origin автоматически, но можно задать `SITE_URL` явно в workflow.
+4. Задеплоить и проверить: canonical, `sitemap-0.xml`, `robots.txt`, `llms.txt`, `manifest.webmanifest` должны содержать новый адрес.
+
+GitHub Pages сам отдаёт 301 со старого `capybara-vpn.github.io` на новый домен, отдельный редирект настраивать не нужно.
+

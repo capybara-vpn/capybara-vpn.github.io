@@ -1,0 +1,95 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Capybara VPN на macOS: настройка на MacBook и iMac за 5 минут';
+const description =
+  'Как подключить Capybara VPN на macOS: 4 шага, 5 минут, первый день бесплатно. Работает на MacBook, iMac и Mac mini.';
+const host = new URL(site.siteUrl).hostname;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  image: `${site.siteUrl}/og/og-image.jpg`,
+  mainEntityOfPage: `${site.siteUrl}/macos/`,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  totalTime: 'PT5M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
+  step: [
+    { '@type': 'HowToStep', name: 'Откройте сайт', text: `Откройте ${host} в Safari.` },
+    { '@type': 'HowToStep', name: 'Выберите вход', text: 'Нажмите «Открыть в Telegram» или «Открыть в браузере».' },
+    { '@type': 'HowToStep', name: 'Заберите пробный период', text: 'Выберите macOS: 1 день бесплатно, карта не нужна.' },
+    { '@type': 'HowToStep', name: 'Подключитесь', text: 'Следуйте инструкции, выберите локацию и включите соединение.' },
+  ],
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'macOS', item: `${site.siteUrl}/macos/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/macos/"
+  crumbName="macOS"
+  eyebrow="Гид · macOS"
+  heading="Capybara VPN на MacBook и iMac за 5 минут"
+  lead="Тот же сценарий, что на телефоне, только на экране побольше. Четыре шага, первый день бесплатно, карта не нужна."
+  guidePath="/macos/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструкции"
+  datePublished="2026-10-20"
+  dateModified="2026-10-20"
+>
+  <h2>Шаг 1. Откройте сайт сервиса</h2>
+  <p>
+    Зайдите на <a href={`${b}/`}>сайт Capybara VPN</a> в Safari или Chrome на Mac.
+    Ничего скачивать заранее не нужно: подключение настраивается прямо в браузере
+    или через Telegram-бот.
+  </p>
+
+  <h2>Шаг 2. Выберите, где начать</h2>
+  <p>
+    Две кнопки: <strong>«Открыть в Telegram»</strong>, если удобнее в мессенджере,
+    и <strong>«Открыть в браузере»</strong> — если проще без него. Оба пути ведут
+    к одной подписке, тарифы и локации общие.
+  </p>
+
+  <h2>Шаг 3. Заберите пробный период</h2>
+  <p>
+    Выберите устройство <strong>macOS</strong>: первый день бесплатно, вы получаете
+    10 ГБ трафика на тест. Следуйте короткой инструкции, профиль установится сам.
+  </p>
+
+  <h2>Шаг 4. Включите и проверьте</h2>
+  <p>
+    Выберите локацию из 38 и включите соединение. Откройте видео или загрузите
+    файл: разницу в скорости видно сразу.
+  </p>
+
+  <h2>Если Mac подключён к сети через роутер</h2>
+  <p>
+    Тогда настройка выполняется один раз на самом роутере, и весь трафик домашних
+    устройств пойдёт через VPN. Отдельный гайд — <a href={`${b}/router/`}>как
+    подключить VPN на роутере</a>.
+  </p>
+
+  <blockquote>
+    Понравилось — выбирайте тариф: 30 дней за 249 ₽, 90 дней за 672 ₽ или
+    180 дней за 1195 ₽. Вопросы — в поддержку через Telegram.
+  </blockquote>
+</GuideLayout>

@@ -13,9 +13,20 @@ const guides = [
     note: 'сравнение 30/90/180 дней, что входит, возврат',
   },
   { path: '/vless/', title: 'Что такое VLESS', note: 'протокол простыми словами' },
+  { path: '/chto-takoe-vpn/', title: 'Что такое VPN', note: 'как работает и что меняется' },
+  {
+    path: '/probny-den/',
+    title: 'Бесплатный день',
+    note: '10 ГБ трафика на тест, карта не нужна',
+  },
+  { path: '/oplata/', title: 'Как оплатить', note: 'карты, СБП, возврат' },
   { path: '/ios/', title: 'Настройка на iOS', note: 'iPhone и iPad' },
   { path: '/android/', title: 'Настройка на Android', note: 'смартфоны и планшеты' },
   { path: '/windows/', title: 'Настройка на Windows', note: 'ПК и ноутбуки' },
+  { path: '/macos/', title: 'Настройка на macOS', note: 'MacBook и iMac' },
+  { path: '/linux/', title: 'Настройка на Linux', note: 'Ubuntu, Debian и другие' },
+  { path: '/tv/', title: 'Настройка на TV', note: 'Smart TV и Android TV' },
+  { path: '/router/', title: 'VPN на роутере', note: 'одна настройка для всей сети' },
 ] as const;
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
