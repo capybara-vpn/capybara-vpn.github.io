@@ -34,8 +34,9 @@ const guideNotes: Record<string, string> = {
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
 
-/** Markdown version of a page: /ios/ -> /ios.md */
-const mdUrl = (path: string) => `${site.siteUrl}${path.replace(/\/$/, '')}.md`;
+/** Markdown version of a page: /ios/ -> /ios.md, / -> /index.md */
+const mdUrl = (path: string) =>
+  `${site.siteUrl}${path === '/' ? '/index.md' : `${path.replace(/\/$/, '')}.md`}`;
 
 export async function GET() {
   const url = site.siteUrl;
