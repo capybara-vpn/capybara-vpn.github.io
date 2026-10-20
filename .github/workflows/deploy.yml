@@ -33,9 +33,10 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Project site: https://<username>.github.io/<repo>/
-          # actions/configure-pages exposes base path; fall back to repo name.
-          SITE_URL: ${{ steps.pages.outputs.origin }}${{ steps.pages.outputs.base_path }}
+          # Public origin. The repo variable wins when set (explicit domain),
+          # otherwise it comes from actions/configure-pages, which already
+          # reports the custom domain once it is configured in Pages settings.
+          SITE_URL: ${{ vars.SITE_URL || format('{0}{1}', steps.pages.outputs.origin, steps.pages.outputs.base_path) }}
           ASTRO_BASE: ${{ steps.pages.outputs.base_path }}/
           # Optional repo variable; when empty the build uses the default
           # measurement id from src/data/site.ts.
