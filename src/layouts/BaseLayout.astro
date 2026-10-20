@@ -7,6 +7,8 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   showFaq?: boolean;
+  /** Per-page FAQ. When set, it replaces the homepage FAQ in the JSON-LD. */
+  pageFaqs?: { q: string; a: string }[];
   ogType?: 'website' | 'article';
   noindex?: boolean;
   /** Path (without base) of the social preview image. */
@@ -18,6 +20,7 @@ const {
   description = site.seo.description,
   canonicalPath = '/',
   showFaq = true,
+  pageFaqs,
   ogType = 'website',
   noindex = false,
   ogImage = 'og/og-image.jpg',
@@ -35,6 +38,10 @@ const pageUrl = `${origin}${withBase(canonicalPath)}`;
 const ogImageUrl = abs(ogImage);
 const gaId = site.gaId;
 const orgId = `${site.siteUrl}/#organization`;
+
+// A guide carries its own Q&A; the homepage uses the shared faqs[] list.
+// One source per page keeps the visible block and the markup in sync.
+const faqList: { q: string; a: string }[] = pageFaqs ?? (showFaq ? [...faqs] : []);
 
 const jsonLdAll = [
   {
@@ -94,19 +101,17 @@ const jsonLdAll = [
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-          ...faqs.map((f) => ({
-            '@type': 'Question',
-            name: f.q,
-            acceptedAnswer: { '@type': 'Answer', text: f.a },
-          })),
-        ],
+    mainEntity: faqList.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   },
 ];
-// FAQPage matches the homepage FAQ; guides carry their own Article/HowTo
-// markup, so drop it there to keep structured data truthful.
+// The FAQPage block is only emitted when the page actually shows a Q&A
+// (homepage or a guide) — the 404 page shows none, so it gets no markup.
 const jsonLd = jsonLdAll.filter(
-  (x) => showFaq || (x as Record<string, unknown>)["@type"] !== "FAQPage"
+  (x) => faqList.length > 0 || (x as Record<string, unknown>)["@type"] !== "FAQPage"
 );
 ---
 
@@ -150,9 +155,8 @@ const jsonLd = jsonLdAll.filter(
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
 
-    <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
-    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
     <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32.png')} />
+    <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
     <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('manifest.webmanifest')} />
 

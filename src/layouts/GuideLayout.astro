@@ -6,6 +6,7 @@ import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
 import Related from '../components/Related.astro';
 import GuideCta from '../components/GuideCta.astro';
+import Icon from '../components/Icon.astro';
 import { b } from '../lib/url';
 
 interface Props {
@@ -26,6 +27,8 @@ interface Props {
   ogImage?: string;
   /** One-sentence direct answer, shown right under the lead. */
   summary?: string;
+  /** This guide's Q&A: rendered visibly and marked up as FAQPage. */
+  faqs?: { q: string; a: string }[];
 }
 
 const {
@@ -44,10 +47,11 @@ const {
   dateModified,
   ogImage = 'og/og-image.jpg',
   summary,
+  faqs = [],
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} canonicalPath={canonicalPath} showFaq={false} ogType="article" ogImage={ogImage}>
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogType="article" ogImage={ogImage} pageFaqs={faqs.length ? faqs : undefined}>
   <meta property="article:published_time" content={datePublished} slot="head" />
   <meta property="article:modified_time" content={dateModified} slot="head" />
   <meta property="article:author" content="Capybara VPN" slot="head" />
@@ -87,6 +91,33 @@ const {
         <div class="guide-body reveal mt-8">
           <slot />
         </div>
+
+        {
+          faqs.length > 0 && (
+            <section class="reveal mt-14" aria-labelledby="guide-faq">
+              <h2 id="guide-faq" class="text-[26px] font-semibold tracking-tight text-white sm:text-[30px]">
+                Частые вопросы
+              </h2>
+              <div class="mt-5 grid gap-3">
+                {faqs.map((f) => (
+                  <details class="faq">
+                    <summary class="flex items-center justify-between gap-4 px-5 py-4 text-left">
+                      <span class="text-[15.5px] font-semibold tracking-tight text-white">{f.q}</span>
+                      <span class="chev flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8fc3c4]">
+                        <Icon name="chevron" class="h-4 w-4" />
+                      </span>
+                    </summary>
+                    <div class="faq-body">
+                      <div>
+                        <p class="px-5 pb-5 text-[14.5px] leading-relaxed text-[#9aa6b2]">{f.a}</p>
+                      </div>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )
+        }
 
         <GuideCta />
         <Related current={guidePath} />
