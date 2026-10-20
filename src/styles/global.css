@@ -15,31 +15,44 @@
   --color-line: rgba(255, 255, 255, 0.09);
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 104px;
-  overflow-x: clip;
-}
-
-@media (max-width: 768px) {
+/* Base element styles live in the `base` layer so Tailwind utilities
+   (which sit in the later `utilities` layer) can always override them. */
+@layer base {
   html {
-    scroll-padding-top: 196px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 104px;
+    overflow-x: clip;
+  }
+
+  @media (max-width: 768px) {
+    html {
+      scroll-padding-top: 196px;
+    }
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgba(96, 161, 163, 0.35);
+    color: #fff;
   }
 }
 
-body {
-  background: var(--color-ink);
-  color: var(--color-cream);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: clip;
-}
-
-::selection {
-  background: rgba(96, 161, 163, 0.35);
-  color: #fff;
-}
+/* ---------- components ----------
+   Every custom class below is registered in the `components` layer.
+   Unlayered rules outrank ALL layered rules regardless of specificity,
+   so an unlayered `.btn { display: inline-flex }` used to beat Tailwind's
+   `hidden` utility (both specificity 0-1-0) and the "Тарифы" button
+   stayed visible below 640px. Keeping our classes in `components` puts
+   them below `utilities` in the cascade, so utilities win as intended. */
+@layer components {
 
 /* ---------- surfaces ---------- */
 .glass {
@@ -231,7 +244,6 @@ body {
 }
 .card-lift:hover .icon-wrap {
   transform: translateY(-2px) scale(1.05);
-  color: #a8d8d9;
 }
 .icon-wrap {
   transition: transform 0.28s ease, color 0.28s ease;
@@ -422,6 +434,20 @@ details.faq[open] .faq-body {
   color: var(--color-cream);
 }
 
+}
+
+/* ---------- state overrides (unlayered) ----------
+   Interactive states must beat base utilities — `.icon-wrap` carries a
+   `text-[#8fc3c4]` utility, and the utilities layer outranks the
+   components layer regardless of specificity. Unlayered rules outrank
+   every layer, so hover/focus states still apply. These rules never set
+   `display`, so they cannot resurrect the hidden-vs-.btn bug. */
+.card-lift:hover .icon-wrap {
+  color: #a8d8d9;
+}
+
+/* Reduced-motion overrides stay unlayered so they outrank every layered
+   rule above (they are a user preference, not a design default). */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .orbit-slow, .orbit-rev, .floaty, .floaty-2, .floaty-3, .glow-pulse, .rail-track {
