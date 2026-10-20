@@ -12,6 +12,8 @@ export interface Guide {
   short?: string;
   /** Paths of the pages this one should link to. */
   related: string[];
+  /** Column in the footer navigation. */
+  group: 'основы' | 'установка' | 'сервис';
 }
 
 export const guides: Guide[] = [
@@ -19,51 +21,108 @@ export const guides: Guide[] = [
     href: '/chto-takoe-vpn/',
     title: 'Что такое VPN',
     note: 'простыми словами',
-    related: ['/vless/', '/tarify/', '/probny-den/', '/ios/'],
+    group: 'основы',
+    related: ['/vless/', '/bezopasnost-vpn/', '/neskolko-ustroystv/', '/tv/'],
   },
   {
     href: '/vless/',
     title: 'Что такое VLESS',
     note: 'протокол простыми словами',
-    related: ['/chto-takoe-vpn/', '/tarify/', '/probny-den/', '/router/'],
+    group: 'основы',
+    related: ['/chto-takoe-vpn/', '/bezopasnost-vpn/', '/android/', '/windows/'],
+  },
+  {
+    href: '/bezopasnost-vpn/',
+    title: 'Безопасность и приватность',
+    note: 'что VPN защищает, а что нет',
+    group: 'основы',
+    related: ['/chto-takoe-vpn/', '/vless/', '/macos/', '/linux/'],
+  },
+  {
+    href: '/kak-vybrat-lokaciyu/',
+    title: 'Как выбрать локацию',
+    note: '38 вариантов и что на них влияет',
+    group: 'основы',
+    related: ['/proverka-skorosti/', '/ne-rabotaet/', '/router/', '/dlya-novichkov/'],
+  },
+  {
+    href: '/proverka-skorosti/',
+    title: 'Как проверить скорость',
+    note: 'замер на своих устройствах',
+    group: 'основы',
+    related: ['/kak-vybrat-lokaciyu/', '/ne-rabotaet/', '/probny-den/', '/dlya-novichkov/'],
+  },
+  {
+    href: '/dlya-novichkov/',
+    title: 'Первый раз с VPN',
+    note: 'от тарифа до первого соединения',
+    group: 'основы',
+    related: ['/telegram-ili-brauzer/', '/ne-rabotaet/', '/bezopasnost-vpn/', '/vless/'],
+  },
+  {
+    href: '/ne-rabotaet/',
+    title: 'Если не работает',
+    note: '7 шагов разбора',
+    group: 'основы',
+    related: ['/proverka-skorosti/', '/kak-vybrat-lokaciyu/', '/dlya-novichkov/', '/tarify/'],
   },
   {
     href: '/tarify/',
-    title: 'Тарифы Capybara VPN',
+    title: 'Тарифы подробно',
     note: '30, 90 и 180 дней',
-    related: ['/oplata/', '/probny-den/', '/chto-takoe-vpn/', '/router/'],
+    group: 'сервис',
+    related: ['/oplata/', '/neskolko-ustroystv/', '/ne-rabotaet/', '/tv/'],
   },
   {
     href: '/probny-den/',
     title: 'Бесплатный день',
     note: '10 ГБ без карты',
-    related: ['/ios/', '/android/', '/tarify/', '/oplata/'],
+    group: 'сервис',
+    related: ['/ios/', '/android/', '/proverka-skorosti/', '/kak-vybrat-lokaciyu/'],
   },
   {
     href: '/oplata/',
     title: 'Как оплатить',
     note: 'карты, СБП, возврат',
-    related: ['/tarify/', '/probny-den/', '/chto-takoe-vpn/', '/vless/'],
+    group: 'сервис',
+    related: ['/tarify/', '/neskolko-ustroystv/', '/telegram-ili-brauzer/', '/vless/'],
+  },
+  {
+    href: '/neskolko-ustroystv/',
+    title: 'Несколько устройств',
+    note: 'слоты и схема с роутером',
+    group: 'сервис',
+    related: ['/router/', '/tarify/', '/oplata/', '/dlya-novichkov/'],
+  },
+  {
+    href: '/telegram-ili-brauzer/',
+    title: 'Telegram или браузер',
+    note: 'два входа в один сервис',
+    group: 'сервис',
+    related: ['/oplata/', '/ios/', '/bezopasnost-vpn/', '/proverka-skorosti/'],
   },
   {
     href: '/ios/',
     title: 'Настройка на iOS',
     note: 'iPhone и iPad',
     short: 'iOS',
-    related: ['/android/', '/macos/', '/probny-den/', '/chto-takoe-vpn/'],
+    group: 'установка',
+    related: ['/android/', '/macos/', '/probny-den/', '/telegram-ili-brauzer/'],
   },
   {
     href: '/android/',
     title: 'Настройка на Android',
     note: 'смартфоны и планшеты',
     short: 'Android',
-    related: ['/ios/', '/tv/', '/probny-den/', '/chto-takoe-vpn/'],
+    group: 'установка',
+    related: ['/ios/', '/tv/', '/probny-den/', '/telegram-ili-brauzer/'],
   },
   {
     href: '/windows/',
     title: 'Настройка на Windows',
     note: 'ПК и ноутбуки',
     short: 'Windows',
+    group: 'установка',
     related: ['/linux/', '/macos/', '/oplata/', '/chto-takoe-vpn/'],
   },
   {
@@ -71,13 +130,15 @@ export const guides: Guide[] = [
     title: 'Настройка на macOS',
     note: 'MacBook и iMac',
     short: 'macOS',
-    related: ['/ios/', '/windows/', '/probny-den/', '/chto-takoe-vpn/'],
+    group: 'установка',
+    related: ['/ios/', '/windows/', '/linux/', '/probny-den/'],
   },
   {
     href: '/linux/',
     title: 'Настройка на Linux',
     note: 'Ubuntu, Debian и другие',
     short: 'Linux',
+    group: 'установка',
     related: ['/windows/', '/macos/', '/router/', '/chto-takoe-vpn/'],
   },
   {
@@ -85,14 +146,16 @@ export const guides: Guide[] = [
     title: 'Настройка на TV',
     note: 'Smart TV и Android TV',
     short: 'TV',
-    related: ['/android/', '/router/', '/oplata/', '/chto-takoe-vpn/'],
+    group: 'установка',
+    related: ['/android/', '/router/', '/tarify/', '/kak-vybrat-lokaciyu/'],
   },
   {
     href: '/router/',
     title: 'VPN на роутере',
     note: 'для всей домашней сети',
     short: 'роутер',
-    related: ['/tv/', '/windows/', '/linux/', '/probny-den/'],
+    group: 'установка',
+    related: ['/tv/', '/windows/', '/linux/', '/neskolko-ustroystv/'],
   },
 ];
 

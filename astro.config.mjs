@@ -32,6 +32,13 @@ const PAGE_SOURCES = {
   '/macos/': 'src/pages/macos.astro',
   '/linux/': 'src/pages/linux.astro',
   '/tv/': 'src/pages/tv.astro',
+  '/bezopasnost-vpn/': 'src/pages/bezopasnost-vpn.astro',
+  '/kak-vybrat-lokaciyu/': 'src/pages/kak-vybrat-lokaciyu.astro',
+  '/proverka-skorosti/': 'src/pages/proverka-skorosti.astro',
+  '/dlya-novichkov/': 'src/pages/dlya-novichkov.astro',
+  '/ne-rabotaet/': 'src/pages/ne-rabotaet.astro',
+  '/neskolko-ustroystv/': 'src/pages/neskolko-ustroystv.astro',
+  '/telegram-ili-brauzer/': 'src/pages/telegram-ili-brauzer.astro',
   '/router/': 'src/pages/router.astro',
 };
 

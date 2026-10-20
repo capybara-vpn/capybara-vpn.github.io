@@ -1,33 +1,32 @@
 import { site, plans, facts, faqs } from '../data/site';
+import { guides } from '../data/guides';
 
 /**
  * Machine-readable service summary for AI crawlers (GEO).
  * Generated at build time from src/data/site.ts — URLs always match
  * the deployed SITE_URL, facts can never drift from the landing.
  */
-const guides = [
-  { path: '/', title: 'Главная', note: 'тарифы, возможности, как это работает, FAQ' },
-  {
-    path: '/tarify/',
-    title: 'Тарифы подробно',
-    note: 'сравнение 30/90/180 дней, что входит, возврат',
-  },
-  { path: '/vless/', title: 'Что такое VLESS', note: 'протокол простыми словами' },
-  { path: '/chto-takoe-vpn/', title: 'Что такое VPN', note: 'как работает и что меняется' },
-  {
-    path: '/probny-den/',
-    title: 'Бесплатный день',
-    note: '10 ГБ трафика на тест, карта не нужна',
-  },
-  { path: '/oplata/', title: 'Как оплатить', note: 'карты, СБП, возврат' },
-  { path: '/ios/', title: 'Настройка на iOS', note: 'iPhone и iPad' },
-  { path: '/android/', title: 'Настройка на Android', note: 'смартфоны и планшеты' },
-  { path: '/windows/', title: 'Настройка на Windows', note: 'ПК и ноутбуки' },
-  { path: '/macos/', title: 'Настройка на macOS', note: 'MacBook и iMac' },
-  { path: '/linux/', title: 'Настройка на Linux', note: 'Ubuntu, Debian и другие' },
-  { path: '/tv/', title: 'Настройка на TV', note: 'Smart TV и Android TV' },
-  { path: '/router/', title: 'VPN на роутере', note: 'одна настройка для всей сети' },
-] as const;
+const guideNotes: Record<string, string> = {
+  '/tarify/': 'сравнение 30/90/180 дней, что входит, возврат',
+  '/vless/': 'протокол простыми словами',
+  '/chto-takoe-vpn/': 'как работает и что меняется',
+  '/bezopasnost-vpn/': 'что VPN защищает, а что нет',
+  '/kak-vybrat-lokaciyu/': '38 локаций и что на них влияет',
+  '/proverka-skorosti/': 'как мерить скорость честно',
+  '/dlya-novichkov/': 'первый раз: от тарифа до соединения',
+  '/ne-rabotaet/': '7 шагов, если не подключается',
+  '/probny-den/': '10 ГБ трафика на тест, карта не нужна',
+  '/oplata/': 'карты, СБП, возврат',
+  '/neskolko-ustroystv/': 'слоты и схема с роутером',
+  '/telegram-ili-brauzer/': 'два входа в один сервис',
+  '/ios/': 'iPhone и iPad',
+  '/android/': 'смартфоны и планшеты',
+  '/windows/': 'ПК и ноутбуки',
+  '/macos/': 'MacBook и iMac',
+  '/linux/': 'Ubuntu, Debian и другие',
+  '/tv/': 'Smart TV и Android TV',
+  '/router/': 'одна настройка для всей сети',
+};
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
 
@@ -69,7 +68,8 @@ export async function GET() {
     '',
     '## Страницы',
     '',
-    ...guides.map((g) => `- ${g.title}: ${url}${g.path}${g.note ? ` — ${g.note}` : ''}`),
+    '- Главная: тарифы, возможности, как это работает, FAQ',
+    ...guides.map((g) => `- ${g.title}: ${url}${g.href}${guideNotes[g.href] ? ` — ${guideNotes[g.href]}` : ''}`),
     '',
     '## Частые вопросы (кратко)',
     '',

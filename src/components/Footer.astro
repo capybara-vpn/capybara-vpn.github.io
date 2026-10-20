@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { guides } from '../data/guides';
 import Icon from './Icon.astro';
 
 const year = new Date().getFullYear();
@@ -48,7 +49,7 @@ const logoSrc = `${b}/logo-96.png`;
       </div>
     </div>
 
-    <div class="flex flex-col gap-8 sm:flex-row sm:flex-wrap sm:gap-10 lg:gap-16">
+    <div class="flex flex-col gap-8 sm:flex-row sm:flex-wrap sm:gap-x-10 sm:gap-y-8 lg:gap-x-16">
       <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Навигация в подвале">
         <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Разделы</h2>
         <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
@@ -58,25 +59,25 @@ const logoSrc = `${b}/logo-96.png`;
         <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
       </nav>
 
-      <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Гид по сервису">
-        <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Гид</h2>
-        <a href={withBase('/chto-takoe-vpn/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Что такое VPN</a>
-        <a href={withBase('/vless/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Что такое VLESS</a>
-        <a href={withBase('/probny-den/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Бесплатный день</a>
-        <a href={withBase('/oplata/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как оплатить</a>
-        <a href={withBase('/tarify/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы подробно</a>
-      </nav>
-
-      <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Настройка на устройствах">
-        <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Установка</h2>
-        <a href={withBase('/ios/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на iOS</a>
-        <a href={withBase('/android/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на Android</a>
-        <a href={withBase('/windows/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на Windows</a>
-        <a href={withBase('/macos/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на macOS</a>
-        <a href={withBase('/linux/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на Linux</a>
-        <a href={withBase('/tv/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Настройка на TV</a>
-        <a href={withBase('/router/')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">VPN на роутере</a>
-      </nav>
+      {
+        (['установка', 'основы', 'сервис'] as const).map((group) => (
+          <nav
+            class="flex flex-col gap-2.5 text-[14px]"
+            aria-label={group === 'установка' ? 'Настройка на устройствах' : group === 'основы' ? 'Гид по сервису' : 'Тарифы и сервис'}
+          >
+            <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
+              {group === 'установка' ? 'Установка' : group === 'основы' ? 'Гид' : 'Тарифы и сервис'}
+            </h2>
+            {guides
+              .filter((g) => g.group === group)
+              .map((g) => (
+                <a href={withBase(g.href)} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">
+                  {g.title}
+                </a>
+              ))}
+          </nav>
+        ))
+      }
     </div>
   </div>
 
