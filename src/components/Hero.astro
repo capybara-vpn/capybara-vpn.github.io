@@ -16,22 +16,22 @@ const logoSrc = `${b}/logo-320.png`;
   <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
     <!-- Copy -->
     <div class="max-w-2xl">
-      <p data-hero-in class="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium text-[#c6d4d4]">
+      <p data-hero-in class="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium text-[#c6d4d4]" style="--hero-i:0">
         <Icon name="bolt" class="h-3.5 w-3.5 text-[#8fc3c4]" />
         Быстрый VPN · VLESS · от 249 ₽
       </p>
 
-      <h1 data-hero-in class="display mt-5 text-[44px] text-[#f2f4f3] sm:text-[64px] lg:text-[76px]">
+      <h1 data-hero-in class="display mt-5 text-[44px] text-[#f2f4f3] sm:text-[64px] lg:text-[76px]" style="--hero-i:0">
         Интернет —<br />
         <span class="bg-gradient-to-r from-[#a8d8d9] via-[#60a1a3] to-[#4d888a] bg-clip-text text-transparent">без лишней суеты</span>
       </h1>
 
-      <p data-hero-in class="lead mt-5 max-w-xl text-[16.5px] sm:text-lg">
+      <p data-hero-in class="lead mt-5 max-w-xl text-[16.5px] sm:text-lg" style="--hero-i:1">
         Capybara VPN — спокойный сервис для быстрого интернета. Выбираете тариф,
         открываете Telegram или браузер — и просто пользуетесь. Без сложных настроек.
       </p>
 
-      <div data-hero-in class="mt-7 flex flex-row items-center gap-3 sm:mt-7 sm:gap-3">
+      <div data-hero-in class="mt-7 flex flex-row items-center gap-3" style="--hero-i:2">
         <a
           href={site.telegramUrl}
           target="_blank"
@@ -62,11 +62,11 @@ const logoSrc = `${b}/logo-320.png`;
         </a>
       </div>
 
-      <p data-hero-in class="mt-4 text-[13px] leading-relaxed text-[#8b98a5]">
+      <p data-hero-in class="mt-4 text-[13px] leading-relaxed text-[#8b98a5]" style="--hero-i:3">
         1 день бесплатно, без карты · Подключение за пару минут · Поддержка в Telegram
       </p>
 
-      <dl data-hero-in class="mt-7 grid max-w-lg grid-cols-3 gap-2 sm:gap-3">
+      <dl data-hero-in class="mt-7 grid max-w-lg grid-cols-3 gap-2 sm:gap-3" style="--hero-i:4">
         <div class="hairline rounded-2xl bg-white/[0.03] px-2 py-3 sm:px-3.5">
           <dt class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5]">Протокол</dt>
           <dd class="mt-1 text-[15px] font-semibold text-white">{facts.protocol}</dd>
@@ -83,7 +83,7 @@ const logoSrc = `${b}/logo-320.png`;
     </div>
 
     <!-- Visual composition -->
-    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center">
+    <div data-hero-in class="relative mx-auto flex w-full max-w-[520px] items-center justify-center" style="--hero-i:5">
       <div class="glow-pulse absolute h-[380px] w-[380px] rounded-full bg-[#60a1a3]/22 blur-[100px] max-sm:h-[300px] max-sm:w-[300px] sm:h-[440px] sm:w-[440px]" aria-hidden="true"></div>
 
       <!-- orbit rings -->

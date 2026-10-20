@@ -52,31 +52,13 @@ if ('IntersectionObserver' in window && !reduced) {
     { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
   );
   revealEls.forEach((el) => io.observe(el));
+  // Failsafe: if the observer never fires (slow script, odd viewport),
+  // the content must not stay invisible.
+  window.setTimeout(() => {
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  }, 3000);
 } else {
   revealEls.forEach((el) => el.classList.add('is-visible'));
-}
-
-/* ---------- hero entrance (CSS transition triggered by observer) ---------- */
-const heroBits = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-in]'));
-if (!reduced && 'IntersectionObserver' in window) {
-  const hio = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        const el = e.target as HTMLElement;
-        hio.unobserve(el);
-        el.style.transitionDelay = `${0.06 * Number(el.dataset.heroIndex || '0')}s`;
-        el.classList.add('hero-in');
-      }
-    },
-    { threshold: 0.2 }
-  );
-  heroBits.forEach((el, i) => {
-    el.dataset.heroIndex = `${i}`;
-    hio.observe(el);
-  });
-} else {
-  heroBits.forEach((el) => el.classList.add('hero-in'));
 }
 
 /* ---------- animated price numbers (subtle count-up, once) ---------- */

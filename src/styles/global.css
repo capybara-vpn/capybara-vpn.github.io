@@ -193,21 +193,24 @@
 .floaty-3 { animation: floaty 8s ease-in-out 0.6s infinite; }
 .glow-pulse { animation: pulse-glow 7s ease-in-out infinite; }
 
-/* ---------- hero entrance (JS adds .hero-in via IntersectionObserver) ---------- */
-[data-hero-in] {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-hero-in].hero-in {
-  opacity: 1;
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-hero-in] {
+/* ---------- hero entrance ----------
+   A pure CSS animation, so the first screen paints as soon as the stylesheet
+   arrives. The previous transition needed a class toggled by the module
+   script, which on a slow connection meant the whole hero stayed at
+   opacity:0 until the JS had loaded and run. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
     opacity: 1;
     transform: none;
   }
+}
+[data-hero-in] {
+  animation: hero-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--hero-i, 0) * 60ms);
 }
 
 /* ---------- reveal ---------- */
@@ -452,6 +455,11 @@ html.has-consent #mobile-cta {
    rule above (they are a user preference, not a design default). */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  [data-hero-in] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
   .orbit-slow, .orbit-rev, .floaty, .floaty-2, .floaty-3, .glow-pulse, .rail-track {
     animation: none !important;
   }
