@@ -13,7 +13,7 @@ const guides = [
   { href: '/windows/', title: 'Настройка на Windows', note: 'ПК и ноутбуки' },
 ];
 
-import { b, withBase } from '../lib/url';
+import { withBase } from '../lib/url';
 const items = guides.filter((g) => withBase(g.href) !== current);
 ---
 

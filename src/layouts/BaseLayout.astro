@@ -8,6 +8,7 @@ interface Props {
   canonicalPath?: string;
   showFaq?: boolean;
   ogType?: 'website' | 'article';
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   canonicalPath = '/',
   showFaq = true,
   ogType = 'website',
+  noindex = false,
 } = Astro.props;
 
 import { withBase } from '../lib/url';
@@ -74,7 +76,7 @@ const jsonLdAll = [
     '@type': 'SoftwareApplication',
     name: 'Capybara VPN',
     applicationCategory: 'UtilitiesApplication',
-    operatingSystem: ['iOS', 'Android', 'Windows', 'macOS', 'Linux'],
+    operatingSystem: 'iOS, Android, Windows, macOS, Linux',
     inLanguage: 'ru',
     url: site.siteUrl,
     offers: {
@@ -115,7 +117,8 @@ const jsonLd = jsonLdAll.filter(
     <meta name="author" content="Capybara VPN" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href={pageUrl} />
-    <meta name="robots" content={canonicalPath === '/404' ? 'noindex, follow' : 'index, follow'} />
+    <link rel="sitemap" type="application/xml" href={withBase('sitemap-index.xml')} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <meta name="theme-color" content={site.themeColor} />
     <meta name="color-scheme" content="dark" />
 

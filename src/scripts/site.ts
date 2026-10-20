@@ -193,8 +193,8 @@ function loadGtag(id: string) {
   s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
   s.onload = () => {
     try {
+      // gtag('js', ...) is already sent by the inline snippet in the head.
       const gtag = (window as unknown as { gtag: (...a: unknown[]) => void }).gtag;
-      gtag('js', new Date());
       gtag('config', id);
     } catch {
       /* noop */

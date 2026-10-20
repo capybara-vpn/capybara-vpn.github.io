@@ -24,6 +24,9 @@ export const SITE_URL = (ENV_SITE_URL || 'https://capybara-vpn.github.io').repla
   ''
 );
 
+// GA4 measurement id. Overridable at build time via the GA_ID repo variable
+// (see .github/workflows/deploy.yml) so switching accounts never requires a
+// code change. The literal below is the fallback for local builds.
 const ENV_GA_ID = typeof process !== 'undefined' ? process.env?.GA_ID : undefined;
 export const GA_ID = ENV_GA_ID || 'G-FHS5BR8L5J';
 

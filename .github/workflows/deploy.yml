@@ -37,8 +37,11 @@ jobs:
           # actions/configure-pages exposes base path; fall back to repo name.
           SITE_URL: ${{ steps.pages.outputs.origin }}${{ steps.pages.outputs.base_path }}
           ASTRO_BASE: ${{ steps.pages.outputs.base_path }}/
-        # NOTE: if you use a custom domain, set SITE_URL to https://your-domain.com
-        # and ASTRO_BASE to / (see README).
+          # Optional repo variable; when empty the build uses the default
+          # measurement id from src/data/site.ts.
+          GA_ID: ${{ vars.GA_ID }}
+          # NOTE: if you use a custom domain, set SITE_URL to https://your-domain.com
+          # and ASTRO_BASE to / (see README).
 
       - uses: actions/upload-pages-artifact@v3
         with:
