@@ -20,67 +20,66 @@ const groupKeys = Object.keys(GROUPS) as Group[];
 
 <footer class="border-t border-white/8 bg-[#090c11]" aria-label="Подвал сайта">
   <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-    <!-- Верхний ряд: бренд и разделы -->
-    <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-      <div class="max-w-sm">
-      <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх">
-        <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-white/15" />
-        <span class="text-[15px] font-semibold tracking-tight text-white">Capybara VPN</span>
-      </a>
-      <p class="mt-4 text-[13.5px] leading-relaxed text-[#8b98a5]">
-        Спокойный и быстрый VPN. Подключение через Telegram
-        <span class="sr-only"> — Capybara VPN</span> или браузер.
-        Тарифы от 249 ₽, каждый — на 1 устройство.
-      </p>
-      <div class="mt-5 flex gap-2">
-        <a
-          href={site.browserUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
-          data-cta
-          data-placement="footer"
-          data-destination="browser"
-        >
-          <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
-          Браузер
-        <span class="sr-only"> — Capybara VPN</span>
+    <!--
+      Весь подвал — одна сетка. Бренд занимает первые две колонки, ряд ссылок
+      на разделы — последние две, ниже идут колонки гайдов. Благодаря общей
+      сетке край ряда ссылок совпадает с краем последней колонки, а не висит
+      отдельно в углу.
+    -->
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="max-w-sm sm:col-span-2 lg:col-span-2">
+        <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх">
+          <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-white/15" />
+          <span class="text-[15px] font-semibold tracking-tight text-white">Capybara VPN</span>
         </a>
-        <a
-          href={site.telegramUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
-          data-cta
-          data-placement="footer"
-          data-destination="telegram"
-        >
-          <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
-          Telegram
-        </a>
+        <p class="mt-4 text-[13.5px] leading-relaxed text-[#8b98a5]">
+          Спокойный и быстрый VPN. Подключение через Telegram
+          <span class="sr-only"> — Capybara VPN</span> или браузер.
+          Тарифы от 249 ₽, каждый — на 1 устройство.
+        </p>
+        <div class="mt-5 flex gap-2">
+          <a
+            href={site.browserUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored nofollow"
+            class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
+            data-cta
+            data-placement="footer"
+            data-destination="browser"
+          >
+            <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
+            Браузер
+            <span class="sr-only"> — Capybara VPN</span>
+          </a>
+          <a
+            href={site.telegramUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored nofollow"
+            class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
+            data-cta
+            data-placement="footer"
+            data-destination="telegram"
+          >
+            <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
+            Telegram
+          </a>
+        </div>
       </div>
-    </div>
 
-    <nav
-      class="flex shrink-0 flex-wrap gap-x-6 gap-y-2 text-[14px] lg:justify-end"
-      aria-label="Разделы сайта"
-    >
-      <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
-      <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
-      <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
-      <a href={withBase('/#pricing')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
-      <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
-    </nav>
-    </div>
+      <nav
+        class="flex flex-wrap gap-x-6 gap-y-2 self-start text-[14px] sm:col-span-2 lg:col-span-2"
+        aria-label="Разделы сайта"
+      >
+        <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
+        <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
+        <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
+        <a href={withBase('/#pricing')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
+        <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+      </nav>
 
-    <!-- Нижний ряд: гайды в колонках одинаковой высоты, без рваных рядов -->
-    <div class="mt-10 columns-2 gap-x-6 sm:columns-2 lg:columns-4">
       {
         groupKeys.map((group) => (
-          <nav
-            class="mb-8 flex flex-col gap-2.5 break-inside-avoid text-[14px]"
-            aria-label={GROUPS[group].label}
-          >
+          <nav class="flex flex-col gap-2.5 text-[14px]" aria-label={GROUPS[group].label}>
             <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
               {GROUPS[group].title}
             </h2>
