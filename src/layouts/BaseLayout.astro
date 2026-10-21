@@ -122,6 +122,42 @@ const jsonLd = jsonLdAll.filter(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    {/*
+      Scroll-reveals are set up here, inline, instead of in the client
+      module: the module is a separate file, so on a slow connection it
+      arrives after the page has painted and the sections below the fold
+      stay invisible for seconds (Speed Index 4s). This runs at
+      DOMContentLoaded — no network round-trip in between.
+    */}
+    <script is:inline>
+      (function () {
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function setup() {
+          var els = document.querySelectorAll('.reveal');
+          if (reduce || !('IntersectionObserver' in window)) {
+            for (var k = 0; k < els.length; k++) els[k].classList.add('is-visible');
+            return;
+          }
+          var io = new IntersectionObserver(
+            function (entries) {
+              for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                  entries[i].target.classList.add('is-visible');
+                  io.unobserve(entries[i].target);
+                }
+              }
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+          );
+          for (var j = 0; j < els.length; j++) io.observe(els[j]);
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setup);
+        } else {
+          setup();
+        }
+      })();
+    </script>
     <style is:inline set:html={fontFaces} />
     <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.latin} />
     <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.cyrillic} />

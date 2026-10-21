@@ -48,33 +48,12 @@ onScrollHeader();
   );
 }
 
-/* ---------- reveal on scroll ---------- */
-const revealEls = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
-if ('IntersectionObserver' in window && !reduced) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
-        }
-      }
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
-  );
-  revealEls.forEach((el) => io.observe(el));
-  // Failsafe: if the observer never fires (slow script, odd viewport), the
-  // content on screen must not stay invisible. Only what is already in view
-  // is revealed, so the scroll effect below the fold is preserved.
-  window.setTimeout(() => {
-    revealEls.forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight * 1.2) {
-        el.classList.add('is-visible');
-      }
-    });
-  }, 3000);
-} else {
-  revealEls.forEach((el) => el.classList.add('is-visible'));
+/* ---------- reveal on scroll ----------
+   The observer itself is set up by the inline script in BaseLayout's head:
+   it must not wait for this module to arrive, or the sections below the
+   fold stay invisible on a slow connection. */
+if (reduced || !('IntersectionObserver' in window)) {
+  document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => el.classList.add('is-visible'));
 }
 
 /* ---------- animated price numbers (subtle count-up, once) ---------- */
