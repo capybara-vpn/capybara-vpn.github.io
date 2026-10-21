@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import { execSync } from 'node:child_process';
+import { statSync } from 'node:fs';
 
 // Deployment: single source is SITE_URL (origin + optional base path).
 // Production is the custom domain: SITE_URL=https://capybaravpn.top
@@ -40,6 +41,9 @@ const PAGE_SOURCES = {
   '/neskolko-ustroystv/': 'src/pages/neskolko-ustroystv.astro',
   '/telegram-ili-brauzer/': 'src/pages/telegram-ili-brauzer.astro',
   '/router/': 'src/pages/router.astro',
+  '/official/': 'src/pages/official.astro',
+  '/belye-spiski/': 'src/pages/belye-spiski.astro',
+  '/vpn-dlya-youtube/': 'src/pages/vpn-dlya-youtube.astro',
 };
 
 const lastmodCache = new Map();
@@ -57,9 +61,13 @@ function lastmodFor(pathname) {
     value = '';
   }
   if (!value) {
-    // No git history (fresh checkout without depth): fall back to the build
-    // time so the sitemap is never empty of dates.
-    value = new Date().toISOString();
+    // No git history for this file yet (uncommitted, or a shallow clone):
+    // fall back to the file's mtime, then to the build time.
+    try {
+      value = statSync(file).mtime.toISOString();
+    } catch {
+      value = new Date().toISOString();
+    }
   }
   lastmodCache.set(file, value);
   return value;
@@ -91,6 +99,9 @@ const LLMS_PAGES = [
   ['ne-rabotaet/index.html', 'Что делать, если не работает'],
   ['neskolko-ustroystv/index.html', 'Несколько устройств'],
   ['telegram-ili-brauzer/index.html', 'Telegram или браузер'],
+  ['official/index.html', 'Официальный сайт'],
+  ['belye-spiski/index.html', 'Белые списки операторов'],
+  ['vpn-dlya-youtube/index.html', 'VPN для YouTube'],
 ];
 
 function htmlToMarkdown(html) {

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --color-ink: #0b0e14;
   --color-ink-2: #12151c;
   --color-ink-3: #1a1f2a;
@@ -16,6 +16,22 @@
 
 /* Base element styles live in the `base` layer so Tailwind utilities
    (which sit in the later `utilities` layer) can always override them. */
+/* ---------- fonts ----------
+   The webfont arrives a moment after the first paint on a slow connection,
+   and a plain system-font fallback has different metrics: the text then
+   reflows when Inter swaps in (a visible jump in the hero and a layout
+   shift). "Inter Fallback" is the system font with Inter's own metrics
+   (size-adjust / ascent / descent overrides), so the swap changes nothing
+   on screen. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Roboto"), local("Helvetica Neue"), local("DejaVu Sans");
+  size-adjust: 105.2%;
+  ascent-override: 96.9%;
+  descent-override: 24.1%;
+  line-gap-override: 0%;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

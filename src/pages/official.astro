@@ -1,0 +1,171 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site, plans, facts } from '../data/site';
+import { b } from '../lib/url';
+
+const title = 'Capybara VPN — официальный сайт: тарифы, платформы, поддержка';
+const description =
+  'Официальный сайт Capybara VPN: тарифы от 249 ₽, протокол VLESS, 38 локаций, iOS, Android, Windows, macOS, Linux, TV и роутеры. Поддержка в Telegram.';
+const ogImage = '/og/official.jpg';
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  image: `${site.siteUrl}${ogImage}`,
+  mainEntityOfPage: `${site.siteUrl}/official/`,
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  datePublished: '2026-10-21',
+  dateModified: '2026-10-21',
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Официальный сайт', item: `${site.siteUrl}/official/` },
+  ],
+};
+
+const faqs = [
+  {
+    q: 'Как понять, что это официальный сайт Capybara VPN?',
+    a: 'Официальный адрес — capybaravpn.top, и в нём есть раздел с тарифами, инструкциями по настройке и страница поддержки. Сервис не рассылает ссылки через сторонние сайты и не просит перейти по реферальным ссылкам из чужих доменов. Подключение и оплата всегда происходят внутри Telegram-бота или браузерной версии.',
+  },
+  {
+    q: 'Это тот же сервис, что в Telegram-боте?',
+    a: 'Да. Сайт и Telegram-бот — два входа в один сервис: подписка, тарифы, локации и устройства общие. Можно начать в мессенджере, а управлять подпиской на сайте, и наоборот.',
+  },
+  {
+    q: 'Сколько стоит Capybara VPN?',
+    a: '30 дней — 249 ₽, 90 дней — 672 ₽ (скидка 10%), 180 дней — 1195 ₽ (скидка 20%). Во всех тарифах безлимитный трафик. Один тариф — одно устройство одновременно, дополнительные слоты докупаются в сервисе.',
+  },
+  {
+    q: 'Как связаться с поддержкой?',
+    a: 'Поддержка работает через Telegram и отвечает живые люди. Удобнее всего написать из того же аккаунта, через который оформлена подписка: так видно номер платежа и устройство.',
+  },
+  {
+    q: 'Где смотреть отзывы?',
+    a: 'Отзывы о сервисе публикуются на сторонних площадках — их можно найти поиском по названию сервиса. На самом сайте мы не размещаем выдуманные отзывы: оценку можно получить только от реального пользователя.',
+  },
+];
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath="/official/"
+  crumbName="Официальный сайт"
+  eyebrow="Capybara VPN"
+  heading="Capybara VPN: официальный сайт"
+  lead="Здесь собрано всё о сервисе в одном месте: тарифы, платформы, как подключить и куда писать. Если вы ищете Capybara VPN в поиске — это тот самый адрес, а не один из десяти сайтов с похожим названием."
+  guidePath="/official/"
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="О сервисе"
+  datePublished="2026-10-21"
+  dateModified="2026-10-21"
+  ogImage={ogImage}
+  summary="Capybara VPN — VPN-сервис с протоколом VLESS, 38 локациями и безлимитным трафиком. Тарифы от 249 ₽, подключение через Telegram-бот или браузер, поддержка в Telegram."
+  faqs={faqs}
+>
+  <h2>Сервис в фактах</h2>
+  <table>
+    <thead>
+      <tr><th>Параметр</th><th>Значение</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Протокол</td><td>VLESS, уже настроен</td></tr>
+      <tr><td>Локации</td><td>{facts.locations}</td></tr>
+      <tr><td>Серверы</td><td>{facts.servers}</td></tr>
+      <tr><td>Каналы связи</td><td>до {facts.speed}</td></tr>
+      <tr><td>Трафик</td><td>безлимит во всех тарифах</td></tr>
+      <tr><td>Устройства</td><td>1 одновременно, дополнительные слоты за доплату</td></tr>
+      <tr><td>Пробный период</td><td>первый день бесплатно, 10 ГБ</td></tr>
+      <tr><td>Оплата</td><td>карты, СБП и другие провайдеры</td></tr>
+      <tr><td>Платформы</td><td>iOS, Android, Windows, macOS, Linux, TV, роутеры</td></tr>
+      <tr><td>Поддержка</td><td>Telegram, живые люди</td></tr>
+    </tbody>
+  </table>
+  <p>
+    Про логи: сервис заявляет, что не хранит историю посещений, IP-адреса и
+    DNS-запросы — серверы работают в режиме RAM-only, без долговременных логов.
+  </p>
+
+  <h2>Как отличить официальный сайт от подделок</h2>
+  <p>
+    В нише VPN много сайтов с названиями, похожими на наше: «Capybara VPN»,
+    «капибара впн», «Capibara VPN» и так далее. Часть из них — обычные
+    партнёрские страницы, часть — зеркала с реферальными ссылками.
+  </p>
+  <ul>
+    <li>
+      <strong>Официальный адрес один: capybaravpn.top.</strong> Если вы
+      открыли другой домен с похожим именем — это не мы. Все рабочие ссылки
+      лежат на этом домене.
+    </li>
+    <li>
+      <strong>На сайте есть тарифы, инструкции и поддержка.</strong> У
+      партнёрских страниц обычно есть только кнопка «купить» и реферальная
+      ссылка, без инструкций и без списка платформ.
+    </li>
+    <li>
+      <strong>Мы не просим перейти по ссылкам на сторонние сайты.</strong>
+      Подключение и оплата происходят внутри Telegram-бота или браузерной
+      версии сервиса.
+    </li>
+    <li>
+      <strong>Поддержка отвечает в том же Telegram.</strong> Если вас
+      переводят в сторонний чат или на сторонний сайт «помощь с оплатой» —
+      это не поддержка сервиса.
+    </li>
+  </ul>
+  <p>
+    Подробные инструкции по подключению — в разделе <a href={`${b}/#faq`}>FAQ
+    на главной</a> и в гайдах по платформам: <a href={`${b}/ios/`}>iOS</a>,
+    <a href={`${b}/android/`}>Android</a>, <a href={`${b}/windows/`}>Windows</a>,
+    <a href={`${b}/macos/`}>macOS</a>, <a href={`${b}/linux/`}>Linux</a>,
+    <a href={`${b}/tv/`}>TV</a> и <a href={`${b}/router/`}>роутер</a>.
+  </p>
+
+  <h2>Где мы есть</h2>
+  <ul>
+    <li><strong>Этот сайт</strong> — тарифы, инструкции, факты о сервисе.</li>
+    <li><strong>Telegram-бот</strong> — подключение, оплата, управление подпиской и локациями.</li>
+    <li><strong>Браузерная версия</strong> — то же самое, если Telegram не открывается.</li>
+    <li><strong>Поддержка</strong> — живой человек в Telegram, отвечает по конкретной ситуации.</li>
+  </ul>
+
+  <h2>Тарифы</h2>
+  <table>
+    <thead>
+      <tr><th>Срок</th><th>Цена</th><th>За 30 дней</th></tr>
+    </thead>
+    <tbody>
+      {
+        plans.map((p) => (
+          <tr>
+            <td><strong>{p.days} дней</strong></td>
+            <td>{p.price} ₽</td>
+            <td>{p.per30Label}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  <p>
+    Первый день — бесплатно: 10 ГБ трафика без карты, чтобы проверить сервис
+    до оплаты. Сравнение тарифов и что входит — на странице
+    <a href={`${b}/tarify/`}>про тарифы</a>.
+  </p>
+
+  <blockquote>
+    Подключение занимает около пяти минут: выбираете устройство, получаете
+    готовый профиль, выбираете локацию из {facts.locations} и включаете
+    соединение. <a href={`${b}/dlya-novichkov/`}>Пошагово для новичков</a>.
+  </blockquote>
+</GuideLayout>

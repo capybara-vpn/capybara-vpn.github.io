@@ -18,6 +18,27 @@ export interface Guide {
 
 export const guides: Guide[] = [
   {
+    href: '/official/',
+    title: 'Официальный сайт',
+    note: 'факты, тарифы, как отличить от подделок',
+    group: 'сервис',
+    related: ['/tarify/', '/oplata/', '/dlya-novichkov/', '/ne-rabotaet/'],
+  },
+  {
+    href: '/belye-spiski/',
+    title: 'Белые списки операторов',
+    note: 'что это и как проверить фильтрацию',
+    group: 'основы',
+    related: ['/ne-rabotaet/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-youtube/', '/chto-takoe-vpn/'],
+  },
+  {
+    href: '/vpn-dlya-youtube/',
+    title: 'VPN для YouTube',
+    note: 'как смотреть видео плавно',
+    group: 'основы',
+    related: ['/kak-vybrat-lokaciyu/', '/proverka-skorosti/', '/ne-rabotaet/', '/chto-takoe-vpn/'],
+  },
+  {
     href: '/chto-takoe-vpn/',
     title: 'Что такое VPN',
     note: 'простыми словами',

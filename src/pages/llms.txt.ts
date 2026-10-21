@@ -30,6 +30,9 @@ const guideNotes: Record<string, string> = {
   '/linux/': 'Ubuntu, Debian и другие',
   '/tv/': 'Smart TV и Android TV',
   '/router/': 'одна настройка для всей сети',
+  '/official/': 'официальный сайт: факты, тарифы, как отличить от подделок',
+  '/belye-spiski/': 'белые списки операторов: что это и как проверить',
+  '/vpn-dlya-youtube/': 'как смотреть YouTube плавно',
 };
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
