@@ -435,6 +435,24 @@ details.faq[open] .faq-body {
   font-size: 14.5px;
   margin-top: 1.4em !important;
 }
+/* Wide comparison tables scroll inside their own box on a phone, so the
+   page itself never scrolls sideways. The box is focusable: a scrollable
+   region must be reachable with the keyboard. */
+.guide-body .table-scroll {
+  margin-top: 1.4em;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.guide-body .table-scroll table {
+  margin-top: 0 !important;
+  min-width: 640px;
+}
+.guide-body .table-scroll:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
 .guide-body th, .guide-body td {
   text-align: left;
   padding: 0.7em 0.9em;

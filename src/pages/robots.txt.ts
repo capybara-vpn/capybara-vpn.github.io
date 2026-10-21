@@ -69,6 +69,8 @@ export async function GET() {
     '',
     'User-agent: *',
     'Allow: /',
+    // The error page is served with noindex and is not in the sitemap.
+    'Disallow: /404.html',
     '',
     '# AI assistants and generative-engine crawlers (explicit allow)',
     ...AI_BOTS.flatMap((bot) => [`User-agent: ${bot}`, 'Allow: /', '']),

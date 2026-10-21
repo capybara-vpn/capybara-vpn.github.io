@@ -100,6 +100,12 @@ function htmlToMarkdown(html) {
     .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n')
     .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n')
     .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '\n- $1')
+    // Links keep their target: an agent that reads the .md copy still sees
+    // where a button actually leads.
+    .replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)')
+    .replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, '**$2**')
+    .replace(/<(em|i)\b[^>]*>([\s\S]*?)<\/\1>/gi, '*$2*')
+    .replace(/<code\b[^>]*>([\s\S]*?)<\/code>/gi, '`$2`')
     .replace(/<\/(p|div|ul|ol|section|article|blockquote|table|tr)>/gi, '\n')
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp;/g, ' ')

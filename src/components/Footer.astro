@@ -82,8 +82,17 @@ import { withBase } from '../lib/url';
   </div>
 
   <div class="border-t border-white/6">
-    <div class="mx-auto max-w-6xl px-4 py-5 text-[12.5px] text-[#8b98a5] sm:px-6">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-5 text-[12.5px] text-[#8b98a5] sm:px-6">
       <p>© {year} Capybara VPN. Все права защищены.</p>
+      {/* The pricing file in Markdown is what agents read; a visible link
+          makes it discoverable without guessing the URL. */}
+      <a
+        href={withBase('/pricing.md')}
+        class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+        title="Тарифы в Markdown — для ИИ-агентов и покупающих ботов"
+      >
+        Тарифы в Markdown
+      </a>
     </div>
   </div>
   <!-- spacer so mobile sticky bar never covers footer content -->
