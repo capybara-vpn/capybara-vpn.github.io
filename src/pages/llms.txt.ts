@@ -75,7 +75,8 @@ export async function GET() {
     '## Служебные файлы',
     '',
     `- [Полный текст сайта](${url}/llms-full.txt): весь сайт одним markdown-файлом`,
-    `- [Карта сайта](${url}/sitemap-index.xml): 20 страниц с датами изменения`,
+    `- [Карта сайта](${url}/sitemap-index.xml): все страницы с датами изменения`,
+    `- [Прайс для агентов](${url}/pricing.md): тарифы в machine-readable формате`,
     '',
   ];
 

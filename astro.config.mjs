@@ -206,7 +206,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Text endpoints are not pages, /404 must never be indexed — keep them out.
-      filter: (page) => !page.endsWith('.txt') && !page.includes('/404'),
+      filter: (page) => !page.endsWith('.txt') && !page.endsWith('.md') && !page.includes('/404'),
       serialize: (item) => {
         const url = item.url.endsWith('/') ? item.url : `${item.url}/`;
         const { pathname } = new URL(url);
