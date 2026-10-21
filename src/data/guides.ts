@@ -208,9 +208,9 @@ export const guides: Guide[] = [
   {
     href: '/sravnenie/',
     title: 'Сравнение VPN-сервисов',
-    note: 'Capybara, Amnezia, Happ, AdGuard, Hiro',
+    note: 'пять сервисов по одинаковым критериям',
     group: 'сервис',
-    related: ['/kak-vybrat-vpn/', '/tarify/', '/besplatny-vpn/', '/fakty/'],
+    related: ['/kak-vybrat-vpn/', '/tarify/', '/besplatny-vpn/', '/fakty/', '/official/'],
   },
   {
     href: '/fakty/',
@@ -218,13 +218,6 @@ export const guides: Guide[] = [
     note: 'все числа сервиса на одной странице',
     group: 'основы',
     related: ['/tarify/', '/official/', '/proverka-skorosti/', '/kak-vybrat-vpn/'],
-  },
-  {
-    href: '/sravnenie/',
-    title: 'Сравнение с конкурентами',
-    note: 'Capybara против Amnezia, Happ, AdGuard и Hiro',
-    group: 'сервис',
-    related: ['/tarify/', '/kak-vybrat-vpn/', '/besplatny-vpn/', '/official/'],
   },
   {
     href: '/besplatny-vpn/',

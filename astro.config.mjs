@@ -63,7 +63,6 @@ const LLMS_PAGES = [
   ['besplatny-vpn/index.html', 'Бесплатный VPN'],
   ['sravnenie/index.html', 'Сравнение VPN-сервисов'],
   ['fakty/index.html', 'Capybara VPN в цифрах'],
-  ['sravnenie/index.html', 'Сравнение VPN-сервисов'],
   ['vpn-bez-registracii/index.html', 'VPN без регистрации'],
   ['kak-vklyuchit-vpn-na-telefone/index.html', 'VPN на телефоне'],
   ['vpn-dlya-windows-11/index.html', 'VPN на Windows 11'],
