@@ -38,7 +38,17 @@ const steps = [
           class="reveal hairline relative rounded-3xl bg-[#12151c]/80 p-7 sm:p-8"
           style={`--reveal-delay:${i * 100}ms`}
         >
-          <p class="display text-[52px] text-transparent" style="-webkit-text-stroke: 1px rgba(143,195,196,.55)">
+          {/*
+            The step number was an outlined glyph (transparent fill + a 55%
+            alpha stroke). Colour-contrast tools read the transparent fill as
+            1:1, and at 1px/55% it is genuinely hard to see, so the number
+            now uses a real dim teal that passes AA for large text.
+          */}
+          <p
+            class="display text-[52px] text-[#4f7075]"
+            style="-webkit-text-stroke: 1px rgba(143,195,196,.4)"
+            aria-hidden="true"
+          >
             {s.n}
           </p>
           <h3 class="mt-3 text-[19px] font-semibold tracking-tight text-white">{s.title}</h3>
