@@ -61,8 +61,10 @@ const groupKeys = Object.keys(GROUPS) as Group[];
       </div>
     </div>
 
-    <nav class="flex shrink-0 flex-col gap-2.5 text-[14px]" aria-label="Навигация в подвале">
-      <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Разделы</h2>
+    <nav
+      class="flex shrink-0 flex-wrap gap-x-6 gap-y-2 text-[14px] lg:justify-end"
+      aria-label="Разделы сайта"
+    >
       <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
       <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
       <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
