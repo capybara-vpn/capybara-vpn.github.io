@@ -19,8 +19,10 @@ const groupKeys = Object.keys(GROUPS) as Group[];
 ---
 
 <footer class="border-t border-white/8 bg-[#090c11]" aria-label="Подвал сайта">
-  <div class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between">
-    <div class="max-w-sm">
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <!-- Верхний ряд: бренд и разделы -->
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+      <div class="max-w-sm">
       <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх">
         <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-white/15" />
         <span class="text-[15px] font-semibold tracking-tight text-white">Capybara VPN</span>
@@ -59,20 +61,22 @@ const groupKeys = Object.keys(GROUPS) as Group[];
       </div>
     </div>
 
-    <div class="flex flex-col gap-8 sm:flex-row sm:flex-wrap sm:gap-x-10 sm:gap-y-8 lg:gap-x-16">
-      <nav class="flex flex-col gap-2.5 text-[14px]" aria-label="Навигация в подвале">
-        <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Разделы</h2>
-        <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
-        <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
-        <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
-        <a href={withBase('/#pricing')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
-        <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
-      </nav>
+    <nav class="flex shrink-0 flex-col gap-2.5 text-[14px]" aria-label="Навигация в подвале">
+      <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">Разделы</h2>
+      <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
+      <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
+      <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
+      <a href={withBase('/#pricing')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
+      <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+    </nav>
+    </div>
 
+    <!-- Нижний ряд: гайды в колонках одинаковой высоты, без рваных рядов -->
+    <div class="mt-10 columns-2 gap-x-6 sm:columns-2 lg:columns-4">
       {
         groupKeys.map((group) => (
           <nav
-            class="flex flex-col gap-2.5 text-[14px]"
+            class="mb-8 flex flex-col gap-2.5 break-inside-avoid text-[14px]"
             aria-label={GROUPS[group].label}
           >
             <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
