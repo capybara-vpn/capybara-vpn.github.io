@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import { site, plans } from '../data/site';
 import Icon from './Icon.astro';
 
@@ -133,6 +134,13 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
     </div>
     <p class="mt-4 text-[13.5px] text-[#8b98a5]">
       Не уверены? Начните с бесплатного дня: 10 ГБ на тест, карта не нужна.
+    </p>
+    <p class="mt-4 text-[13.5px] text-[#8b98a5]">
+      Хотите сравнить тарифы и увидеть, что входит в подписку — <a
+        href={withBase('/tarify/')}
+        class="text-[#8fc3c4] underline underline-offset-4 transition-colors hover:text-white"
+        >подробный разбор тарифов</a
+      >.
     </p>
   </div>
 </section>
