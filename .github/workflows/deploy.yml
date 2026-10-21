@@ -92,6 +92,14 @@ jobs:
           GSC_SITE: ${{ needs.build.outputs.site_url }}
           GSC_SERVICE_ACCOUNT_KEY: ${{ secrets.GSC_SERVICE_ACCOUNT_KEY }}
         run: node scripts/gsc.mjs submit
+      # Отчёт об индексации — в summary запуска: видно, что Google уже взял,
+      # а что ещё нет, без открытия Search Console.
+      - name: Index status
+        continue-on-error: true
+        env:
+          GSC_SITE: ${{ needs.build.outputs.site_url }}
+          GSC_SERVICE_ACCOUNT_KEY: ${{ secrets.GSC_SERVICE_ACCOUNT_KEY }}
+        run: node scripts/gsc.mjs status --summary >> "$GITHUB_STEP_SUMMARY"
       # IndexNow: tells Bing / Yandex / other engines that the URLs changed
       # right after the deploy, instead of waiting for the next crawl.
       - name: Notify IndexNow

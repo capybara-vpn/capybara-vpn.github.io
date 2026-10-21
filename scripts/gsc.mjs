@@ -214,16 +214,35 @@ async function status(token) {
 
   const rows = await mapLimit(urls, 5, async (url, i) => {
     const row = await inspect(token, url, siteUrl);
-    process.stdout.write(`\r  проверено ${i + 1}/${urls.length}   `);
+    // Прогресс — в stderr, чтобы stdout остался чистым отчётом.
+    process.stderr.write(`\r  проверено ${i + 1}/${urls.length}   `);
     return row;
   });
-  process.stdout.write('\n');
+  process.stderr.write('\n');
 
   const missing = rows.filter((r) => label(r) === 'НЕ в индексе');
   const broken = rows.filter((r) => r.error);
 
   if (hasFlag('json')) {
     console.log(JSON.stringify({ site: SITE, total: rows.length, missing: missing.length, rows }, null, 2));
+    return;
+  }
+
+  // Компактный отчёт для CI: Markdown, который читается в summary запуска.
+  if (hasFlag('summary')) {
+    const inIndex = rows.length - missing.length - broken.length;
+    console.log('### Индексация в Google');
+    console.log('');
+    console.log(`${SITE}: **${inIndex} из ${rows.length}** страниц в индексе.`);
+    if (missing.length) {
+      console.log('');
+      console.log('Ещё не в индексе:');
+      console.log('');
+      for (const row of missing) {
+        const why = row.error ? row.error : row.coverage || row.verdict;
+        console.log(`- \`${row.url.replace(SITE, '')}\` — ${why}`);
+      }
+    }
     return;
   }
 
