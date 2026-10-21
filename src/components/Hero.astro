@@ -40,11 +40,11 @@ const logoSrc = `${b}/logo-320.png`;
           data-cta
           data-placement="hero"
           data-destination="telegram"
-          aria-label="Открыть Capybara VPN в Telegram с главного экрана"
         >
           <Icon name="telegram" class="h-5 w-5" />
           <span class="sm:hidden">Telegram</span>
           <span class="hidden sm:inline">Открыть в Telegram</span>
+        <span class="sr-only"> — Capybara VPN</span>
         </a>
         <a
           href={site.browserUrl}
@@ -54,11 +54,11 @@ const logoSrc = `${b}/logo-320.png`;
           data-cta
           data-placement="hero"
           data-destination="browser"
-          aria-label="Открыть Capybara VPN в браузере с главного экрана"
         >
           <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
           <span class="sm:hidden">Браузер</span>
           <span class="hidden sm:inline">Открыть в браузере</span>
+        <span class="sr-only"> — Capybara VPN</span>
         </a>
       </div>
 
@@ -136,9 +136,9 @@ const logoSrc = `${b}/logo-320.png`;
       <a
         href="#pricing"
         class="glass group absolute -bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full py-2 pl-4 pr-2.5 text-[13px] font-medium text-[#c6d4d4] transition-colors hover:text-white"
-        aria-label="Перейти к тарифам от 249 рублей"
       >
         от 249 ₽ · безлим
+        <span class="sr-only"> — перейти к тарифам</span>
         <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#60a1a3]/25 text-[#8fc3c4] transition-transform group-hover:translate-y-0.5">
           <Icon name="chevron" class="h-4 w-4" />
         </span>

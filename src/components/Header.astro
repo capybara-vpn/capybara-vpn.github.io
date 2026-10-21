@@ -1,9 +1,9 @@
 ---
 import { site, nav } from '../data/site';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 
 import { b, withBase } from '../lib/url';
-const logoSrc = `${b}/logo-96.png`;
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50">
@@ -17,14 +17,9 @@ const logoSrc = `${b}/logo-96.png`;
 
   <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6" aria-label="Основная навигация">
     <a href={withBase("/#top")} class="flex shrink-0 items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
-      <img
-        src={logoSrc}
-        alt=""
-        width="36"
-        height="36"
+      <Logo
         class="h-9 w-9 rounded-full object-cover ring-1 ring-white/15"
-        loading="eager"
-        decoding="async"
+        eager
       />
       <span class="whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
     </a>
@@ -46,7 +41,6 @@ const logoSrc = `${b}/logo-96.png`;
       <a
         href={withBase("/#pricing")}
         class="btn btn-ghost hidden px-4 py-2 text-[13.5px] sm:inline-flex"
-        aria-label="Перейти к тарифам"
       >
         Тарифы
       </a>
@@ -58,11 +52,11 @@ const logoSrc = `${b}/logo-96.png`;
         data-cta
         data-placement="header"
         data-destination="telegram"
-        aria-label="Открыть Capybara VPN в Telegram из шапки сайта"
       >
         <Icon name="telegram" class="h-4 w-4" />
         <span class="sm:hidden">Telegram</span>
         <span class="hidden sm:inline">Открыть в Telegram</span>
+        <span class="sr-only"> — Capybara VPN</span>
       </a>
     </div>
   </nav>

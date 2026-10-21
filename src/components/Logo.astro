@@ -1,0 +1,46 @@
+---
+/** Brand mark. WebP with a palette-optimised PNG fallback. */
+import { b } from '../lib/url';
+
+interface Props {
+  class?: string;
+  /** Above-the-fold logos should load eagerly. */
+  eager?: boolean;
+  alt?: string;
+  /** The 120px mark used in the closing block (320px source). */
+  large?: boolean;
+}
+
+const { class: cls = 'h-9 w-9', eager = false, alt = '', large = false } = Astro.props;
+---
+
+{
+  large ? (
+    <picture>
+      <source srcset={`${b}/logo-320.webp`} type="image/webp" />
+      <img
+        src={`${b}/logo-320.png`}
+        srcset={`${b}/logo-320.png 2x`}
+        alt={alt}
+        width="120"
+        height="120"
+        class={cls}
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+  ) : (
+    <picture>
+      <source srcset={`${b}/logo-96.webp`} type="image/webp" />
+      <img
+        src={`${b}/logo-96.png`}
+        alt={alt}
+        width="96"
+        height="96"
+        class={cls}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </picture>
+  )
+}
