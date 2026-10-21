@@ -1,18 +1,17 @@
 ---
 import GuideLayout from '../layouts/GuideLayout.astro';
-import { site, facts, plans } from '../data/site';
+import { site, facts } from '../data/site';
 import { b } from '../lib/url';
 import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Capybara VPN в цифрах: все факты на одной странице';
 const description =
-  'Все цифры Capybara VPN в одном месте: локации, серверы, скорость, тарифы, трафик, устройства, логи. С датой проверки и инструкцией, как перепроверить самому.';
+  'Все цифры Capybara VPN в одном месте: локации, серверы, скорость, трафик, устройства, логи. С датой проверки и инструкцией, как перепроверить самому.';
 const ogImage = '/og/fakty.jpg';
 
 const canonicalPath = '/fakty/';
 // Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
 const modified = lastModifiedDate(canonicalPath);
-const price = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -80,7 +79,8 @@ const faqs = [
     приходилось искать по сайту. Данные проверены
     <strong>{new Date(modified).toLocaleDateString('ru-RU')}</strong> — дата
     совпадает с датой последней правки страницы: цифры перепроверяются, а не
-    переписываются.
+    переписываются. Цены здесь не дублируются: они живут на странице
+    <a href={`${b}/tarify/`}>«Тарифы подробно»</a>.
   </p>
 
   <h2>Все цифры в одной таблице</h2>
@@ -128,21 +128,6 @@ const faqs = [
           <td>Устройства</td>
           <td>{facts.devicesPerPlan}, дополнительные слоты за доплату</td>
           <td>Личный кабинет</td>
-        </tr>
-        <tr>
-          <td>Тариф 30 дней</td>
-          <td>{price(plans[0].price)}</td>
-          <td>Страница тарифов</td>
-        </tr>
-        <tr>
-          <td>Тариф 90 дней</td>
-          <td>{price(plans[1].price)} ({plans[1].per30Label})</td>
-          <td>Страница тарифов</td>
-        </tr>
-        <tr>
-          <td>Тариф 180 дней</td>
-          <td>{price(plans[2].price)} ({plans[2].per30Label})</td>
-          <td>Страница тарифов</td>
         </tr>
         <tr>
           <td>Пробный период</td>

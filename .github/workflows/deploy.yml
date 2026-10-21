@@ -102,6 +102,9 @@ jobs:
         run: node scripts/gsc.mjs status --summary >> "$GITHUB_STEP_SUMMARY"
       # IndexNow: tells Bing / Yandex / other engines that the URLs changed
       # right after the deploy, instead of waiting for the next crawl.
+      # Only the pages the last commit touched — Bing asks not to send the
+      # whole site in one batch: a targeted note is indexed faster and does
+      # not spend crawl budget on pages that did not change.
       - name: Notify IndexNow
         continue-on-error: true
         env:
@@ -114,13 +117,12 @@ jobs:
             echo "IndexNow: ключ недоступен, пропускаем"
             exit 0
           fi
-          URLS="$(curl -fsS "$ORIGIN/sitemap-0.xml" \
-            | grep -o '<loc>[^<]*</loc>' \
-            | sed 's|<loc>||;s|</loc>||' || true)"
+          URLS="$(node scripts/indexnow-urls.mjs || true)"
           if [ -z "$URLS" ]; then
-            echo "IndexNow: sitemap пуст, пропускаем"
+            echo "IndexNow: изменённых URL нет, пропускаем"
             exit 0
           fi
+          echo "IndexNow: отправляем $(echo "$URLS" | wc -l) URL"
           node -e '
             const urls = process.argv[1].split("\n").filter(Boolean);
             const origin = process.argv[3].replace(/\/+$/, "");
