@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, faqs, plans } from '../data/site';
+import { site, faqs, plans, facts } from '../data/site';
 
 interface Props {
   title?: string;
@@ -109,6 +109,29 @@ const jsonLdAll = [
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
   },
+  // One Product per tariff: a single price each is what price-rich results
+  // need, and it keeps the markup honest about the three separate plans.
+  ...plans.map((p) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${site.siteUrl}/tarify/#${p.id}`,
+    name: `Capybara VPN — ${p.days} дней`,
+    description: `Подписка Capybara VPN на ${p.days} дней: безлимитный трафик, ${facts.locations} локаций, ${facts.protocol}.`,
+    category: 'VPN service',
+    inLanguage: 'ru',
+    brand: { '@type': 'Brand', name: 'Capybara VPN' },
+    url: `${site.siteUrl}/tarify/`,
+    offers: {
+      '@type': 'Offer',
+      name: `Тариф ${p.days} дней`,
+      price: `${p.price}`,
+      priceCurrency: 'RUB',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url: `${site.siteUrl}/tarify/`,
+      seller: { '@id': orgId },
+    },
+  })),
 ];
 // The FAQPage block is only emitted when the page actually shows a Q&A
 // (homepage or a guide) — the 404 page shows none, so it gets no markup.

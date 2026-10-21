@@ -9,8 +9,7 @@ const AI_BOTS = [
   'GPTBot',
   'ChatGPT-User',
   'OAI-SearchBot',
-  'OAI-AdsBot',
-  'ClaudeBot',
+  'OAI-AdsBot',  'ClaudeBot',
   'anthropic-ai',
   'Claude-SearchBot',
   'Claude-User',
@@ -42,11 +41,26 @@ const AI_BOTS = [
   'TimpiBot',
   'Omgili',
   'Omgilibot',
+] as const;
+
+/**
+ * Classic search engines. The HTML pages are the ones meant for the search
+ * index; the Markdown mirrors (/ios.md and friends) duplicate them for AI
+ * readers, so they are kept out of the search index to avoid duplicate
+ * content. The AI crawlers above still get full access.
+ */
+const SEARCH_BOTS = [
+  'Googlebot',
+  'Googlebot-Image',
+  'Googlebot-News',
+  'Googlebot-Video',
+  'Bingbot',
+  'BingPreview',
   'YandexBot',
   'YandexAdditional',
   'YandexAdditionalBot',
-  'Bingbot',
-  'BingPreview',
+  'DuckDuckBot',
+  'Baiduspider',
 ] as const;
 
 export async function GET() {
@@ -58,6 +72,8 @@ export async function GET() {
     '',
     '# AI assistants and generative-engine crawlers (explicit allow)',
     ...AI_BOTS.flatMap((bot) => [`User-agent: ${bot}`, 'Allow: /', '']),
+    '# Search engines: the HTML pages only, the .md mirrors are for AI readers',
+    ...SEARCH_BOTS.flatMap((bot) => [`User-agent: ${bot}`, 'Disallow: /*.md', '']),
     `Sitemap: ${site.siteUrl}/sitemap-index.xml`,
     '',
   ];

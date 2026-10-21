@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Что такое VPN: как работает и что меняется в вашем интернете';
 const description =
   'Что такое VPN простыми словами: как шифруется трафик, что видят сайты и провайдер, а что не меняется. Коротко и без маркетинговых обещаний.';
 const ogImage = '/og/chto-takoe-vpn.jpg';
+
+const canonicalPath = '/chto-takoe-vpn/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/chto-takoe-vpn/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-10-20',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/chto-takoe-vpn/"
+  canonicalPath={canonicalPath}
   crumbName="Что такое VPN"
   eyebrow="Гид · Основы"
   heading="Что такое VPN и что на самом деле меняется"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Основы"
   datePublished="2026-10-20"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="VPN шифрует трафик между вашим устройством и сервером: сайты видят адрес VPN-сервера, а провайдер — только зашифрованный поток."
   faqs={faqs}

@@ -1,11 +1,16 @@
 ---
 import GuideLayout from '../layouts/GuideLayout.astro';
+import { lastModifiedDate } from '../lib/dates';
 import { site } from '../data/site';
 
 const title = 'Capybara VPN не подключается: 7 причин и что делать';
 const description =
   'Capybara VPN не подключается или не работает: 7 причин от простых к сложным — состояние соединения, конфликт клиентов, локация и сеть. Разбор по шагам.';
 const ogImage = '/og/ne-rabotaet.jpg';
+
+const canonicalPath = '/ne-rabotaet/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -19,7 +24,7 @@ const articleLd = {
   image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/ne-rabotaet/`,
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
   totalTime: 'PT5M',
   estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '0' },
   step: [
@@ -62,7 +67,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/ne-rabotaet/"
+  canonicalPath={canonicalPath}
   crumbName="Не подключается"
   eyebrow="Гид · Capybara VPN"
   heading="Capybara VPN не подключается: 7 причин и что делать"
@@ -72,7 +77,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Проблемы"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Если Capybara VPN не подключается: проверьте состояние соединения, переподключитесь, смените локацию из 38, уберите конфликтующие VPN-клиенты и смените сеть."
   faqs={faqs}

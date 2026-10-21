@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Что такое VLESS: протокол Capybara VPN простыми словами';
 const description =
   'VLESS — современный протокол VPN: быстрый, стабильный, устойчивый к блокировкам. Объясняем просто + где он уже настроен.';
 const ogImage = '/og/vless.jpg';
+
+const canonicalPath = '/vless/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/vless/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/vless/"
+  canonicalPath={canonicalPath}
   crumbName="VLESS"
   eyebrow="Гид · VLESS"
   heading="Что такое VLESS — простыми словами"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Основы"
   datePublished="2026-09-29"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="VLESS — протокол, на котором работает Capybara VPN: соединение устойчивее к блокировкам, а настройку полностью берёт на себя сервис."
   faqs={faqs}

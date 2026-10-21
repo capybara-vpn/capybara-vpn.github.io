@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      # The public URL of the site, reused by the IndexNow step below.
+      site_url: ${{ steps.site.outputs.url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,13 +37,25 @@ jobs:
 
       - run: npm ci
 
+      # The public origin is decided once, here: the repo variable wins when
+      # set (explicit domain), otherwise it comes from actions/configure-pages,
+      # which already reports the custom domain once it is configured in the
+      # Pages settings. Everything else (build, IndexNow) reads it from here,
+      # so the domain is never written twice.
+      - id: site
+        env:
+          SITE_URL: ${{ vars.SITE_URL || format('{0}{1}', steps.pages.outputs.origin, steps.pages.outputs.base_path) }}
+        run: echo "url=${SITE_URL%/}" >> "$GITHUB_OUTPUT"
+
+      # Type check before the build: a broken component must fail the run
+      # here, not after the artifact is uploaded.
+      - name: Type check
+        run: npx astro check
+
       - name: Build
         run: npm run build
         env:
-          # Public origin. The repo variable wins when set (explicit domain),
-          # otherwise it comes from actions/configure-pages, which already
-          # reports the custom domain once it is configured in Pages settings.
-          SITE_URL: ${{ vars.SITE_URL || format('{0}{1}', steps.pages.outputs.origin, steps.pages.outputs.base_path) }}
+          SITE_URL: ${{ steps.site.outputs.url }}
           ASTRO_BASE: ${{ steps.pages.outputs.base_path }}/
           # Optional repo variable; when empty the build uses the default
           # measurement id from src/data/site.ts.
@@ -68,9 +83,11 @@ jobs:
       # right after the deploy, instead of waiting for the next crawl.
       - name: Notify IndexNow
         continue-on-error: true
+        env:
+          SITE_URL: ${{ needs.build.outputs.site_url }}
         run: |
           set -euo pipefail
-          ORIGIN="https://capybaravpn.top"
+          ORIGIN="${SITE_URL%/}"
           KEY="$(curl -fsS "$ORIGIN/indexnow-key.txt" || true)"
           if [ -z "$KEY" ]; then
             echo "IndexNow: ключ недоступен, пропускаем"
@@ -85,10 +102,11 @@ jobs:
           fi
           node -e '
             const urls = process.argv[1].split("\n").filter(Boolean);
+            const origin = process.argv[3].replace(/\/+$/, "");
             const body = {
-              host: "capybaravpn.top",
+              host: new URL(origin).host,
               key: process.argv[2],
-              keyLocation: "https://capybaravpn.top/indexnow-key.txt",
+              keyLocation: origin + "/indexnow-key.txt",
               urlList: urls,
             };
             fetch("https://api.indexnow.org/indexnow", {
@@ -101,4 +119,4 @@ jobs:
                 if (r.status >= 400) console.log(await r.text());
               })
               .catch((e) => console.log("IndexNow: ошибка", e.message));
-          ' "$URLS" "$KEY"
+          ' "$URLS" "$KEY" "$ORIGIN"

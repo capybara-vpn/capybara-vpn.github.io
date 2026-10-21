@@ -1,8 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
-import { execSync } from 'node:child_process';
-import { statSync } from 'node:fs';
+import { lastCommitISO, pageSource } from './src/lib/dates.ts';
 
 // Deployment: single source is SITE_URL (origin + optional base path).
 // Production is the custom domain: SITE_URL=https://capybaravpn.top
@@ -19,58 +18,13 @@ const BASE = process.env.ASTRO_BASE ?? (URL_PATH ? `${URL_PATH}/` : '/');
 /**
  * Last commit date per page, so the sitemap carries <lastmod> and Google
  * can tell which pages actually changed instead of recrawling all of them.
+ * The date comes from the same helper the pages use for their visible
+ * "Обновлено" line (src/lib/dates.ts), so the two can never drift apart.
  */
-const PAGE_SOURCES = {
-  '/': 'src/pages/index.astro',
-  '/tarify/': 'src/pages/tarify.astro',
-  '/vless/': 'src/pages/vless.astro',
-  '/chto-takoe-vpn/': 'src/pages/chto-takoe-vpn.astro',
-  '/probny-den/': 'src/pages/probny-den.astro',
-  '/oplata/': 'src/pages/oplata.astro',
-  '/ios/': 'src/pages/ios.astro',
-  '/android/': 'src/pages/android.astro',
-  '/windows/': 'src/pages/windows.astro',
-  '/macos/': 'src/pages/macos.astro',
-  '/linux/': 'src/pages/linux.astro',
-  '/tv/': 'src/pages/tv.astro',
-  '/bezopasnost-vpn/': 'src/pages/bezopasnost-vpn.astro',
-  '/kak-vybrat-lokaciyu/': 'src/pages/kak-vybrat-lokaciyu.astro',
-  '/proverka-skorosti/': 'src/pages/proverka-skorosti.astro',
-  '/dlya-novichkov/': 'src/pages/dlya-novichkov.astro',
-  '/ne-rabotaet/': 'src/pages/ne-rabotaet.astro',
-  '/neskolko-ustroystv/': 'src/pages/neskolko-ustroystv.astro',
-  '/telegram-ili-brauzer/': 'src/pages/telegram-ili-brauzer.astro',
-  '/router/': 'src/pages/router.astro',
-  '/official/': 'src/pages/official.astro',
-  '/belye-spiski/': 'src/pages/belye-spiski.astro',
-  '/vpn-dlya-youtube/': 'src/pages/vpn-dlya-youtube.astro',
-};
-
-const lastmodCache = new Map();
 function lastmodFor(pathname) {
-  const file = PAGE_SOURCES[pathname];
+  const file = pageSource(pathname);
   if (!file) return undefined;
-  if (lastmodCache.has(file)) return lastmodCache.get(file);
-  let value;
-  try {
-    value = execSync(`git log -1 --format=%cI -- ${file}`, {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-  } catch {
-    value = '';
-  }
-  if (!value) {
-    // No git history for this file yet (uncommitted, or a shallow clone):
-    // fall back to the file's mtime, then to the build time.
-    try {
-      value = statSync(file).mtime.toISOString();
-    } catch {
-      value = new Date().toISOString();
-    }
-  }
-  lastmodCache.set(file, value);
-  return value;
+  return lastCommitISO(file);
 }
 
 /**
@@ -104,22 +58,48 @@ const LLMS_PAGES = [
   ['vpn-dlya-youtube/index.html', 'VPN для YouTube'],
 ];
 
+/**
+ * HTML tables -> Markdown tables.
+ * Stripping the tags left rows without a header separator, so the table did
+ * not render as a table at all — just loose lines with pipes in them.
+ */
+function tablesToMarkdown(html) {
+  return html.replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
+    const rows = [];
+    for (const rowMatch of table.matchAll(/<tr\b[\s\S]*?<\/tr>/gi)) {
+      const cells = [...rowMatch[0].matchAll(/<t[hd]\b[^>]*>([\s\S]*?)<\/t[hd]>/gi)].map(
+        (cell) =>
+          cell[1]
+            .replace(/<[^>]+>/g, '')
+            .replace(/\s+/g, ' ')
+            .replace(/\|/g, '\\|')
+            .trim()
+      );
+      if (cells.length) rows.push(cells);
+    }
+    if (!rows.length) return '';
+    const [head, ...body] = rows;
+    const line = (row) => `| ${row.join(' | ')} |`;
+    const separator = line(head.map(() => '---'));
+    return `\n${[line(head), separator, ...body.map(line)].join('\n')}\n`;
+  });
+}
+
 function htmlToMarkdown(html) {
   // Only the page content: the header, footer, sticky CTA and consent bar
   // are navigation chrome and would only dilute the text for a model.
   const main = html.match(/<main\b[\s\S]*?<\/main>/i);
   const body = main ? main[0] : html;
-  return body
+  const cleaned = body
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '')
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
-    .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+    .replace(/<svg[\s\S]*?<\/svg>/gi, '');
+  return tablesToMarkdown(cleaned)
     .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n')
     .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n')
     .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n')
     .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '\n- $1')
-    .replace(/<td[^>]*>([\s\S]*?)<\/td>/gi, ' | $1')
-    .replace(/<tr[^>]*>/gi, '\n')
     .replace(/<\/(p|div|ul|ol|section|article|blockquote|table|tr)>/gi, '\n')
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp;/g, ' ')

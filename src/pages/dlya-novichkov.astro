@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Первый раз с VPN: пошагово от выбора тарифа до первого соединения';
 const description =
   'Впервые подключаете VPN? Полный путь за один раз: как выбрать тариф, забрать бесплатный день, подключиться и понять, что всё работает.';
 const ogImage = '/og/dlya-novichkov.jpg';
+
+const canonicalPath = '/dlya-novichkov/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/dlya-novichkov/`,
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
   totalTime: 'PT10M',
   estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '0' },
   step: [
@@ -62,7 +67,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/dlya-novichkov/"
+  canonicalPath={canonicalPath}
   crumbName="Для новичков"
   eyebrow="Гид · С чего начать"
   heading="Первый раз с VPN: от тарифа до первого соединения"
@@ -72,7 +77,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Инструкции"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Первый раз с VPN проще, чем кажется: заберите бесплатный день, выберите устройство, включите локацию — всё остальное сервис сделает сам."
   faqs={faqs}

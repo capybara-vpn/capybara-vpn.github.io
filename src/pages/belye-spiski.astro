@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site, facts } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Белые списки операторов: что это, как проверить и что делать';
 const description =
   'Что такое белые списки IP у мобильных операторов, почему трафик иногда фильтруют, как проверить фильтрацию у себя и что делать, если сайты не открываются.';
 const ogImage = '/og/belye-spiski.jpg';
+
+const canonicalPath = '/belye-spiski/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/belye-spiski/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/belye-spiski/"
+  canonicalPath={canonicalPath}
   crumbName="Белые списки"
   eyebrow="Гид · Сети операторов"
   heading="Белые списки операторов: что это и как с этим жить"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Основы"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Белый список у оператора — это список адресов, трафик к которым пропускают без проверки. Всё остальное может фильтроваться, и тогда часть сайтов перестаёт открываться."
   faqs={faqs}

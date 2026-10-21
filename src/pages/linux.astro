@@ -2,12 +2,17 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Capybara VPN на Linux: настройка на компьютере за 5 минут';
 const description =
   'Как подключить Capybara VPN на Linux: 4 шага, 5 минут, первый день бесплатно. Подходит для Ubuntu, Debian, Fedora и других дистрибутивов.';
 const host = new URL(site.siteUrl).hostname;
 const ogImage = '/og/linux.jpg';
+
+const canonicalPath = '/linux/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -21,7 +26,7 @@ const articleLd = {
   image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/linux/`,
   datePublished: '2026-10-20',
-  dateModified: '2026-10-21',
+  dateModified: modified,
   totalTime: 'PT5M',
   estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '249' },
   step: [
@@ -63,7 +68,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/linux/"
+  canonicalPath={canonicalPath}
   crumbName="Linux"
   eyebrow="Гид · Linux"
   heading="Capybara VPN на Linux за 5 минут"
@@ -73,7 +78,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Инструкции"
   datePublished="2026-10-20"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="В Linux подключение занимает около пяти минут: профиль забирается из сервиса, вручную ничего настраивать не нужно."
   faqs={faqs}

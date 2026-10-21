@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Как проверить скорость Capybara VPN: замер без лишних сервисов';
 const description =
   'Как проверить скорость VPN на практике: на что смотреть, какие цифры считаются нормой и почему скорость зависит от локации и нагрузки.';
 const ogImage = '/og/proverka-skorosti.jpg';
+
+const canonicalPath = '/proverka-skorosti/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/proverka-skorosti/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/proverka-skorosti/"
+  canonicalPath={canonicalPath}
   crumbName="Скорость"
   eyebrow="Гид · Скорость"
   heading="Как проверить скорость VPN и что значат цифры"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Основы"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Скорость VPN проверяют на своих устройствах: смотрите на разницу с обычным интернетом и на стабильность, а не на пиковые цифры."
   faqs={faqs}

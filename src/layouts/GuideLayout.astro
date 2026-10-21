@@ -8,6 +8,7 @@ import Related from '../components/Related.astro';
 import GuideCta from '../components/GuideCta.astro';
 import Icon from '../components/Icon.astro';
 import { b } from '../lib/url';
+import { formatRuDate } from '../lib/dates';
 
 interface Props {
   title: string;
@@ -77,6 +78,11 @@ const {
         </h1>
         <p class="lead reveal mt-4 text-[16.5px]">
           {lead}
+        </p>
+
+        <p class="reveal mt-3 text-[13px] text-[#8b98a5]">
+          Обновлено{' '}
+          <time datetime={dateModified}>{formatRuDate(dateModified)}</time>
         </p>
 
         {

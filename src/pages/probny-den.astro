@@ -2,12 +2,17 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Бесплатный день Capybara VPN: 10 ГБ без карты на тест';
 const description =
   'Как получить бесплатный день в Capybara VPN: 10 ГБ трафика, карта не нужна. Что входит в пробный период и как проверить сервис перед покупкой тарифа.';
 const host = new URL(site.siteUrl).hostname;
 const ogImage = '/og/probny-den.jpg';
+
+const canonicalPath = '/probny-den/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -21,7 +26,7 @@ const articleLd = {
   image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/probny-den/`,
   datePublished: '2026-10-20',
-  dateModified: '2026-10-21',
+  dateModified: modified,
   totalTime: 'PT3M',
   estimatedCost: { '@type': 'MonetaryAmount', currency: 'RUB', value: '0' },
   step: [
@@ -63,7 +68,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/probny-den/"
+  canonicalPath={canonicalPath}
   crumbName="Бесплатный день"
   eyebrow="Гид · Пробный период"
   heading="Сначала бесплатный день: 10 ГБ без карты"
@@ -73,7 +78,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Пробный период"
   datePublished="2026-10-20"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Первый день Capybara VPN бесплатный: 10 ГБ трафика без привязки карты, чтобы проверить сервис до покупки тарифа."
   faqs={faqs}

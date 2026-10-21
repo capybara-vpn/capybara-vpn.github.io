@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Тарифы Capybara VPN: 30, 90 или 180 дней — что выбрать';
 const description =
   'Тарифы Capybara VPN: 30 дней — 249 ₽, 90 дней — 672 ₽, 180 дней — 1195 ₽. Безлимит, оплата картой и СБП, первый день бесплатно. Сравнение и что входит.';
 const ogImage = '/og/tarify.jpg';
+
+const canonicalPath = '/tarify/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/tarify/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-09-29',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/tarify/"
+  canonicalPath={canonicalPath}
   crumbName="Тарифы"
   eyebrow="Гид · Тарифы"
   heading="Тарифы Capybara VPN: 30, 90 или 180 дней"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Тарифы"
   datePublished="2026-09-29"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Три тарифа: 30 дней за 249 ₽, 90 дней за 672 ₽ со скидкой 10% и 180 дней за 1195 ₽ со скидкой 20% — во всех безлимитный трафик на 1 устройство."
   faqs={faqs}

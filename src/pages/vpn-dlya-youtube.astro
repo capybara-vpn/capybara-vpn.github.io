@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site, facts } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'VPN для YouTube: как смотреть видео плавно и без зависаний';
 const description =
   'Как VPN помогает смотреть YouTube без зависаний: что на самом деле влияет на скорость видео, как выбрать локацию и что делать, если видео всё равно тормозит.';
 const ogImage = '/og/vpn-dlya-youtube.jpg';
+
+const canonicalPath = '/vpn-dlya-youtube/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   image: `${site.siteUrl}${ogImage}`,
   mainEntityOfPage: `${site.siteUrl}/vpn-dlya-youtube/`,
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
   totalTime: 'PT5M',
   step: [
     { '@type': 'HowToStep', name: 'Подключитесь', text: 'Выберите устройство в сервисе и включите соединение.' },
@@ -61,7 +66,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/vpn-dlya-youtube/"
+  canonicalPath={canonicalPath}
   crumbName="VPN для YouTube"
   eyebrow="Гид · YouTube"
   heading="VPN для YouTube: как смотреть плавно"
@@ -71,7 +76,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Сценарии"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="Плавность видео на YouTube зависит от локации, стабильности соединения и лишних расширений, а не от самого факта VPN. Разбираем по шагам."
   faqs={faqs}

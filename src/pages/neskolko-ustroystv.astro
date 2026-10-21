@@ -2,11 +2,16 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import { site } from '../data/site';
 import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
 
 const title = 'Несколько устройств: как подключить VPN на двух и больше';
 const description =
   'Как пользоваться Capybara VPN на нескольких устройствах сразу: дополнительные слоты, схема с роутером и почему один тариф — это одно устройство.';
 const ogImage = '/og/neskolko-ustroystv.jpg';
+
+const canonicalPath = '/neskolko-ustroystv/';
+// Дата последней правки — из git, чтобы «Обновлено» всегда было правдой.
+const modified = lastModifiedDate(canonicalPath);
 
 const articleLd = {
   '@context': 'https://schema.org',
@@ -20,7 +25,7 @@ const articleLd = {
   mainEntityOfPage: `${site.siteUrl}/neskolko-ustroystv/`,
   author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
   datePublished: '2026-10-21',
-  dateModified: '2026-10-21',
+  dateModified: modified,
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -54,7 +59,7 @@ const faqs = [
 <GuideLayout
   title={title}
   description={description}
-  canonicalPath="/neskolko-ustroystv/"
+  canonicalPath={canonicalPath}
   crumbName="Несколько устройств"
   eyebrow="Гид · Устройства"
   heading="VPN на нескольких устройствах: слоты и схема с роутером"
@@ -64,7 +69,7 @@ const faqs = [
   breadcrumbLd={breadcrumbLd}
   articleSection="Устройства"
   datePublished="2026-10-21"
-  dateModified="2026-10-21"
+  dateModified={modified}
   ogImage={ogImage}
   summary="В тарифе Capybara VPN один слот — одно одновременное подключение. Нужно больше: докупите слоты или поднимите VPN на роутере, и тогда хватит одного."
   faqs={faqs}

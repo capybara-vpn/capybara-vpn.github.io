@@ -181,7 +181,8 @@ if (glow && !reduced && window.matchMedia('(pointer: fine)').matches) {
 
 /* ---------- consent + GA4 lazy load (library only after consent) ---------- */
 const CONSENT_KEY = 'capybara-consent-v1';
-const CONSENT_TTL_MS = 180 * 24 * 60 * 60 * 1000; // re-ask twice a year
+const CONSENT_TTL_MS = 180 * 24 * 60 * 60 * 1000; // an explicit "yes" is remembered for half a year
+const CONSENT_SESSION_KEY = 'capybara-consent-session-v1';
 const banner = document.getElementById('consent');
 let gaConfigured = false;
 
@@ -254,24 +255,58 @@ function applyConsent(value: 'granted' | 'denied') {
 }
 
 function readStoredConsent(): 'granted' | 'denied' | null {
+  // An explicit "Разрешить" is remembered across visits.
   try {
     const raw = localStorage.getItem(CONSENT_KEY);
-    if (raw === 'granted' || raw === 'denied') return raw; // legacy plain values
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as { v?: unknown; ts?: unknown };
-    if ((parsed.v === 'granted' || parsed.v === 'denied') && typeof parsed.ts === 'number') {
-      if (Date.now() - parsed.ts < CONSENT_TTL_MS) return parsed.v;
-      localStorage.removeItem(CONSENT_KEY); // expired — ask again
+    if (raw === 'granted') return 'granted'; // legacy plain value
+    if (raw === 'denied') {
+      // A refusal must never silence the visitor for months: drop it and ask
+      // again on the next visit.
+      localStorage.removeItem(CONSENT_KEY);
+    } else if (raw) {
+      const parsed = JSON.parse(raw) as { v?: unknown; ts?: unknown };
+      if (parsed.v === 'granted' && typeof parsed.ts === 'number') {
+        if (Date.now() - parsed.ts < CONSENT_TTL_MS) return 'granted';
+        localStorage.removeItem(CONSENT_KEY); // expired — ask again
+      } else if (parsed.v === 'denied') {
+        localStorage.removeItem(CONSENT_KEY);
+      }
     }
-    return null;
   } catch {
-    return null;
+    /* noop */
+  }
+  // "Не сейчас" only lasts for the current visit: the bar comes back on the
+  // next one instead of staying hidden for half a year.
+  try {
+    if (sessionStorage.getItem(CONSENT_SESSION_KEY) === 'denied') return 'denied';
+  } catch {
+    /* noop */
+  }
+  return null;
+}
+
+function writeStoredConsent(value: 'granted') {
+  try {
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: value, ts: Date.now() }));
+  } catch {
+    /* noop */
+  }
+  try {
+    sessionStorage.removeItem(CONSENT_SESSION_KEY);
+  } catch {
+    /* noop */
   }
 }
 
-function writeStoredConsent(value: 'granted' | 'denied') {
+/** "Не сейчас": remembered for this visit only. */
+function writeSessionDecline() {
   try {
-    localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: value, ts: Date.now() }));
+    localStorage.removeItem(CONSENT_KEY);
+  } catch {
+    /* noop */
+  }
+  try {
+    sessionStorage.setItem(CONSENT_SESSION_KEY, 'denied');
   } catch {
     /* noop */
   }
@@ -295,7 +330,7 @@ function setBannerVisible(visible: boolean) {
 }
 
 function declineConsent(event: string) {
-  writeStoredConsent('denied');
+  writeSessionDecline();
   applyConsent('denied');
   setBannerVisible(false);
   returnFocusToManage();
@@ -345,6 +380,7 @@ function returnFocusToManage() {
 document.getElementById('consent-manage')?.addEventListener('click', () => {
   try {
     localStorage.removeItem(CONSENT_KEY);
+    sessionStorage.removeItem(CONSENT_SESSION_KEY);
   } catch {
     /* noop */
   }
