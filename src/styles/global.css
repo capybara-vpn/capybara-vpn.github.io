@@ -443,6 +443,35 @@ details.faq[open] .faq-body {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  /* Scroll shadows without a line of JS: the two flat gradients are tied
+     to the scrollport (background-attachment: local) and cover the two
+     radial shadows (background-attachment: scroll) when an edge is
+     reached. The shadow is therefore visible exactly when there is more
+     table to the right — a wide comparison table is cut off in a 768px
+     column, and a silent cut-off reads as a broken layout. */
+  background-image:
+    linear-gradient(to right, var(--color-ink) 40%, rgba(11, 14, 20, 0)),
+    linear-gradient(to left, var(--color-ink) 40%, rgba(11, 14, 20, 0)),
+    radial-gradient(farthest-side at 0 50%, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 36px 100%, 36px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+/* The line under a wide table: says out loud that it scrolls sideways. */
+.guide-body .table-hint {
+  margin-top: 0.6em;
+  font-size: 13px;
+  color: var(--color-faint);
+}
+/* Six columns have to fit a 768px column: tighter cells and a hair
+   smaller type, so the table ends flush on a desktop screen and only
+   scrolls on a phone. */
+.guide-body .table-scroll.table-compare th,
+.guide-body .table-scroll.table-compare td {
+  padding: 0.65em 0.7em;
+  font-size: 14px;
 }
 .guide-body .table-scroll table {
   margin-top: 0 !important;

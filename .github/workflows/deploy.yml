@@ -79,6 +79,19 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      # Google Search Console: сообщаем, что карта сайта изменилась, —
+      # Google переобходит страницы с новым lastmod. Кнопки «Запросить
+      # индексацию» в веб-интерфейсе нет в виде API, а отправка карты —
+      # ближайший рабочий эквивалент для всех страниц сразу.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Notify Google (Search Console)
+        continue-on-error: true
+        env:
+          GSC_SITE: ${{ needs.build.outputs.site_url }}
+          GSC_SERVICE_ACCOUNT_KEY: ${{ secrets.GSC_SERVICE_ACCOUNT_KEY }}
+        run: node scripts/gsc.mjs submit
       # IndexNow: tells Bing / Yandex / other engines that the URLs changed
       # right after the deploy, instead of waiting for the next crawl.
       - name: Notify IndexNow
