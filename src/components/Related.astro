@@ -1,5 +1,6 @@
 ---
 import { guides } from '../data/guides';
+import { withBase } from '../lib/url';
 
 interface Props {
   /** Path of the current page, e.g. '/ios/'. */
@@ -28,7 +29,7 @@ const items = [...relatedPaths, ...fill.map((g) => g.href)]
       items.map((g) => (
         <li>
           <a
-            href={g.href}
+            href={withBase(g.href)}
             class="card-lift glass group flex items-center justify-between gap-3 rounded-2xl px-5 py-4"
           >
             <span>

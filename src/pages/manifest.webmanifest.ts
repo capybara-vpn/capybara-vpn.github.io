@@ -17,13 +17,13 @@ export async function GET() {
     theme_color: '#0b0e14',
     icons: [
       {
-        src: '/icon-192.png',
+        src: `${site.siteUrl}/icon-192.png`,
         sizes: '192x192',
         type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/icon-512.png',
+        src: `${site.siteUrl}/icon-512.png`,
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any',
@@ -31,7 +31,7 @@ export async function GET() {
       {
         // Separate artwork: the logo is inset with a solid background so any
         // Android launcher mask (circle, squircle, teardrop) cannot crop it.
-        src: '/icon-512-maskable.png',
+        src: `${site.siteUrl}/icon-512-maskable.png`,
         sizes: '512x512',
         type: 'image/png',
         purpose: 'maskable',
