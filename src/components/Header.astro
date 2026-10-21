@@ -3,12 +3,12 @@ import { site, nav } from '../data/site';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 
-import { b, withBase } from '../lib/url';
+import { withBase } from '../lib/url';
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50">
   <!-- announcement strip -->
-  <div class="border-b border-white/8 bg-[#0b0e14]/80">
+  <div id="announce" class="border-b border-white/8 bg-[#0b0e14]/80">
     <p class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-[12.5px] leading-snug text-[#9aa6b2]">
       <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#60a1a3]" aria-hidden="true"></span>
       <span class="hidden sm:inline">Capybara VPN — спокойный VPN с подпиской от 249 ₽. </span>Подключение через Telegram или браузер.
@@ -62,7 +62,7 @@ import { b, withBase } from '../lib/url';
   </nav>
 
   <!-- compact mobile nav -->
-  <nav class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
+  <nav id="subnav" class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
     <div class="mx-auto flex max-w-6xl items-center gap-4 overflow-x-auto px-3.5 py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:px-4 sm:text-[13px]" tabindex="0" role="region" aria-label="Навигация по разделам">
       {
         nav.map((n) => (

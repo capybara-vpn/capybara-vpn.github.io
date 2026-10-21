@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import type { IconName } from '../lib/icon';
 import { guides } from '../data/guides';
+import { withBase } from '../lib/url';
 
 const platforms: { name: string; icon: IconName; note: string }[] = [
   { name: 'iOS', icon: 'phone', note: 'iPhone · iPad' },
@@ -55,7 +56,10 @@ const platforms: { name: string; icon: IconName; note: string }[] = [
         guides
           .filter((g) => g.short)
           .map((g) => (
-            <a href={g.href} class="transition-colors hover:text-white">
+            <a
+              href={withBase(g.href)}
+              class="inline-flex min-h-[24px] items-center px-1 py-1 transition-colors hover:text-white"
+            >
               {g.short}
             </a>
           ))
