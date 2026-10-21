@@ -125,15 +125,19 @@ async function siteUrls() {
   return urls;
 }
 
-/** Отправить карту сайта: Google переобходит страницы с обновлённым lastmod. */
+/**
+ * Отправить карту сайта: Google переобходит страницы с обновлённым lastmod.
+ * Метод — PUT (в актуальной документации Google POST больше не работает),
+ * адрес карты передаётся закодированным ровно один раз.
+ */
 async function submit(token) {
   let lastError = '';
-  for (const candidate of siteCandidates(SITE)) {
-    const url = `${SITEMAPS_API}/sites/${encodeURIComponent(candidate)}/sitemaps/${encodeURIComponent(SITEMAP)}`;
-    const res = await fetchTimeout(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+  for (const { site, feed } of siteCandidates(SITE)) {
+    const url = `${SITEMAPS_API}/sites/${encodeURIComponent(site)}/sitemaps/${encodeURIComponent(feed)}`;
+    const res = await fetchTimeout(url, { method: 'PUT', headers: { Authorization: `Bearer ${token}` } });
     const body = await res.json().catch(() => ({}));
     if (res.ok) {
-      console.log(`  карта отправлена: ${candidate}/${SITEMAP}`);
+      console.log(`  карта отправлена: ${feed} (${site}, ${res.status})`);
       return;
     }
     lastError = body.error?.message || `HTTP ${res.status}`;
@@ -143,14 +147,18 @@ async function submit(token) {
 
 /**
  * Формы адреса свойства, которые Google принимает:
- *   https://site            — свойство «URL-префикс» без слэша
- *   https://site/           — то же со слэшем
  *   sc-domain:site         — свойство «Домен»
- * Какая именно заведена — unknown, поэтому перебираем.
+ *   https://site/          — свойство «URL-префикс»
+ * К каждой форме прилагается feedpath, который ждёт API: у домена это
+ * полный URL карты, у префикса — путь от корня.
  */
 function siteCandidates(site) {
   const host = new URL(site).host;
-  return [...new Set([site, `${site}/`, `sc-domain:${host}`])];
+  return [
+    { site: `sc-domain:${host}`, feed: `${site}/${SITEMAP}` },
+    { site: `${site}/`, feed: SITEMAP },
+    { site, feed: SITEMAP },
+  ];
 }
 
 /** Проверка одной страницы через URL Inspection API. */
@@ -196,9 +204,9 @@ async function status(token) {
   // Какой формой адреса заведено свойство — перебираем на одной странице.
   let siteUrl = SITE;
   for (const candidate of siteCandidates(SITE)) {
-    const probe = await inspect(token, urls[0], candidate);
+    const probe = await inspect(token, urls[0], candidate.site);
     if (!probe.hint) {
-      siteUrl = candidate;
+      siteUrl = candidate.site;
       break;
     }
   }
