@@ -6,6 +6,16 @@ import Logo from './Logo.astro';
 
 const year = new Date().getFullYear();
 import { withBase } from '../lib/url';
+
+/** Columns of the footer navigation. */
+const GROUPS = {
+  'установка': { title: 'Установка', label: 'Настройка на устройствах' },
+  'основы': { title: 'Гид', label: 'Гид по сервису' },
+  'сервис': { title: 'Тарифы и сервис', label: 'Тарифы и сервис' },
+  'сценарии': { title: 'Сценарии', label: 'Задачи и сценарии' },
+} as const;
+type Group = keyof typeof GROUPS;
+const groupKeys = Object.keys(GROUPS) as Group[];
 ---
 
 <footer class="border-t border-white/8 bg-[#090c11]" aria-label="Подвал сайта">
@@ -60,13 +70,13 @@ import { withBase } from '../lib/url';
       </nav>
 
       {
-        (['установка', 'основы', 'сервис'] as const).map((group) => (
+        groupKeys.map((group) => (
           <nav
             class="flex flex-col gap-2.5 text-[14px]"
-            aria-label={group === 'установка' ? 'Настройка на устройствах' : group === 'основы' ? 'Гид по сервису' : 'Тарифы и сервис'}
+            aria-label={GROUPS[group].label}
           >
             <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
-              {group === 'установка' ? 'Установка' : group === 'основы' ? 'Гид' : 'Тарифы и сервис'}
+              {GROUPS[group].title}
             </h2>
             {guides
               .filter((g) => g.group === group)

@@ -13,7 +13,7 @@ export interface Guide {
   /** Paths of the pages this one should link to. */
   related: string[];
   /** Column in the footer navigation. */
-  group: 'основы' | 'установка' | 'сервис';
+  group: 'основы' | 'установка' | 'сервис' | 'сценарии';
 }
 
 export const guides: Guide[] = [
@@ -22,7 +22,7 @@ export const guides: Guide[] = [
     title: 'Официальный сайт',
     note: 'факты, тарифы, как отличить от подделок',
     group: 'сервис',
-    related: ['/tarify/', '/oplata/', '/dlya-novichkov/', '/ne-rabotaet/'],
+    related: ['/tarify/', '/oplata/', '/kak-vybrat-vpn/', '/dlya-novichkov/'],
   },
   {
     href: '/belye-spiski/',
@@ -36,14 +36,14 @@ export const guides: Guide[] = [
     title: 'VPN для YouTube',
     note: 'как смотреть видео плавно',
     group: 'основы',
-    related: ['/kak-vybrat-lokaciyu/', '/proverka-skorosti/', '/ne-rabotaet/', '/chto-takoe-vpn/'],
+    related: ['/kak-vybrat-lokaciyu/', '/proverka-skorosti/', '/vpn-dlya-instagram/', '/ne-rabotaet/'],
   },
   {
     href: '/chto-takoe-vpn/',
     title: 'Что такое VPN',
     note: 'простыми словами',
     group: 'основы',
-    related: ['/vless/', '/bezopasnost-vpn/', '/neskolko-ustroystv/', '/tv/'],
+    related: ['/vless/', '/bezopasnost-vpn/', '/kak-vybrat-vpn/', '/neskolko-ustroystv/'],
   },
   {
     href: '/vless/',
@@ -57,49 +57,49 @@ export const guides: Guide[] = [
     title: 'Безопасность и приватность',
     note: 'что VPN защищает, а что нет',
     group: 'основы',
-    related: ['/chto-takoe-vpn/', '/vless/', '/macos/', '/linux/'],
+    related: ['/chto-takoe-vpn/', '/vless/', '/vpn-bez-registracii/', '/macos/'],
   },
   {
     href: '/kak-vybrat-lokaciyu/',
     title: 'Как выбрать локацию',
     note: '38 вариантов и что на них влияет',
     group: 'основы',
-    related: ['/proverka-skorosti/', '/ne-rabotaet/', '/router/', '/dlya-novichkov/'],
+    related: ['/proverka-skorosti/', '/ne-rabotaet/', '/vpn-dlya-igr/', '/dlya-novichkov/'],
   },
   {
     href: '/proverka-skorosti/',
     title: 'Как проверить скорость',
     note: 'замер на своих устройствах',
     group: 'основы',
-    related: ['/kak-vybrat-lokaciyu/', '/ne-rabotaet/', '/probny-den/', '/dlya-novichkov/'],
+    related: ['/kak-vybrat-lokaciyu/', '/ne-rabotaet/', '/vpn-dlya-igr/', '/probny-den/'],
   },
   {
     href: '/dlya-novichkov/',
     title: 'Первый раз с VPN',
     note: 'от тарифа до первого соединения',
     group: 'основы',
-    related: ['/telegram-ili-brauzer/', '/ne-rabotaet/', '/bezopasnost-vpn/', '/vless/'],
+    related: ['/telegram-ili-brauzer/', '/ne-rabotaet/', '/kak-vklyuchit-vpn-na-telefone/', '/bezopasnost-vpn/'],
   },
   {
     href: '/ne-rabotaet/',
     title: 'Если не работает',
     note: '7 шагов разбора',
     group: 'основы',
-    related: ['/proverka-skorosti/', '/kak-vybrat-lokaciyu/', '/dlya-novichkov/', '/tarify/'],
+    related: ['/proverka-skorosti/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-windows-11/', '/dlya-novichkov/'],
   },
   {
     href: '/tarify/',
     title: 'Тарифы подробно',
     note: '30, 90 и 180 дней',
     group: 'сервис',
-    related: ['/oplata/', '/neskolko-ustroystv/', '/ne-rabotaet/', '/tv/'],
+    related: ['/oplata/', '/neskolko-ustroystv/', '/kak-vybrat-vpn/', '/ne-rabotaet/'],
   },
   {
     href: '/probny-den/',
     title: 'Бесплатный день',
     note: '10 ГБ без карты',
     group: 'сервис',
-    related: ['/ios/', '/android/', '/proverka-skorosti/', '/kak-vybrat-lokaciyu/'],
+    related: ['/ios/', '/android/', '/proverka-skorosti/', '/besplatny-vpn/'],
   },
   {
     href: '/oplata/',
@@ -113,14 +113,14 @@ export const guides: Guide[] = [
     title: 'Несколько устройств',
     note: 'слоты и схема с роутером',
     group: 'сервис',
-    related: ['/router/', '/tarify/', '/oplata/', '/dlya-novichkov/'],
+    related: ['/router/', '/tarify/', '/vpn-dlya-raboty/', '/oplata/'],
   },
   {
     href: '/telegram-ili-brauzer/',
     title: 'Telegram или браузер',
     note: 'два входа в один сервис',
     group: 'сервис',
-    related: ['/oplata/', '/ios/', '/bezopasnost-vpn/', '/proverka-skorosti/'],
+    related: ['/oplata/', '/ios/', '/vpn-bez-registracii/', '/bezopasnost-vpn/'],
   },
   {
     href: '/ios/',
@@ -128,7 +128,7 @@ export const guides: Guide[] = [
     note: 'iPhone и iPad',
     short: 'iOS',
     group: 'установка',
-    related: ['/android/', '/macos/', '/probny-den/', '/telegram-ili-brauzer/'],
+    related: ['/android/', '/kak-vklyuchit-vpn-na-telefone/', '/probny-den/', '/telegram-ili-brauzer/'],
   },
   {
     href: '/android/',
@@ -136,7 +136,7 @@ export const guides: Guide[] = [
     note: 'смартфоны и планшеты',
     short: 'Android',
     group: 'установка',
-    related: ['/ios/', '/tv/', '/probny-den/', '/telegram-ili-brauzer/'],
+    related: ['/ios/', '/kak-vklyuchit-vpn-na-telefone/', '/probny-den/', '/telegram-ili-brauzer/'],
   },
   {
     href: '/windows/',
@@ -144,7 +144,7 @@ export const guides: Guide[] = [
     note: 'ПК и ноутбуки',
     short: 'Windows',
     group: 'установка',
-    related: ['/linux/', '/macos/', '/oplata/', '/chto-takoe-vpn/'],
+    related: ['/linux/', '/macos/', '/vpn-dlya-windows-11/', '/chto-takoe-vpn/'],
   },
   {
     href: '/macos/',
@@ -177,6 +177,61 @@ export const guides: Guide[] = [
     short: 'роутер',
     group: 'установка',
     related: ['/tv/', '/windows/', '/linux/', '/neskolko-ustroystv/'],
+  },  {
+    href: '/vpn-dlya-instagram/',
+    title: 'VPN для Instagram',
+    note: 'как вернуть доступ к профилю и Reels',
+    group: 'сценарии',
+    related: ['/vpn-dlya-youtube/', '/kak-vybrat-lokaciyu/', '/besplatny-vpn/', '/bezopasnost-vpn/'],
+  },
+  {
+    href: '/vpn-dlya-raboty/',
+    title: 'VPN для работы',
+    note: 'почта, CRM и видеозвонки',
+    group: 'сценарии',
+    related: ['/neskolko-ustroystv/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-igr/', '/proverka-skorosti/'],
+  },
+  {
+    href: '/vpn-dlya-igr/',
+    title: 'VPN для игр',
+    note: 'пинг, лаги и игровые серверы',
+    group: 'сценарии',
+    related: ['/kak-vybrat-lokaciyu/', '/proverka-skorosti/', '/vpn-dlya-raboty/', '/ne-rabotaet/'],
+  },
+  {
+    href: '/kak-vybrat-vpn/',
+    title: 'Как выбрать VPN',
+    note: '7 критериев и красные флаги',
+    group: 'сценарии',
+    related: ['/tarify/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-raboty/', '/besplatny-vpn/'],
+  },
+  {
+    href: '/besplatny-vpn/',
+    title: 'Бесплатный VPN',
+    note: 'за что платят и что бывает бесплатно',
+    group: 'сервис',
+    related: ['/probny-den/', '/bezopasnost-vpn/', '/vpn-bez-registracii/', '/kak-vybrat-vpn/'],
+  },
+  {
+    href: '/vpn-bez-registracii/',
+    title: 'VPN без регистрации',
+    note: 'без почты, телефона и карты',
+    group: 'сервис',
+    related: ['/telegram-ili-brauzer/', '/probny-den/', '/besplatny-vpn/', '/bezopasnost-vpn/'],
+  },
+  {
+    href: '/kak-vklyuchit-vpn-na-telefone/',
+    title: 'VPN на телефоне',
+    note: 'iPhone и Android за 5 минут',
+    group: 'установка',
+    related: ['/ios/', '/android/', '/dlya-novichkov/', '/probny-den/'],
+  },
+  {
+    href: '/vpn-dlya-windows-11/',
+    title: 'VPN на Windows 11',
+    note: 'подключение за пару минут',
+    group: 'установка',
+    related: ['/windows/', '/linux/', '/macos/', '/ne-rabotaet/'],
   },
 ];
 

@@ -33,6 +33,14 @@ const guideNotes: Record<string, string> = {
   '/official/': 'официальный сайт: факты, тарифы, как отличить от подделок',
   '/belye-spiski/': 'белые списки операторов: что это и как проверить',
   '/vpn-dlya-youtube/': 'как смотреть YouTube плавно',
+  '/vpn-dlya-instagram/': 'как вернуть доступ к профилю и Reels',
+  '/vpn-dlya-raboty/': 'почта, CRM и видеозвонки: когда VPN нужен на работе',
+  '/vpn-dlya-igr/': 'пинг, лаги и игровые серверы',
+  '/kak-vybrat-vpn/': '7 критериев выбора и красные флаги',
+  '/besplatny-vpn/': 'за что платят бесплатные сервисы и что можно получить бесплатно',
+  '/vpn-bez-registracii/': 'вход без почты, телефона и карты',
+  '/kak-vklyuchit-vpn-na-telefone/': 'iPhone и Android за 5 минут',
+  '/vpn-dlya-windows-11/': 'подключение на Windows 11',
 };
 
 const fmtPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
