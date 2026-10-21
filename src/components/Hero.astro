@@ -33,10 +33,24 @@ const logoSrc = `${b}/logo-320.png`;
 
       <div data-hero-in class="mt-7 flex flex-row items-center gap-3" style="--hero-i:2">
         <a
-          href={site.telegramUrl}
+          href={site.browserUrl}
           target="_blank"
           rel="noopener noreferrer sponsored nofollow"
           class="btn btn-primary flex-1 px-4 py-3.5 text-[14.5px] sm:flex-none sm:px-7 sm:py-4 sm:text-[15.5px]"
+          data-cta
+          data-placement="hero"
+          data-destination="browser"
+        >
+          <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
+          <span class="sm:hidden">Браузер</span>
+          <span class="hidden sm:inline">Продолжить в браузере</span>
+        <span class="sr-only"> — Capybara VPN</span>
+        </a>
+        <a
+          href={site.telegramUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored nofollow"
+          class="btn btn-ghost flex-1 px-4 py-3.5 text-[14.5px] sm:flex-none sm:px-7 sm:py-4 sm:text-[15.5px]"
           data-cta
           data-placement="hero"
           data-destination="telegram"
@@ -44,20 +58,6 @@ const logoSrc = `${b}/logo-320.png`;
           <Icon name="telegram" class="h-5 w-5" />
           <span class="sm:hidden">Telegram</span>
           <span class="hidden sm:inline">Открыть в Telegram</span>
-        <span class="sr-only"> — Capybara VPN</span>
-        </a>
-        <a
-          href={site.browserUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-ghost flex-1 px-4 py-3.5 text-[14.5px] sm:flex-none sm:px-7 sm:py-4 sm:text-[15.5px]"
-          data-cta
-          data-placement="hero"
-          data-destination="browser"
-        >
-          <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
-          <span class="sm:hidden">Браузер</span>
-          <span class="hidden sm:inline">Открыть в браузере</span>
         <span class="sr-only"> — Capybara VPN</span>
         </a>
       </div>

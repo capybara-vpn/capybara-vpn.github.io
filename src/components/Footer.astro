@@ -22,18 +22,6 @@ import { withBase } from '../lib/url';
       </p>
       <div class="mt-5 flex gap-2">
         <a
-          href={site.telegramUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored nofollow"
-          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
-          data-cta
-          data-placement="footer"
-          data-destination="telegram"
-        >
-          <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
-          Telegram
-        </a>
-        <a
           href={site.browserUrl}
           target="_blank"
           rel="noopener noreferrer sponsored nofollow"
@@ -45,6 +33,18 @@ import { withBase } from '../lib/url';
           <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
           Браузер
         <span class="sr-only"> — Capybara VPN</span>
+        </a>
+        <a
+          href={site.telegramUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored nofollow"
+          class="btn btn-ghost px-4 py-2.5 text-[13.5px]"
+          data-cta
+          data-placement="footer"
+          data-destination="telegram"
+        >
+          <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
+          Telegram
         </a>
       </div>
     </div>

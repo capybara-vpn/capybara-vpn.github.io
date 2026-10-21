@@ -11,29 +11,29 @@ import Icon from './Icon.astro';
 >
   <div class="grid grid-cols-2 gap-2">
     <a
-      href={site.telegramUrl}
-      target="_blank"
-      rel="noopener noreferrer sponsored nofollow"
-      class="btn btn-primary px-3 py-3 text-[14px]"
-      data-cta
-      data-placement="sticky"
-      data-destination="telegram"
-    >
-      <Icon name="telegram" class="h-4.5 w-4.5" />
-      Telegram
-        <span class="sr-only"> — Capybara VPN</span>
-    </a>
-    <a
       href={site.browserUrl}
       target="_blank"
       rel="noopener noreferrer sponsored nofollow"
-      class="btn btn-ghost px-3 py-3 text-[14px]"
+      class="btn btn-primary px-3 py-3 text-[14px]"
       data-cta
       data-placement="sticky"
       data-destination="browser"
     >
       <Icon name="globe" class="h-4.5 w-4.5 text-[#8fc3c4]" />
       Браузер
+        <span class="sr-only"> — Capybara VPN</span>
+    </a>
+    <a
+      href={site.telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer sponsored nofollow"
+      class="btn btn-ghost px-3 py-3 text-[14px]"
+      data-cta
+      data-placement="sticky"
+      data-destination="telegram"
+    >
+      <Icon name="telegram" class="h-4.5 w-4.5" />
+      Telegram
         <span class="sr-only"> — Capybara VPN</span>
     </a>
   </div>

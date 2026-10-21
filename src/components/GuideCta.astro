@@ -10,29 +10,29 @@ import Icon from './Icon.astro';
   </p>
   <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
     <a
-      href={site.telegramUrl}
+      href={site.browserUrl}
       target="_blank"
       rel="noopener noreferrer sponsored nofollow"
       class="btn btn-primary px-6 py-3.5 text-[15px]"
+      data-cta
+      data-placement="guide"
+      data-destination="browser"
+    >
+      <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
+      Продолжить в браузере
+        <span class="sr-only"> — Capybara VPN</span>
+    </a>
+    <a
+      href={site.telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer sponsored nofollow"
+      class="btn btn-ghost px-6 py-3.5 text-[15px]"
       data-cta
       data-placement="guide"
       data-destination="telegram"
     >
       <Icon name="telegram" class="h-5 w-5" />
       Открыть в Telegram
-        <span class="sr-only"> — Capybara VPN</span>
-    </a>
-    <a
-      href={site.browserUrl}
-      target="_blank"
-      rel="noopener noreferrer sponsored nofollow"
-      class="btn btn-ghost px-6 py-3.5 text-[15px]"
-      data-cta
-      data-placement="guide"
-      data-destination="browser"
-    >
-      <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
-      Открыть в браузере
         <span class="sr-only"> — Capybara VPN</span>
     </a>
   </div>

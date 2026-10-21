@@ -103,32 +103,32 @@ const fmt = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
   </div>
 
   <div class="reveal relative mx-auto mt-10 max-w-2xl text-center">
-    <p class="text-[15px] text-[#9aa6b2]">Откройте Capybara в Telegram — или продолжите в браузере.</p>
+    <p class="text-[15px] text-[#9aa6b2]">Продолжите в браузере — или откройте Capybara в Telegram.</p>
     <div class="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+      <a
+        href={site.browserUrl}
+        target="_blank"
+        rel="noopener noreferrer sponsored nofollow"
+        class="btn btn-primary px-6 py-3.5 text-[15px]"
+        data-cta
+        data-placement="pricing"
+        data-destination="browser"
+      >
+        <Icon name="globe" class="h-5 w-5 text-[#4d888a]" />
+        Продолжить в браузере
+        <span class="sr-only"> — Capybara VPN</span>
+      </a>
       <a
         href={site.telegramUrl}
         target="_blank"
         rel="noopener noreferrer sponsored nofollow"
-        class="btn btn-primary px-6 py-3.5 text-[15px]"
+        class="btn btn-ghost px-6 py-3.5 text-[15px]"
         data-cta
         data-placement="pricing"
         data-destination="telegram"
       >
         <Icon name="telegram" class="h-5 w-5" />
         Открыть в Telegram
-        <span class="sr-only"> — Capybara VPN</span>
-      </a>
-      <a
-        href={site.browserUrl}
-        target="_blank"
-        rel="noopener noreferrer sponsored nofollow"
-        class="btn btn-ghost px-6 py-3.5 text-[15px]"
-        data-cta
-        data-placement="pricing"
-        data-destination="browser"
-      >
-        <Icon name="globe" class="h-5 w-5 text-[#8fc3c4]" />
-        Открыть в браузере
         <span class="sr-only"> — Capybara VPN</span>
       </a>
     </div>
