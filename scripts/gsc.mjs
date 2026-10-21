@@ -36,6 +36,9 @@ const args = process.argv.slice(2);
 const command = args.find((a) => !a.startsWith('-')) || 'status';
 const hasFlag = (name) => args.includes(`--${name}`);
 
+/** E-mail сервис-аккаунта: нужен, чтобы добавить его в Search Console. */
+let clientEmail = '';
+
 const b64url = (buf) => Buffer.from(buf).toString('base64url');
 
 /** Ключ сервис-аккаунта: из переменной окружения или из файла. */
@@ -119,7 +122,12 @@ async function inspect(token, url) {
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) {
-    return { url, error: body.error?.message || `HTTP ${res.status}` };
+    const message = body.error?.message || `HTTP ${res.status}`;
+    // Самая частая причина: сервис-аккаунт не добавлен в свойство.
+    const hint = /do not own this site/i.test(message)
+      ? 'сервис-аккаунт не добавлен в Search Console — добавьте его в свойство домена (Настройки → Пользователи и разрешения)'
+      : '';
+    return { url, error: message, hint };
   }
   const r = body.inspectionResult?.indexStatusResult || {};
   return {
@@ -161,9 +169,24 @@ async function status(token) {
   }
 
   const shown = hasFlag('only-missing') ? missing : rows;
+  // Если не прошла ни одна проверка и причина одна и та же — доступа нет.
+  const noAccess = broken.filter((r) => r.hint);
+  if (rows.length && noAccess.length === rows.length) {
+    console.log(`  ${SITE}: сервис-аккаунт не имеет доступа к свойству.`);
+    console.log(`  ${noAccess[0].hint}.`);
+    console.log(`  E-mail аккаунта: ${clientEmail}`);
+    console.log('  Что сделать: Search Console → выбрать свойство домена → Настройки →');
+    console.log('  Пользователи и разрешения → Добавить пользователя → вставить этот e-mail.');
+    return;
+  }
+  let hintShown = false;
   for (const row of shown) {
     if (row.error) {
-      console.log(`  ✗ ${row.url}\n      ${row.error}`);
+      console.log(`  ✗ ${row.url.replace(SITE, '')}\n      ${row.error}`);
+      if (row.hint && !hintShown) {
+        console.log(`      ${row.hint}`);
+        hintShown = true;
+      }
       continue;
     }
     const mark = label(row) === 'в индексе' ? '✓' : '·';
@@ -194,7 +217,9 @@ async function main() {
     process.exit(2);
   }
   const token = await accessToken(key);
+  clientEmail = key.client_email;
   console.log(`  домен: ${SITE}`);
+  console.log(`  аккаунт: ${clientEmail}`);
   if (command === 'submit') await submit(token);
   else await status(token);
 }
