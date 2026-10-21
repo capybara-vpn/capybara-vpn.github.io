@@ -37,6 +37,8 @@ const guideNotes: Record<string, string> = {
   '/vpn-dlya-raboty/': 'почта, CRM и видеозвонки: когда VPN нужен на работе',
   '/vpn-dlya-igr/': 'пинг, лаги и игровые серверы',
   '/kak-vybrat-vpn/': '7 критериев выбора и красные флаги',
+  '/fakty/': 'все цифры сервиса в одной таблице с датой проверки',
+  '/sravnenie/': 'Capybara против Amnezia, Happ, AdGuard VPN и Hiro VPN — по цифрам с их сайтов',
   '/besplatny-vpn/': 'за что платят бесплатные сервисы и что можно получить бесплатно',
   '/vpn-bez-registracii/': 'вход без почты, телефона и карты',
   '/kak-vklyuchit-vpn-na-telefone/': 'iPhone и Android за 5 минут',

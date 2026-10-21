@@ -22,7 +22,7 @@ export const guides: Guide[] = [
     title: 'Официальный сайт',
     note: 'факты, тарифы, как отличить от подделок',
     group: 'сервис',
-    related: ['/tarify/', '/oplata/', '/kak-vybrat-vpn/', '/dlya-novichkov/'],
+    related: ['/tarify/', '/oplata/', '/fakty/', '/kak-vybrat-vpn/'],
   },
   {
     href: '/belye-spiski/',
@@ -206,11 +206,25 @@ export const guides: Guide[] = [
     related: ['/tarify/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-raboty/', '/besplatny-vpn/'],
   },
   {
+    href: '/fakty/',
+    title: 'Факты в цифрах',
+    note: 'все числа сервиса на одной странице',
+    group: 'основы',
+    related: ['/tarify/', '/official/', '/proverka-skorosti/', '/kak-vybrat-vpn/'],
+  },
+  {
+    href: '/sravnenie/',
+    title: 'Сравнение с конкурентами',
+    note: 'Capybara против Amnezia, Happ, AdGuard и Hiro',
+    group: 'сервис',
+    related: ['/tarify/', '/kak-vybrat-vpn/', '/besplatny-vpn/', '/official/'],
+  },
+  {
     href: '/besplatny-vpn/',
     title: 'Бесплатный VPN',
     note: 'за что платят и что бывает бесплатно',
     group: 'сервис',
-    related: ['/probny-den/', '/bezopasnost-vpn/', '/vpn-bez-registracii/', '/kak-vybrat-vpn/'],
+    related: ['/probny-den/', '/bezopasnost-vpn/', '/vpn-bez-registracii/', '/sravnenie/'],
   },
   {
     href: '/vpn-bez-registracii/',
