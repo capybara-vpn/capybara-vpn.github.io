@@ -41,6 +41,29 @@ let clientEmail = '';
 
 const b64url = (buf) => Buffer.from(buf).toString('base64url');
 
+/** fetch с таймаутом: одна зависшая страница не должна держать весь прогон. */
+async function fetchTimeout(url, options = {}, ms = 30000) {
+  return fetch(url, { ...options, signal: AbortSignal.timeout(ms) });
+}
+
+/**
+ * Ограниченная параллельность: инспекция Google по одной странице занимает
+ * несколько секунд, поэтому по очереди 34 страницы шли бы две минуты.
+ * Пять одновременно — и быстро, и в пределах квоты.
+ */
+async function mapLimit(items, limit, worker) {
+  const results = new Array(items.length);
+  let next = 0;
+  const runners = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) {
+      const i = next++;
+      results[i] = await worker(items[i], i);
+    }
+  });
+  await Promise.all(runners);
+  return results;
+}
+
 /** Ключ сервис-аккаунта: из переменной окружения или из файла. */
 async function readKey() {
   const raw = process.env.GSC_SERVICE_ACCOUNT_KEY;
@@ -64,7 +87,7 @@ async function accessToken(key) {
   signer.update(signingInput);
   const assertion = `${signingInput}.${b64url(signer.sign(key.private_key))}`;
 
-  const res = await fetch(TOKEN_URL, {
+  const res = await fetchTimeout(TOKEN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -85,7 +108,7 @@ async function accessToken(key) {
 async function siteUrls() {
   const readLocs = async (xml) => [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 
-  const indexRes = await fetch(`${SITE}/${SITEMAP}`);
+  const indexRes = await fetchTimeout(`${SITE}/${SITEMAP}`);
   if (!indexRes.ok) throw new Error(`карта ${SITEMAP} недоступна (${indexRes.status})`);
   const indexXml = await indexRes.text();
 
@@ -95,7 +118,7 @@ async function siteUrls() {
 
   const urls = [];
   for (const child of own) {
-    const res = await fetch(child);
+    const res = await fetchTimeout(child);
     if (!res.ok) continue;
     urls.push(...(await readLocs(await res.text())));
   }
@@ -104,21 +127,38 @@ async function siteUrls() {
 
 /** Отправить карту сайта: Google переобходит страницы с обновлённым lastmod. */
 async function submit(token) {
-  const url = `${SITEMAPS_API}/sites/${encodeURIComponent(SITE)}/sitemaps/${encodeURIComponent(SITEMAP)}`;
-  const res = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-  const body = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(`отправка не удалась (${res.status}): ${body.error?.message || JSON.stringify(body)}`);
+  let lastError = '';
+  for (const candidate of siteCandidates(SITE)) {
+    const url = `${SITEMAPS_API}/sites/${encodeURIComponent(candidate)}/sitemaps/${encodeURIComponent(SITEMAP)}`;
+    const res = await fetchTimeout(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+    const body = await res.json().catch(() => ({}));
+    if (res.ok) {
+      console.log(`  карта отправлена: ${candidate}/${SITEMAP}`);
+      return;
+    }
+    lastError = body.error?.message || `HTTP ${res.status}`;
   }
-  console.log(`  карта отправлена: ${SITE}/${SITEMAP}`);
+  throw new Error(`отправка не удалась: ${lastError}`);
+}
+
+/**
+ * Формы адреса свойства, которые Google принимает:
+ *   https://site            — свойство «URL-префикс» без слэша
+ *   https://site/           — то же со слэшем
+ *   sc-domain:site         — свойство «Домен»
+ * Какая именно заведена — unknown, поэтому перебираем.
+ */
+function siteCandidates(site) {
+  const host = new URL(site).host;
+  return [...new Set([site, `${site}/`, `sc-domain:${host}`])];
 }
 
 /** Проверка одной страницы через URL Inspection API. */
-async function inspect(token, url) {
-  const res = await fetch(INSPECT_URL, {
+async function inspect(token, url, siteUrl = SITE) {
+  const res = await fetchTimeout(INSPECT_URL, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ siteUrl: SITE, inspectionUrl: url, languageCode: 'ru-RU' }),
+    body: JSON.stringify({ siteUrl, inspectionUrl: url, languageCode: 'ru-RU' }),
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) {
@@ -153,12 +193,23 @@ async function status(token) {
   const urls = await siteUrls();
   if (!urls.length) throw new Error('в карте сайта нет ни одного URL');
 
-  const rows = [];
-  for (const url of urls) {
-    rows.push(await inspect(token, url));
-    // Пауза между запросами: инспекция — не массовый API, лимиты жёсткие.
-    await new Promise((r) => setTimeout(r, 250));
+  // Какой формой адреса заведено свойство — перебираем на одной странице.
+  let siteUrl = SITE;
+  for (const candidate of siteCandidates(SITE)) {
+    const probe = await inspect(token, urls[0], candidate);
+    if (!probe.hint) {
+      siteUrl = candidate;
+      break;
+    }
   }
+  console.log(`  свойство: ${siteUrl}`);
+
+  const rows = await mapLimit(urls, 5, async (url, i) => {
+    const row = await inspect(token, url, siteUrl);
+    process.stdout.write(`\r  проверено ${i + 1}/${urls.length}   `);
+    return row;
+  });
+  process.stdout.write('\n');
 
   const missing = rows.filter((r) => label(r) === 'НЕ в индексе');
   const broken = rows.filter((r) => r.error);
