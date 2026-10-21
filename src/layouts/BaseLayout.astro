@@ -203,5 +203,22 @@ const jsonLd = jsonLdAll.filter(
     <script>
       import '../scripts/site.ts';
     </script>
+    {/*
+      Scroll-reveals are driven by the client script. On a slow mobile
+      connection that script arrives after the page has painted, and the
+      first screen stays half empty for seconds (Speed Index 4s). This inline
+      timer — no extra request, it runs as soon as the DOM is parsed — shows
+      whatever is already on screen if the script has not got there yet.
+      Elements below the fold keep their scroll-reveal.
+    */}
+    <script is:inline>
+      setTimeout(function () {
+        var list = document.querySelectorAll('.reveal');
+        for (var i = 0; i < list.length; i++) {
+          var r = list[i].getBoundingClientRect();
+          if (r.top < window.innerHeight * 1.2) list[i].classList.add('is-visible');
+        }
+      }, 1000);
+    </script>
   </body>
 </html>

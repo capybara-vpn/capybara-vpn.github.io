@@ -63,10 +63,15 @@ if ('IntersectionObserver' in window && !reduced) {
     { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
   );
   revealEls.forEach((el) => io.observe(el));
-  // Failsafe: if the observer never fires (slow script, odd viewport),
-  // the content must not stay invisible.
+  // Failsafe: if the observer never fires (slow script, odd viewport), the
+  // content on screen must not stay invisible. Only what is already in view
+  // is revealed, so the scroll effect below the fold is preserved.
   window.setTimeout(() => {
-    revealEls.forEach((el) => el.classList.add('is-visible'));
+    revealEls.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 1.2) {
+        el.classList.add('is-visible');
+      }
+    });
   }, 3000);
 } else {
   revealEls.forEach((el) => el.classList.add('is-visible'));
