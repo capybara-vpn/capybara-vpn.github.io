@@ -3,88 +3,23 @@ import { site } from '../data/site';
 /**
  * Generated at build time so the Sitemap URL always matches SITE_URL,
  * including project-subpath deploys (actions/configure-pages sets it).
- * Crawlers for search engines and AI systems are welcome.
+ *
+ * Nothing is blocked for anyone: search engines, AI assistants and any
+ * other client may crawl the whole site. The per-bot Disallow groups the
+ * file used to carry (/*.md, /llms.txt, /llms-full.txt for classic search
+ * bots) tripped "blocked by robots.txt" warnings in Bing Webmaster Tools,
+ * so they are gone. The .md mirrors and the llms files are free to crawl;
+ * the search index keeps them out by cleaner means than robots.txt:
+ * they are not in the sitemap (see the sitemap filter in astro.config.mjs).
  */
-const AI_BOTS = [
-  'GPTBot',
-  'ChatGPT-User',
-  'OAI-SearchBot',
-  'OAI-AdsBot',  'ClaudeBot',
-  'anthropic-ai',
-  'Claude-SearchBot',
-  'Claude-User',
-  'PerplexityBot',
-  'Perplexity-User',
-  'Google-Extended',
-  'Google-CloudVertexBot',
-  'GoogleOther',
-  'Google-GeminiNotebook',
-  'Meta-ExternalAgent',
-  'Meta-ExternalFetcher',
-  'FacebookBot',
-  'Amazonbot',
-  'Amzn-SearchBot',
-  'Amzn-User',
-  'DuckAssistBot',
-  'Applebot',
-  'Applebot-Extended',
-  'Bytespider',
-  'CCBot',
-  'MistralAI-User',
-  'YouBot',
-  'Diffbot',
-  'cohere-ai',
-  'CohereBot',
-  'cohere-training-data-crawler',
-  'AI2Bot',
-  'iaskspider',
-  'TimpiBot',
-  'Omgili',
-  'Omgilibot',
-] as const;
-
-/**
- * Classic search engines. The HTML pages are the ones meant for the search
- * index; the Markdown mirrors (/ios.md and friends) duplicate them for AI
- * readers, so they are kept out of the search index to avoid duplicate
- * content. The AI crawlers above still get full access.
- */
-const SEARCH_BOTS = [
-  'Googlebot',
-  'Googlebot-Image',
-  'Googlebot-News',
-  'Googlebot-Video',
-  'Bingbot',
-  'BingPreview',
-  'YandexBot',
-  'YandexAdditional',
-  'YandexAdditionalBot',
-  'DuckDuckBot',
-  'Baiduspider',
-] as const;
-
 export async function GET() {
   const lines = [
-    '# Machine-readable service summary: /llms.txt',
+    '# Everything on this site may be crawled. No exceptions.',
+    '# Text mirrors of the pages: /llms.txt (summary), /llms-full.txt (full).',
     '',
     'User-agent: *',
     'Allow: /',
-    // The error page is served with noindex and is not in the sitemap.
-    'Disallow: /404.html',
     '',
-    '# AI assistants and generative-engine crawlers (explicit allow)',
-    ...AI_BOTS.flatMap((bot) => [`User-agent: ${bot}`, 'Allow: /', '']),
-    '# Search engines: the HTML pages only. The .md mirrors are for AI readers,',
-    '# and /llms.txt with /llms-full.txt repeat the whole site in one file —',
-    '# both would be duplicate copies of the pages already in the index, so the',
-    '# classic search bots stay out of them. The AI crawlers above keep access.',
-    ...SEARCH_BOTS.flatMap((bot) => [
-      `User-agent: ${bot}`,
-      'Disallow: /*.md',
-      'Disallow: /llms.txt',
-      'Disallow: /llms-full.txt',
-      '',
-    ]),
     `Sitemap: ${site.siteUrl}/sitemap-index.xml`,
     '',
   ];
