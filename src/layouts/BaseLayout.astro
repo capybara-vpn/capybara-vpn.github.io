@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, faqs, plans, facts, reviews } from '../data/site';
+import { site, faqs, plans, facts } from '../data/site';
 
 interface Props {
   title?: string;
@@ -125,36 +125,6 @@ const jsonLdAll = [
     image: [`${site.siteUrl}/logo-320.png`],
     brand: { '@type': 'Brand', name: 'Capybara VPN' },
     url: `${site.siteUrl}/tarify/`,
-    // Reviews and the rating are only marked up when real ones exist: Google
-    // forbids invented or undisclosed incentivised reviews, and a rating with
-    // no visible source would be a lie in the markup. The data lives in
-    // src/data/site.ts — when it is empty, this block is absent entirely and
-    // `offers` alone already makes the product eligible for a snippet.
-    ...(reviews.length
-      ? {
-          review: reviews.map((r) => ({
-            '@type': 'Review',
-            author: { '@type': 'Person', name: r.author },
-            datePublished: r.date,
-            reviewBody: r.text,
-            reviewRating: {
-              '@type': 'Rating',
-              ratingValue: r.rating,
-              bestRating: 5,
-              worstRating: 1,
-            },
-          })),
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: (
-              reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-            ).toFixed(1),
-            reviewCount: reviews.length,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
-      : {}),
     offers: {
       '@type': 'Offer',
       name: `Тариф ${p.days} дней`,
