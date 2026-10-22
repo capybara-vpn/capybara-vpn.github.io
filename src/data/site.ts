@@ -119,6 +119,25 @@ export const plans: Plan[] = [
   },
 ];
 
+/**
+ * Настоящие отзывы клиентов — источник для видимого блока на странице
+ * тарифов и для разметки Review / AggregateRating.
+ *
+ * Пока список пуст, разметки отзывов на сайте нет вовсе: Google прямо
+ * запрещает выдуманные отзывы и скрытые за вознаграждение, поэтому сюда
+ * попадают только реальные мнения, опубликованные с согласия авторов.
+ * Одно отключённое поле — и предупреждения Google уходят.
+ */
+export interface Review {
+  author: string;
+  rating: 1 | 2 | 3 | 4 | 5;
+  /** Дата отзыва в формате YYYY-MM-DD. */
+  date: string;
+  text: string;
+}
+
+export const reviews: Review[] = [];
+
 /** Only numbers that are treated as confirmed product facts. */
 export const facts = {
   protocol: 'VLESS',

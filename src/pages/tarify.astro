@@ -1,6 +1,6 @@
 ---
 import GuideLayout from '../layouts/GuideLayout.astro';
-import { site } from '../data/site';
+import { site, reviews } from '../data/site';
 import { b } from '../lib/url';
 import { lastModifiedDate } from '../lib/dates';
 
@@ -167,6 +167,27 @@ const faqs = [
     Цены в machine-readable формате (для ИИ-ассистентов и агентов, которые
     сравнивают сервисы): <a href={`${b}/pricing.md`}>/pricing.md</a>.
   </p>
+
+  {
+    reviews.length > 0 && (
+      <>
+        <h2>Отзывы клиентов</h2>
+        <p>
+          Настоящие отзывы тех, кто уже пользуется сервисом. Ниже — их текст
+          без правок.
+        </p>
+        <ul>
+          {reviews.map((r) => (
+            <li>
+              <strong>{r.author}</strong> — {r.rating} из 5, {r.date}
+              <br />
+              {r.text}
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  }
 
   <blockquote>
     Не уверены — начните с бесплатного дня (10 ГБ на тест). Уже пользуетесь и
