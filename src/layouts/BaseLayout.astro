@@ -229,6 +229,8 @@ const jsonLd = jsonLdAll.filter(
     <meta name="twitter:image:alt" content="Capybara VPN — быстрый интернет без лишней сложности" />
 
     <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32.png')} />
+    <!-- 192px is a multiple of 48px: the size Google recommends for the SERP favicon. -->
+    <link rel="icon" type="image/png" sizes="192x192" href={withBase('icon-192.png')} />
     <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
     <!-- The primary CTA opens Telegram: warm the connection up front. -->
     <link rel="preconnect" href="https://t.me" crossorigin />
