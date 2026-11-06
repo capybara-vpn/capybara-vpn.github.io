@@ -30,6 +30,10 @@ interface Props {
   summary?: string;
   /** This guide's Q&A: rendered visibly and marked up as FAQPage. */
   faqs?: { q: string; a: string }[];
+  /** Pass-through to BaseLayout: emit the Service JSON-LD block. */
+  serviceLd?: boolean;
+  /** Pass-through to BaseLayout: emit the three Product/Offer blocks. */
+  productLd?: boolean;
 }
 
 const {
@@ -49,10 +53,12 @@ const {
   ogImage = 'og/og-image.jpg',
   summary,
   faqs = [],
+  serviceLd = false,
+  productLd = false,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogType="article" ogImage={ogImage} pageFaqs={faqs.length ? faqs : undefined}>
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogType="article" ogImage={ogImage} pageFaqs={faqs.length ? faqs : undefined} serviceLd={serviceLd} productLd={productLd}>
   <meta property="article:published_time" content={datePublished} slot="head" />
   <meta property="article:modified_time" content={dateModified} slot="head" />
   <meta property="article:author" content="Capybara VPN" slot="head" />

@@ -13,6 +13,10 @@ interface Props {
   noindex?: boolean;
   /** Path (without base) of the social preview image. */
   ogImage?: string;
+  /** Emit the Service block (home, /tarify/, /official/). */
+  serviceLd?: boolean;
+  /** Emit the three Product/Offer blocks (pages that show the plans). */
+  productLd?: boolean;
 }
 
 const {
@@ -24,6 +28,8 @@ const {
   ogType = 'website',
   noindex = false,
   ogImage = 'og/og-image.jpg',
+  serviceLd = false,
+  productLd = false,
 } = Astro.props;
 
 import { withBase } from '../lib/url';
@@ -41,6 +47,15 @@ const mdPath = canonicalPath === '/' ? 'index.md' : `${canonicalPath.replace(/\/
 const gaId = site.gaId;
 const orgId = `${site.siteUrl}/#organization`;
 
+// Yandex Metrika loads inline in <head> on every page, as close to the top
+// as possible — the owner's explicit decision (2026-11-07): the counter must
+// fire even on a bounce. It is therefore NOT part of the consent gate; only
+// GA4 stays behind it. Source: the standard Yandex.Metrika snippet.
+const ymId = site.ymId;
+const ymCounterScript = ymId
+  ? `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=${ymId}', 'ym');ym(${ymId}, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});`
+  : '';
+
 // A guide carries its own Q&A; the homepage uses the shared faqs[] list.
 // One source per page keeps the visible block and the markup in sync.
 const faqList: { q: string; a: string }[] = pageFaqs ?? (showFaq ? [...faqs] : []);
@@ -53,9 +68,9 @@ const jsonLdAll = [
     name: 'Capybara VPN',
     url: site.siteUrl,
     logo: `${origin}${withBase(site.logo.src)}`,
-    // The browser version lives on the service's own domain; listing it in
-    // sameAs ties the entity together alongside the Telegram bot.
-    sameAs: [site.telegramUrl, site.browserUrl],
+    // Clean profile URLs only: sameAs represents the entity, so the bot goes
+    // in without the partner start parameter and tracked deep links stay out.
+    sameAs: [site.telegramProfile],
   },
   {
     '@context': 'https://schema.org',
@@ -64,46 +79,38 @@ const jsonLdAll = [
     url: site.siteUrl,
     inLanguage: 'ru',
   },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Capybara VPN',
-    serviceType: 'VPN',
-    url: pageUrl,
-    description: description,
-    provider: { '@id': orgId },
-    areaServed: 'RU',
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Тарифы Capybara VPN',
-      itemListElement: plans.map((p) => ({
-        '@type': 'Offer',
-        name: `Capybara VPN — ${p.days} дней`,
-        price: `${p.price}`,
-        priceCurrency: 'RUB',
-        availability: 'https://schema.org/InStock',
-        url: site.browserUrl,
-      })),
-    },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'Capybara VPN',
-    applicationCategory: 'UtilitiesApplication',
-    // The full platform list, kept in sync with facts.platforms (TV and
-    // router included) — the old value silently dropped both.
-    operatingSystem: 'iOS, Android, Windows, macOS, Linux, TV, Router',
-    inLanguage: 'ru',
-    url: site.siteUrl,
-    offers: {
-      '@type': 'Offer',
-      price: `${plans[0].price}`,
-      priceCurrency: 'RUB',
-      availability: 'https://schema.org/InStock',
-      url: site.browserUrl,
-    },
-  },
+  // Service/Product markup only on pages that actually describe the service
+  // and show the plans — emitting offers on every guide page was markup
+  // contradicting the content (audit 2026-11-07).
+  ...(serviceLd
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'Capybara VPN',
+          serviceType: 'VPN',
+          url: pageUrl,
+          description: description,
+          provider: { '@id': orgId },
+          areaServed: 'RU',
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Тарифы Capybara VPN',
+            itemListElement: plans.map((p) => ({
+              '@type': 'Offer',
+              name: `Capybara VPN — ${p.days} дней`,
+              price: `${p.price}`,
+              priceCurrency: 'RUB',
+              availability: 'https://schema.org/InStock',
+              // Purchase happens off-site, but the markup keeps pointing at
+              // this domain's own pricing page — external partner links are
+              // already in the visible CTAs.
+              url: `${site.siteUrl}/tarify/`,
+            })),
+          },
+        },
+      ]
+    : []),
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -115,31 +122,35 @@ const jsonLdAll = [
   },
   // One Product per tariff: a single price each is what price-rich results
   // need, and it keeps the markup honest about the three separate plans.
-  ...plans.map((p) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    '@id': `${site.siteUrl}/tarify/#${p.id}`,
-    name: `Capybara VPN — ${p.days} дней`,
-    description: `Подписка Capybara VPN на ${p.days} дней: безлимитный трафик, ${facts.locations} локаций, ${facts.protocol}.`,
-    category: 'VPN service',
-    inLanguage: 'ru',
-    // Without an image Google treats the product markup as incomplete: the
-    // Rich Results Test flags a missing `image` as a critical error. The
-    // brand mark is the product here — a VPN has no other picture.
-    image: [`${site.siteUrl}/logo-320.png`],
-    brand: { '@type': 'Brand', name: 'Capybara VPN' },
-    url: `${site.siteUrl}/tarify/`,
-    offers: {
-      '@type': 'Offer',
-      name: `Тариф ${p.days} дней`,
-      price: `${p.price}`,
-      priceCurrency: 'RUB',
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/NewCondition',
-      url: `${site.siteUrl}/tarify/`,
-      seller: { '@id': orgId },
-    },
-  })),
+  // No SoftwareApplication: the service has no app of its own (clients are
+  // third-party), and markup must not claim one.
+  ...(productLd
+    ? plans.map((p) => ({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        '@id': `${site.siteUrl}/tarify/#${p.id}`,
+        name: `Capybara VPN — ${p.days} дней`,
+        description: `Подписка Capybara VPN на ${p.days} дней: безлимитный трафик, ${facts.locations} локаций, ${facts.protocol}.`,
+        category: 'VPN service',
+        inLanguage: 'ru',
+        // Without an image Google treats the product markup as incomplete: the
+        // Rich Results Test flags a missing `image` as a critical error. The
+        // brand mark is the product here — a VPN has no other picture.
+        image: [`${site.siteUrl}/logo-320.png`],
+        brand: { '@type': 'Brand', name: 'Capybara VPN' },
+        url: `${site.siteUrl}/tarify/`,
+        offers: {
+          '@type': 'Offer',
+          name: `Тариф ${p.days} дней`,
+          price: `${p.price}`,
+          priceCurrency: 'RUB',
+          availability: 'https://schema.org/InStock',
+          itemCondition: 'https://schema.org/NewCondition',
+          url: `${site.siteUrl}/tarify/`,
+          seller: { '@id': orgId },
+        },
+      }))
+    : []),
 ];
 // The FAQPage block is only emitted when the page actually shows a Q&A
 // (homepage or a guide) — the 404 page shows none, so it gets no markup.
@@ -153,6 +164,10 @@ const jsonLd = jsonLdAll.filter(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    {/* Yandex Metrika: inline, first thing after the base metas so it starts
+        loading before anything else (owner decision 2026-11-07). */}
+    {ymCounterScript && <script is:inline set:html={ymCounterScript} />}
     {/*
       Scroll-reveals are set up here, inline, instead of in the client
       module: the module is a separate file, so on a slow connection it
@@ -253,6 +268,13 @@ const jsonLd = jsonLdAll.filter(
   </head>
   <body class="noise min-h-screen min-h-dvh antialiased">
     <a href="#main" class="skip-link">Перейти к содержимому</a>
+    {ymId && (
+      <noscript>
+        <div>
+          <img src={`https://mc.yandex.ru/watch/${ymId}`} style="position:absolute; left:-9999px;" alt="" />
+        </div>
+      </noscript>
+    )}
     <div id="cursor-glow" aria-hidden="true"></div>
     <slot />
 

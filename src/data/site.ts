@@ -30,11 +30,12 @@ export const SITE_URL = (ENV_SITE_URL || 'https://capybaravpn.top').replace(
 const ENV_GA_ID = typeof process !== 'undefined' ? process.env?.GA_ID : undefined;
 export const GA_ID = ENV_GA_ID || 'G-FHS5BR8L5J';
 
-// Yandex Metrika counter id. Empty means "not configured": the loader is
-// never injected and no request is made. Set the YM_ID repo variable to
-// enable it.
+// Yandex Metrika counter id. Overridable at build time via the YM_ID repo
+// variable; the literal below is the owner-provided counter (2026-11-07).
+// The counter loads inline in <head> on every page — NOT behind the consent
+// gate (owner decision: it must fire even on a bounce, see BaseLayout).
 const ENV_YM_ID = typeof process !== 'undefined' ? process.env?.YM_ID : undefined;
-export const YM_ID = ENV_YM_ID || '';
+export const YM_ID = ENV_YM_ID || '114114411';
 
 export const site = {
   brand: 'Capybara VPN',
@@ -51,6 +52,9 @@ export const site = {
     width: 320,
     height: 320,
   },
+  // Clean bot URL without the partner start parameter: sameAs must point at
+  // the entity's profiles, not at a tracked deep link.
+  telegramProfile: 'https://t.me/capybaravpnbot',
   seo: {
     title: 'Capybara VPN — быстрый VPN от 249 ₽ для всех устройств',
     description:

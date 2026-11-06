@@ -210,28 +210,10 @@ function configureGA(id: string) {
   loadGtag(id);
 }
 
-/* ---------- Yandex Metrika (same consent gate as GA4) ---------- */
-function loadMetrika(id: string) {
-  if (!id || document.querySelector('script[data-ym]')) return;
-  const s = document.createElement('script');
-  s.async = true;
-  s.dataset.ym = '1';
-  s.src = 'https://mc.yandex.ru/metrika/tag.js';
-  s.onload = () => {
-    try {
-      const ym = (window as unknown as { ym?: (...a: unknown[]) => void }).ym;
-      ym?.(id, 'init', {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true,
-        webvisor: true,
-      });
-    } catch {
-      /* noop */
-    }
-  };
-  document.head.appendChild(s);
-}
+/* ---------- consent + GA4 lazy load (library only after consent) ----------
+   Yandex Metrika is NOT here anymore: since 2026-11-07 it loads inline in
+   <head> on every page (owner decision — it must fire even on a bounce).
+   The consent gate covers GA4 only. */
 
 function applyConsent(value: 'granted' | 'denied') {
   try {
@@ -249,8 +231,6 @@ function applyConsent(value: 'granted' | 'denied') {
       document.documentElement.dataset.gaId ||
       (document.getElementById('ga-id')?.textContent?.trim() ?? '');
     if (id) configureGA(id);
-    const ymId = document.documentElement.dataset.ymId || '';
-    if (ymId) loadMetrika(ymId);
   }
 }
 

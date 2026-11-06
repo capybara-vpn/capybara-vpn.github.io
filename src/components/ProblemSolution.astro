@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { b } from '../lib/url';
 ---
 
 <section class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="problem-title">
@@ -58,4 +59,16 @@ import Icon from './Icon.astro';
       </ul>
     </div>
   </div>
+
+  {/* The whitelist cluster is the biggest search demand the site targets;
+      it must be reachable from the body of the homepage, not only the footer
+      (audit 2026-11-07). */}
+  <p class="reveal mt-6 text-[14.5px] leading-relaxed text-[#9aa6b2]">
+    Сайты не открываются из-за белых списков операторов? Разбираем в гиде
+    <a
+      href={`${b}/belye-spiski/`}
+      class="text-[#8fc3c4] underline underline-offset-4 transition-colors hover:text-white"
+      >что такое белые списки и почему VPN их проходит</a
+    >.
+  </p>
 </section>
