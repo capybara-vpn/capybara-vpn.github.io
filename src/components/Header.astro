@@ -65,7 +65,7 @@ import { withBase } from '../lib/url';
     <div class="mx-auto flex max-w-6xl items-center gap-4 overflow-x-auto px-3.5 py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:px-4 sm:text-[13px]" tabindex="0" role="region" aria-label="Навигация по разделам">
       {
         nav.map((n) => (
-          <a href={withBase(n.href)} class="whitespace-nowrap py-2 transition-colors hover:text-white">
+          <a href={withBase(n.href)} class="inline-flex min-h-[32px] items-center whitespace-nowrap py-1 transition-colors hover:text-white">
             {n.label}
           </a>
         ))

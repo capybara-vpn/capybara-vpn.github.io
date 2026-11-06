@@ -29,8 +29,8 @@ function lastmodFor(pathname) {
 
 /**
  * llms-full.txt — the whole site as markdown, so an AI crawler can ingest
- * every guide in one request instead of fetching 13 pages. Built from the
- * rendered HTML, which keeps it in sync with the site by construction.
+ * every page in one request instead of fetching them one by one. Built from
+ * the rendered HTML, which keeps it in sync with the site by construction.
  */
 const LLMS_PAGES = [
   ['index.html', 'Главная'],
@@ -41,7 +41,7 @@ const LLMS_PAGES = [
   ['oplata/index.html', 'Как оплатить'],
   ['ios/index.html', 'Настройка на iOS'],
   ['android/index.html', 'Настройка на Android'],
-  ['windows/index.html', 'Настройка on Windows'],
+  ['windows/index.html', 'Настройка на Windows'],
   ['macos/index.html', 'Настройка на macOS'],
   ['linux/index.html', 'Настройка на Linux'],
   ['tv/index.html', 'Настройка на TV'],

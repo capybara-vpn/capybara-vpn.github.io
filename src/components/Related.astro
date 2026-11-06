@@ -23,7 +23,9 @@ const items = [...relatedPaths, ...fill.map((g) => g.href)]
 ---
 
 <nav class="reveal mt-14" aria-label="Читайте также">
-  <h2 class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8b98a5]">Читайте также</h2>
+  {/* <p> вместо <h2>: это подпись навигационного блока, а не раздел статьи —
+      лишний h2 в конце каждой страницы размывал структуру заголовков. */}
+  <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8b98a5]">Читайте также</p>
   <ul class="mt-4 grid gap-3 sm:grid-cols-2">
     {
       items.map((g) => (

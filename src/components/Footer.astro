@@ -80,9 +80,12 @@ const groupKeys = Object.keys(GROUPS) as Group[];
       {
         groupKeys.map((group) => (
           <nav class="flex flex-col gap-2.5 text-[14px]" aria-label={GROUPS[group].label}>
-            <h2 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
+            {/* <p> instead of <h2>: footer column labels are navigation chrome,
+                not document sections — four consecutive h2 at the end of every
+                page only diluted the heading structure. */}
+            <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
               {GROUPS[group].title}
-            </h2>
+            </p>
             {guides
               .filter((g) => g.group === group)
               .map((g) => (

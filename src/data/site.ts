@@ -55,17 +55,8 @@ export const site = {
     title: 'Capybara VPN — быстрый VPN от 249 ₽ для всех устройств',
     description:
       'VPN от 249 ₽, 1 день бесплатно. Capybara VPN: VLESS, 38 локаций, подключение за пару минут через Telegram или браузер.',
-    keywords: [
-      'Capybara VPN',
-      'VPN Capybara',
-      'купить VPN',
-      'VPN подписка',
-      'быстрый VPN',
-      'VPN для телефона',
-      'VPN Telegram',
-      'VPN в браузере',
-      'VLESS VPN',
-    ],
+    // meta keywords сознательно не используются: Яндекс и Google их не
+    // читают, а одинаковый набор на всех страницах выглядел шаблонно.
   },
 } as const;
 
