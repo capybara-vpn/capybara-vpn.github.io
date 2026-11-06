@@ -177,7 +177,8 @@ export const guides: Guide[] = [
     short: 'роутер',
     group: 'установка',
     related: ['/tv/', '/windows/', '/linux/', '/neskolko-ustroystv/'],
-  },  {
+  },
+  {
     href: '/vpn-dlya-instagram/',
     title: 'VPN для Instagram',
     note: 'как вернуть доступ к профилю и Reels',

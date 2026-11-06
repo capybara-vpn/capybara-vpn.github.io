@@ -53,7 +53,9 @@ const jsonLdAll = [
     name: 'Capybara VPN',
     url: site.siteUrl,
     logo: `${origin}${withBase(site.logo.src)}`,
-    sameAs: [site.telegramUrl],
+    // The browser version lives on the service's own domain; listing it in
+    // sameAs ties the entity together alongside the Telegram bot.
+    sameAs: [site.telegramUrl, site.browserUrl],
   },
   {
     '@context': 'https://schema.org',
@@ -89,7 +91,9 @@ const jsonLdAll = [
     '@type': 'SoftwareApplication',
     name: 'Capybara VPN',
     applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'iOS, Android, Windows, macOS, Linux',
+    // The full platform list, kept in sync with facts.platforms (TV and
+    // router included) — the old value silently dropped both.
+    operatingSystem: 'iOS, Android, Windows, macOS, Linux, TV, Router',
     inLanguage: 'ru',
     url: site.siteUrl,
     offers: {
@@ -192,7 +196,9 @@ const jsonLd = jsonLdAll.filter(
     <meta name="description" content={description} />
     <meta name="author" content="Capybara VPN" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <link rel="canonical" href={pageUrl} />
+    {/* A noindex page must not declare a canonical: pointing the 404 at "/"
+        sent conflicting signals. Canonical only for indexable pages. */}
+    {!noindex && <link rel="canonical" href={pageUrl} />}
     <link rel="sitemap" type="application/xml" href={withBase('sitemap-index.xml')} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <meta name="theme-color" content={site.themeColor} />

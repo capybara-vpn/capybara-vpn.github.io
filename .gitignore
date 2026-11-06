@@ -17,3 +17,6 @@ Thumbs.db
 
 # local debug scratchpad (playwright/puppeteer probes, screenshots)
 /tmp/
+
+# agent onboarding docs live locally only, never in the repo
+AGENTS.md

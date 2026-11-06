@@ -70,11 +70,11 @@ const groupKeys = Object.keys(GROUPS) as Group[];
         class="flex flex-wrap gap-x-6 gap-y-2 self-start text-[14px] sm:col-span-2 lg:col-span-2"
         aria-label="Разделы сайта"
       >
-        <a href={withBase('/#benefits')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
-        <a href={withBase('/#how')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
-        <a href={withBase('/#platforms')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
-        <a href={withBase('/#pricing')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
-        <a href={withBase('/#faq')} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+        <a href={withBase('/#benefits')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
+        <a href={withBase('/#how')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
+        <a href={withBase('/#platforms')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
+        <a href={withBase('/#pricing')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
+        <a href={withBase('/#faq')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
       </nav>
 
       {
@@ -89,7 +89,7 @@ const groupKeys = Object.keys(GROUPS) as Group[];
             {guides
               .filter((g) => g.group === group)
               .map((g) => (
-                <a href={withBase(g.href)} class="py-1 text-[#9aa6b2] transition-colors hover:text-white">
+                <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
                   {g.title}
                 </a>
               ))}
