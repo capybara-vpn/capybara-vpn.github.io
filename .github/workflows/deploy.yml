@@ -85,7 +85,10 @@ jobs:
       # ближайший рабочий эквивалент для всех страниц сразу.
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          # Depth 2: indexnow-urls.mjs diff'ит последний коммит (HEAD~1..HEAD),
+          # поэтому предыдущий коммит должен быть в истории. С depth 1 diff
+          # падал, скрипт молча выходил — IndexNow не отправлял ничего.
+          fetch-depth: 2
       - name: Notify Google (Search Console)
         continue-on-error: true
         env:
