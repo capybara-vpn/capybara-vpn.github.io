@@ -179,6 +179,21 @@ if (glow && !reduced && window.matchMedia('(pointer: fine)').matches) {
   );
 }
 
+/* ---------- footer columns: open on desktop, accordeon on mobile ---------- */
+{
+  const cols = document.querySelectorAll<HTMLDetailsElement>('details.footer-col');
+  const mq = window.matchMedia('(min-width: 768px)');
+  const syncFooterCols = () => {
+    // Two groups stay open on mobile (the most useful ones); on desktop
+    // every column renders expanded, like a regular footer grid.
+    cols.forEach((d) => {
+      d.open = mq.matches || d.dataset.footerDefault === 'open';
+    });
+  };
+  syncFooterCols();
+  mq.addEventListener('change', syncFooterCols);
+}
+
 /* ---------- consent + GA4 lazy load (library only after consent) ---------- */
 const CONSENT_KEY = 'capybara-consent-v1';
 const CONSENT_TTL_MS = 180 * 24 * 60 * 60 * 1000; // an explicit "yes" is remembered for half a year

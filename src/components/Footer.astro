@@ -86,16 +86,16 @@ const groupKeys = Object.keys(GROUPS) as Group[];
              column permanently expanded, so the desktop grid is unchanged. */
           <details
             class="footer-col"
-            open={group === 'установка' || group === 'сервис'}
+            data-footer-default={group === 'установка' || group === 'сервис' ? 'open' : undefined}
           >
             <summary>
               <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
                 {GROUPS[group].title}
               </span>
-              <span
-                class="chev mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8fc3c4]"
-                aria-hidden="true"
-              >
+              {/* No Tailwind display utilities on this span: the md+ hide rule
+                  lives in the components layer and would lose the cascade
+                  battle against a `flex` utility class. */}
+              <span class="footer-chev" aria-hidden="true">
                 <Icon name="chevron" class="h-3.5 w-3.5" />
               </span>
             </summary>

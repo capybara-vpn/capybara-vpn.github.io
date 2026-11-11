@@ -334,8 +334,11 @@ details.faq[open] .faq-body {
   }
 }
 
-/* Footer guide columns: <details> accordions on mobile, always-open columns
-   from md up (display: revert beats the UA's hidden-content rule). */
+/* Footer guide columns: <details> accordions on mobile. From md up every
+   column is forced open by site.ts (matchMedia listener toggles .open) —
+   UA hiding then applies to nothing, and the regular flex column renders.
+   The chevron is hidden on desktop via .footer-chev, which carries no
+   Tailwind display utility that could out-rank this rule. */
 details.footer-col summary {
   display: flex;
   align-items: center;
@@ -348,14 +351,23 @@ details.footer-col summary {
 details.footer-col summary::-webkit-details-marker {
   display: none;
 }
+.footer-chev {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.125rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  color: #8fc3c4;
+}
 @media (min-width: 768px) {
-  details.footer-col > *:not(summary) {
-    display: revert !important;
-  }
   details.footer-col summary {
     cursor: default;
   }
-  details.footer-col summary .chev {
+  details.footer-col summary .footer-chev {
     display: none;
   }
 }
