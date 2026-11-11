@@ -1,0 +1,98 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
+
+const title = 'Контакты Capybara VPN: поддержка и сервис';
+const description =
+  'Как связаться с Capybara VPN: поддержка в Telegram — живые люди, ежедневно. Браузерная версия и личный кабинет. Оператор сервиса — MISUTECHLIMITED LTD.';
+const ogImage = '/og/og-image.jpg';
+
+const canonicalPath = '/contacts/';
+const modified = lastModifiedDate(canonicalPath);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  image: `${site.siteUrl}${ogImage}`,
+  mainEntityOfPage: `${site.siteUrl}/contacts/`,
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  datePublished: '2026-11-11',
+  dateModified: modified,
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Контакты', item: `${site.siteUrl}/contacts/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  crumbName="Контакты"
+  eyebrow="Документы"
+  heading="Контакты"
+  lead="Один канал связи — поддержка в Telegram: живые люди, ежедневно, отвечают по конкретной ситуации. Всё остальное — там же или в сервисе."
+  guidePath={canonicalPath}
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Документы"
+  datePublished="2026-11-11"
+  dateModified={modified}
+  ogImage={ogImage}
+  ogType="website"
+  summary="Поддержка Capybara VPN — в Telegram, ежедневно, отвечают живые люди. Подключение и оплата — в Telegram-боте или браузерной версии сервиса. Оператор сервиса — MISUTECHLIMITED LTD."
+>
+  <h2>Поддержка</h2>
+  <p>
+    <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer sponsored nofollow">Telegram-бот Capybara VPN</a>
+    — основной канал: подключение, оплата, вопросы, возвраты. Отвечают живые
+    люди, ежедневно. Чтобы разобрались быстрее, приложите: номер платежа (если
+    вопрос про оплату), устройство и систему (если про подключение), выбранную
+    локацию.
+  </p>
+
+  <h2>Сервис и оплата</h2>
+  <ul>
+    <li>
+      <strong>Подключение и управление</strong> — в Telegram-боте или в
+      <a href={site.browserUrl} target="_blank" rel="noopener noreferrer sponsored nofollow">браузерной версии</a>
+      (личный кабинет): подписка, тарифы, локации, устройства.
+    </li>
+    <li>
+      <strong>Оплата</strong> — карты, СБП и другие подключённые провайдеры,
+      внутри сервиса. Как это устроено — в гайде
+      <a href={`${b}/oplata/`}>«Как оплатить»</a>.
+    </li>
+  </ul>
+
+  <h2>Оператор сервиса</h2>
+  <p>
+    VPN-сервис «Capybara VPN» управляется компанией
+    <strong>MISUTECHLIMITED LTD</strong>. Условия пользования сервисом:
+    <a href="https://capybara.black/terms" target="_blank" rel="noopener noreferrer">capybara.black/terms</a>.
+  </p>
+
+  <h2>Документы</h2>
+  <ul>
+    <li><a href={`${b}/privacy/`}>Политика обработки данных</a></li>
+    <li><a href={`${b}/oferta/`}>Условия оказания услуг</a></li>
+    <li><a href={`${b}/refund/`}>Возврат средств</a></li>
+  </ul>
+
+  <blockquote>
+    Пишете впервые? Скажите просто, что случилось, — дальше подскажут, что
+    прислать.
+  </blockquote>
+</GuideLayout>

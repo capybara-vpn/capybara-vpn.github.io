@@ -1,0 +1,107 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { lastModifiedDate } from '../lib/dates';
+
+const title = 'Политика обработки данных на сайте Capybara VPN';
+const description =
+  'Какие данные обрабатывает сайт capybaravpn.top: Яндекс Метрика, GA4 после согласия, только флаг выбора в локальном хранилище. Данные VPN-аккаунта — на стороне сервиса, No-Logs.';
+const ogImage = '/og/og-image.jpg';
+
+const canonicalPath = '/privacy/';
+const modified = lastModifiedDate(canonicalPath);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  image: `${site.siteUrl}${ogImage}`,
+  mainEntityOfPage: `${site.siteUrl}/privacy/`,
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  datePublished: '2026-11-11',
+  dateModified: modified,
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Политика данных', item: `${site.siteUrl}/privacy/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  crumbName="Политика данных"
+  eyebrow="Документы"
+  heading="Политика обработки данных"
+  lead="На этом сайте нет форм и регистраций: нам нечего у вас спрашивать. Ниже — единственное, что обрабатывается при посещении, и что происходит с данными в самом сервисе."
+  guidePath={canonicalPath}
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Документы"
+  datePublished="2026-11-11"
+  dateModified={modified}
+  ogImage={ogImage}
+  ogType="website"
+  summary="Сайт не собирает e-mail, телефоны и имена. Работает Яндекс Метрика (обезличенная статистика) и GA4 — только после вашего согласия; в локальном хранилище хранится лишь ваш выбор аналитики. Данные VPN-аккаунта обрабатывает сервис в режиме No-Logs."
+>
+  <h2>Кто обрабатывает данные</h2>
+  <p>
+    Сервисом «Capybara VPN» управляет компания <strong>MISUTECHLIMITED LTD</strong>.
+    Этот сайт — информационный ресурс: инструкции, тарифы и факты о сервисе.
+  </p>
+
+  <h2>Что обрабатывается при посещении сайта</h2>
+  <ul>
+    <li>
+      <strong>Яндекс Метрика</strong> (счётчик 114114411): обезличенная
+      статистика посещений — страницы, источники, клики, запись сессий
+      (вебвизор) для улучшения страниц. Загружается сразу, чтобы статистика
+      считалась даже при коротком визите.
+    </li>
+    <li>
+      <strong>Google Analytics 4</strong>: загружается только после нажатия
+      «Разрешить» в плашке согласия. До согласия запросов к GA4 нет.
+    </li>
+    <li>
+      <strong>Локальное хранилище браузера</strong>: только ваш выбор по
+      аналитике (флаг согласия). Это не персональные данные и не cookie
+      трекинга.
+    </li>
+  </ul>
+
+  <h2>Чего здесь нет</h2>
+  <p>
+    Мы не собираем e-mail, телефоны, имена и платёжные данные на этом сайте —
+    форм на сайте нет. Мы не продаём данные и не передаём их третьим лицам в
+    рекламных целях.
+  </p>
+
+  <h2>Данные в самом сервисе</h2>
+  <p>
+    При подключении и оплате данные обрабатывает сервис Capybara VPN: вход
+    через Telegram или личный кабинет, оплата платёжным провайдером. Сервис
+    не ведёт журналов активности пользователей (No-Logs) — за исключением
+    данных, необходимых для работы аккаунта и оплаты. Вопросы по аккаунту —
+    в поддержку в Telegram.
+  </p>
+
+  <h2>Как отказаться от аналитики</h2>
+  <ul>
+    <li>GA4 не загружается без вашего «Разрешить» в плашке согласия.</li>
+    <li>Выбор можно изменить в любой момент кнопкой «Cookie» в углу экрана.</li>
+    <li>Метрика и любые счётчики отключаются блокировщиком рекламы — сайту это не мешает.</li>
+  </ul>
+
+  <blockquote>
+    Вопросы по обработке данных — в поддержку в Telegram: отвечают живые люди.
+  </blockquote>
+</GuideLayout>

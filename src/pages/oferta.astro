@@ -1,0 +1,100 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { b } from '../lib/url';
+import { lastModifiedDate } from '../lib/dates';
+
+const title = 'Условия оказания услуг Capybara VPN';
+const description =
+  'Условия оказания услуг Capybara VPN: оператор, подписка и устройства, лимит трафика, возвраты. Полный текст условий пользования — по ссылке на этой странице.';
+const ogImage = '/og/og-image.jpg';
+
+const canonicalPath = '/oferta/';
+const modified = lastModifiedDate(canonicalPath);
+const officialTerms = 'https://capybara.black/terms';
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  image: `${site.siteUrl}${ogImage}`,
+  mainEntityOfPage: `${site.siteUrl}/oferta/`,
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  datePublished: '2026-11-11',
+  dateModified: modified,
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Условия', item: `${site.siteUrl}/oferta/` },
+  ],
+};
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  crumbName="Условия"
+  eyebrow="Документы"
+  heading="Условия оказания услуг"
+  lead="Коротко о главном в условиях пользования сервисом Capybara VPN. Полный текст условий действует для всех пользователей сервиса и опубликован по ссылке ниже."
+  guidePath={canonicalPath}
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Документы"
+  datePublished="2026-11-11"
+  dateModified={modified}
+  ogImage={ogImage}
+  ogType="website"
+  summary="Сервисом Capybara VPN управляет MISUTECHLIMITED LTD. Количество устройств выбирается при оформлении подписки и докупается слотами; трафик безлимитный в рамках 100 ГБ в сутки на устройство; возврат — только до фактического использования."
+>
+  <h2>Кто оператор сервиса</h2>
+  <p>
+    VPN-сервис «Capybara VPN» управляется компанией
+    <strong>MISUTECHLIMITED LTD</strong>. Подключение и оплата происходят в
+    сервисе — в Telegram-боте или браузерной версии.
+  </p>
+
+  <h2>Полный текст условий</h2>
+  <p>
+    Условия пользования сервисом:
+    <a href={officialTerms} target="_blank" rel="noopener noreferrer">capybara.black/terms</a>.
+    Они юридически обязательны для пользователей и применяются в актуальной
+    редакции. Ниже — только самое частое, о чём спрашивают.
+  </p>
+
+  <h2>Подписка и устройства</h2>
+  <p>
+    Количество устройств не включено в подписку по умолчанию: при оформлении
+    вы выбираете нужное количество, дополнительные слоты докупаются в
+    процессе. Использовать подписку можно только на оплаченном числе
+    устройств.
+  </p>
+
+  <h2>Трафик</h2>
+  <p>
+    Трафик неограниченный в рамках стандартного использования: не более
+    100 ГБ в сутки на одно подключённое устройство. При систематическом
+    превышении сервис может ограничить скорость или приостановить доступ до
+    конца расчётного периода.
+  </p>
+
+  <h2>Возврат средств</h2>
+  <p>
+    Возврат возможен только до фактического использования сервиса. Правила и
+    порядок оформления — на странице
+    <a href={`${b}/refund/`}>«Возврат средств»</a>.
+  </p>
+
+  <blockquote>
+    Использовать сервис — только для законных целей. Полные условия:
+    <a href={officialTerms} target="_blank" rel="noopener noreferrer">capybara.black/terms</a>.
+  </blockquote>
+</GuideLayout>

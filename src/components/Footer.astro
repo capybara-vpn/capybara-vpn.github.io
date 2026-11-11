@@ -117,15 +117,22 @@ const groupKeys = Object.keys(GROUPS) as Group[];
   <div class="border-t border-white/6">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-5 text-[12.5px] text-[#8b98a5] sm:px-6">
       <p>© {year} Capybara VPN. Все права защищены.</p>
-      {/* The pricing file in Markdown is what agents read; a visible link
-          makes it discoverable without guessing the URL. */}
-      <a
-        href={withBase('/pricing.md')}
-        class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
-        title="Тарифы в Markdown — для ИИ-агентов и покупающих ботов"
-      >
-        Тарифы в Markdown
-      </a>
+      {/* Legal links live next to the copyright — audit 2026-11-11: the site
+          collects analytics consent, so policy/terms/contacts must be
+          reachable from every page. */}
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
+        <a href={withBase('/privacy/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Политика</a>
+        <a href={withBase('/oferta/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Условия</a>
+        <a href={withBase('/refund/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Возврат</a>
+        <a href={withBase('/contacts/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Контакты</a>
+        <a
+          href={withBase('/pricing.md')}
+          class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+          title="Тарифы в Markdown — для ИИ-агентов и покупающих ботов"
+        >
+          Тарифы в Markdown
+        </a>
+      </div>
     </div>
   </div>
   <!-- spacer so mobile sticky bar never covers footer content -->
