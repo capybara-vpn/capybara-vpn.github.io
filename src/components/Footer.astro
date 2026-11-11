@@ -99,14 +99,18 @@ const groupKeys = Object.keys(GROUPS) as Group[];
                 <Icon name="chevron" class="h-3.5 w-3.5" />
               </span>
             </summary>
-            <nav class="mt-2.5 flex flex-col gap-2.5 text-[14px]" aria-label={GROUPS[group].label}>
-              {guides
-                .filter((g) => g.group === group)
-                .map((g) => (
-                  <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
-                    {g.title}
-                  </a>
-                ))}
+            <nav class="footer-body" aria-label={GROUPS[group].label}>
+              <div>
+                <div class="flex flex-col gap-2.5 py-2.5 text-[14px]">
+                  {guides
+                    .filter((g) => g.group === group)
+                    .map((g) => (
+                      <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
+                        {g.title}
+                      </a>
+                    ))}
+                </div>
+              </div>
             </nav>
           </details>
         ))

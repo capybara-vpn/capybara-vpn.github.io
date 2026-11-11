@@ -61,11 +61,19 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogType={ogType} ogImage={ogImage} pageFaqs={faqs.length ? faqs : undefined} serviceLd={serviceLd} productLd={productLd}>
-  <meta property="article:published_time" content={datePublished} slot="head" />
-  <meta property="article:modified_time" content={dateModified} slot="head" />
-  <meta property="article:author" content="Capybara VPN" slot="head" />
-  <meta property="article:section" content={articleSection} slot="head" />
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} ogType={ogType} ogImage={ogImage} pageFaqs={faqs.length ? faqs : undefined} showFaq={faqs.length > 0} serviceLd={serviceLd} productLd={productLd}>
+  {/* Document pages without their own FAQ must not inherit the homepage
+      FAQPage: markup must match visible content (audit 2026-11-11). With
+      showFaq=false the homepage FAQ list stays empty and no FAQPage block
+      is emitted. */}
+  {ogType === 'article' && (
+    <>
+      <meta property="article:published_time" content={datePublished} slot="head" />
+      <meta property="article:modified_time" content={dateModified} slot="head" />
+      <meta property="article:author" content="Capybara VPN" slot="head" />
+      <meta property="article:section" content={articleSection} slot="head" />
+    </>
+  )}
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
   <div id="top">

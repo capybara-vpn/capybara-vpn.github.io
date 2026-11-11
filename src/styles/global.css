@@ -363,6 +363,19 @@ details.footer-col summary::-webkit-details-marker {
   border-radius: 9999px;
   color: #8fc3c4;
 }
+/* Same smooth accordion motion as the FAQ block: grid-rows transition,
+   prefers-reduced-motion already zeroes it globally. */
+details.footer-col .footer-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+details.footer-col[open] .footer-body {
+  grid-template-rows: 1fr;
+}
+.footer-body > div {
+  overflow: hidden;
+}
 @media (min-width: 768px) {
   details.footer-col summary {
     cursor: default;

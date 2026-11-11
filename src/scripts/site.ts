@@ -191,7 +191,13 @@ if (glow && !reduced && window.matchMedia('(pointer: fine)').matches) {
     });
   };
   syncFooterCols();
-  mq.addEventListener('change', syncFooterCols);
+  // Older Safari: matchMedia queries expose addListener instead of the
+  // standard addEventListener — guard instead of assuming one API.
+  if ('addEventListener' in mq) {
+    mq.addEventListener('change', syncFooterCols);
+  } else if ('addListener' in mq) {
+    (mq as unknown as { addListener: (cb: () => void) => void }).addListener(syncFooterCols);
+  }
 }
 
 /* ---------- consent + GA4 lazy load (library only after consent) ---------- */
