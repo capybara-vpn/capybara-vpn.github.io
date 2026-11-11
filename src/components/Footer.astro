@@ -80,21 +80,35 @@ const groupKeys = Object.keys(GROUPS) as Group[];
 
       {
         groupKeys.map((group) => (
-          <nav class="flex flex-col gap-2.5 text-[14px]" aria-label={GROUPS[group].label}>
-            {/* <p> instead of <h2>: footer column labels are navigation chrome,
-                not document sections — four consecutive h2 at the end of every
-                page only diluted the heading structure. */}
-            <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
-              {GROUPS[group].title}
-            </p>
-            {guides
-              .filter((g) => g.group === group)
-              .map((g) => (
-                <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
-                  {g.title}
-                </a>
-              ))}
-          </nav>
+          /* <details> on mobile: the four guide columns are 30+ taps of small
+             text at the very end of the page; two are open by default, the
+             rest collapse. From md up CSS (details.footer-col) keeps every
+             column permanently expanded, so the desktop grid is unchanged. */
+          <details
+            class="footer-col"
+            open={group === 'установка' || group === 'сервис'}
+          >
+            <summary>
+              <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
+                {GROUPS[group].title}
+              </span>
+              <span
+                class="chev mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8fc3c4]"
+                aria-hidden="true"
+              >
+                <Icon name="chevron" class="h-3.5 w-3.5" />
+              </span>
+            </summary>
+            <nav class="mt-2.5 flex flex-col gap-2.5 text-[14px]" aria-label={GROUPS[group].label}>
+              {guides
+                .filter((g) => g.group === group)
+                .map((g) => (
+                  <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
+                    {g.title}
+                  </a>
+                ))}
+            </nav>
+          </details>
         ))
       }
     </div>

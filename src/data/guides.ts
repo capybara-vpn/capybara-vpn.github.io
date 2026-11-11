@@ -27,7 +27,7 @@ export const guides: Guide[] = [
   {
     href: '/belye-spiski/',
     title: 'Белые списки операторов',
-    note: 'режим ограничений и обход через VPN',
+    note: 'что это, какие сайты в списке, как проверить и почему VPN обходит',
     group: 'основы',
     related: ['/ne-rabotaet/', '/kak-vybrat-lokaciyu/', '/vpn-dlya-youtube/', '/chto-takoe-vpn/'],
   },

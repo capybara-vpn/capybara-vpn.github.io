@@ -15,8 +15,17 @@ import { withBase } from '../lib/url';
     </p>
   </div>
 
-  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6" aria-label="Основная навигация">
-    <a href={withBase("/#top")} class="flex shrink-0 items-center gap-2.5" aria-label="Capybara VPN — на главную страницу">
+  <!--
+    One nav for both layouts: on lg the section links sit in the header row
+    (grid column 2), below lg they drop to their own scrollable strip under
+    the row. The links exist in the DOM once — the old hidden desktop copy
+    plus the mobile strip duplicated the same four links twice.
+  -->
+  <nav
+    class="mx-auto grid max-w-6xl grid-cols-[auto_1fr] items-center gap-x-3 px-4 sm:px-6 lg:grid-cols-[auto_1fr_auto]"
+    aria-label="Основная навигация"
+  >
+    <a href={withBase("/#top")} class="row-start-1 flex shrink-0 items-center gap-2.5 py-3" aria-label="Capybara VPN — на главную страницу">
       <Logo
         class="h-9 w-9 rounded-full object-cover ring-1 ring-white/15"
         eager
@@ -24,20 +33,7 @@ import { withBase } from '../lib/url';
       <span class="whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
     </a>
 
-    <div class="hidden items-center gap-7 lg:flex">
-      {
-        nav.map((n) => (
-          <a
-            href={withBase(n.href)}
-            class="text-[14px] font-medium text-[#9aa6b2] transition-colors hover:text-white"
-          >
-            {n.label}
-          </a>
-        ))
-      }
-    </div>
-
-    <div class="flex items-center gap-2">
+    <div class="row-start-1 flex items-center justify-end gap-2 py-3 lg:col-start-3">
       <a
         href={withBase("/#pricing")}
         class="btn btn-ghost hidden px-4 py-2 text-[13.5px] sm:inline-flex"
@@ -58,18 +54,27 @@ import { withBase } from '../lib/url';
         <span class="sr-only"> — Capybara VPN</span>
       </a>
     </div>
-  </nav>
 
-  <!-- compact mobile nav -->
-  <nav id="subnav" class="border-t border-white/6 lg:hidden" aria-label="Навигация по разделам">
-    <div class="mx-auto flex max-w-6xl items-center gap-4 overflow-x-auto px-3.5 py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:px-4 sm:text-[13px]" tabindex="0" role="region" aria-label="Навигация по разделам">
-      {
-        nav.map((n) => (
-          <a href={withBase(n.href)} class="inline-flex min-h-[32px] items-center whitespace-nowrap py-1 transition-colors hover:text-white">
-            {n.label}
-          </a>
-        ))
-      }
-    </div>
+    <nav
+      id="subnav"
+      aria-label="Навигация по разделам"
+      class="col-span-full -mx-4 border-t border-white/6 px-4 sm:-mx-6 sm:px-6 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:border-0 lg:px-0"
+    >
+      <div
+        class="flex items-center gap-4 overflow-x-auto py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:text-[13px] lg:justify-center lg:gap-7 lg:overflow-visible lg:py-0 lg:text-[14px]"
+        tabindex="0"
+      >
+        {
+          nav.map((n) => (
+            <a
+              href={withBase(n.href)}
+              class="inline-flex min-h-[32px] items-center whitespace-nowrap py-1 transition-colors hover:text-white"
+            >
+              {n.label}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
   </nav>
 </header>

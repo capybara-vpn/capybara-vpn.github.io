@@ -325,6 +325,63 @@ details.faq[open] .faq-body {
   mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
 }
+/* On lg the same strip lives inline in the header row without scrolling —
+   the fade edge must not fade the last link into nothing. */
+@media (min-width: 1024px) {
+  #site-header .overflow-x-auto {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+
+/* Footer guide columns: <details> accordions on mobile, always-open columns
+   from md up (display: revert beats the UA's hidden-content rule). */
+details.footer-col summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.25rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+details.footer-col summary::-webkit-details-marker {
+  display: none;
+}
+@media (min-width: 768px) {
+  details.footer-col > *:not(summary) {
+    display: revert !important;
+  }
+  details.footer-col summary {
+    cursor: default;
+  }
+  details.footer-col summary .chev {
+    display: none;
+  }
+}
+
+/* Whitelist checklist: square boxes instead of bullets — a visible "you can
+   check this yourself" affordance for the diagnostic section. */
+.guide-body ul.checklist {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 0.6em;
+}
+.guide-body ul.checklist li {
+  position: relative;
+  padding-left: 1.9em;
+}
+.guide-body ul.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0.1em;
+  top: 0.4em;
+  width: 0.95em;
+  height: 0.95em;
+  border: 1.5px solid rgba(143, 195, 196, 0.6);
+  border-radius: 4px;
+}
 
 /* forced-colors (Windows High Contrast): gradient text would vanish — fall back to CanvasText */
 @media (forced-colors: active) {
