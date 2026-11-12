@@ -199,4 +199,5 @@ export const nav = [
   { href: '/#benefits', label: 'Возможности' },
   { href: '/#how', label: 'Как работает' },
   { href: '/#faq', label: 'FAQ' },
+  { href: '/status/', label: 'Статус' },
 ] as const;

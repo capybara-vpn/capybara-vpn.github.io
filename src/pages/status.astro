@@ -1,0 +1,297 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { site } from '../data/site';
+import { lastModifiedDate } from '../lib/dates';
+
+const title = 'Статус серверов Capybara VPN — живая проверка';
+const description =
+  'Статус серверов Capybara VPN: проверка доступности локаций из вашего браузера. Нидерланды, Германия, США, Япония и другие локации — отклик и доступность порта в реальном времени.';
+const ogImage = '/og/og-image.jpg';
+
+const canonicalPath = '/status/';
+const modified = lastModifiedDate(canonicalPath);
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  inLanguage: 'ru',
+  publisher: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl,
+    logo: `${site.siteUrl}/logo-320.png` },
+  image: `${site.siteUrl}${ogImage}`,
+  mainEntityOfPage: `${site.siteUrl}/status/`,
+  author: { '@type': 'Organization', name: 'Capybara VPN', url: site.siteUrl },
+  datePublished: '2026-11-12',
+  dateModified: modified,
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: site.siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Статус серверов', item: `${site.siteUrl}/status/` },
+  ],
+};
+
+type Server = { flag: string; name: string; host: string; proto: string; speed: string };
+const mainServers: Server[] = [
+  { flag: '🇳🇱', name: 'Нидерланды', host: 'nl.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇱🇹', name: 'Литва', host: 'lt.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇪🇪', name: 'Эстония', host: 'ee.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇫🇮', name: 'Финляндия', host: 'fi.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇸🇪', name: 'Швеция', host: 'se.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇵🇱', name: 'Польша', host: 'pl.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇩🇪', name: 'Германия', host: 'de.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇫🇷', name: 'Франция', host: 'fr.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇺🇸', name: 'США', host: 'us.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇯🇵', name: 'Япония', host: 'jp.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇸🇬', name: 'Сингапур', host: 'sg.dertux.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇷🇺', name: 'Россия', host: 'ru.moordox.com', proto: 'VLESS Reality', speed: '10 Гбит/с' },
+  { flag: '🇧🇾', name: 'Беларусь', host: 'by.moordox.com', proto: 'VLESS Reality', speed: '1 Гбит/с' },
+  { flag: '🇰🇿', name: 'Казахстан', host: 'kz.moordox.com', proto: 'VLESS Reality', speed: '1 Гбит/с' },
+  { flag: '🛟', name: 'Франция — запасная', host: 'fr-tls.moordox.com', proto: 'VLESS TLS', speed: '10 Гбит/с' },
+];
+const gameServers: Server[] = [
+  { flag: '🎮', name: 'Германия — игровой', host: 'deh2.moordox.com', proto: 'Hysteria2 · QUIC', speed: '10 Гбит/с' },
+  { flag: '🎮', name: 'Нидерланды — игровой', host: 'nlh2.moordox.com', proto: 'Hysteria2 · QUIC', speed: '10 Гбит/с' },
+];
+const autoCount = 11;
+---
+
+<GuideLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  crumbName="Статус серверов"
+  eyebrow="Инструмент"
+  heading="Статус серверов"
+  lead="Живая проверка доступности локаций прямо из вашего браузера: нажмите «Проверить сейчас» — страница постучится на каждый сервер и покажет отклик. Проверка не требует подписки."
+  guidePath={canonicalPath}
+  articleLd={articleLd}
+  breadcrumbLd={breadcrumbLd}
+  articleSection="Инструменты"
+  datePublished="2026-11-12"
+  dateModified={modified}
+  ogImage={ogImage}
+  ogType="website"
+>
+  <div id="status-root" class="not-prose">
+    <!-- summary strip -->
+    <div class="glass relative overflow-hidden rounded-3xl p-6 sm:p-8">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div class="min-w-0">
+          <p class="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#8fc3c4]">Сводка</p>
+          <p id="status-summary" class="mt-1.5 text-[17px] font-semibold text-white">
+            Нажмите «Проверить сейчас» — опросим {mainServers.length} локаций
+          </p>
+          <p id="status-time" class="mt-1 text-[13px] text-[#8b98a5]">Последняя проверка: —</p>
+        </div>
+        <button
+          id="status-run"
+          type="button"
+          class="btn btn-primary shrink-0 px-6 py-3.5 text-[15px]"
+        >
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 3v6h-6"></path></svg>
+          <span id="status-run-label">Проверить сейчас</span>
+        </button>
+      </div>
+      <div class="mt-5 grid grid-cols-3 gap-2 sm:gap-3" role="presentation">
+        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
+          <p id="count-ok" class="display text-[24px] text-white sm:text-[26px]">—</p>
+          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">отвечают</p>
+        </div>
+        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
+          <p id="count-fail" class="display text-[24px] text-white sm:text-[26px]">—</p>
+          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">не отвечают</p>
+        </div>
+        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
+          <p class="display text-[24px] text-white sm:text-[26px]">{mainServers.length + gameServers.length + autoCount}</p>
+          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">всего</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- main list -->
+    <h2 class="mt-12 text-[24px] font-semibold tracking-tight text-white">Основные локации</h2>
+    <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
+      Проверка стучится на порт сервера и замеряет время отклика. Значение — оценка из вашего браузера, а не замер скорости.
+    </p>
+    <div id="status-grid" class="glass mt-5 overflow-hidden rounded-3xl">
+      <div class="hidden grid-cols-[1.3fr_1.2fr_auto] gap-4 border-b border-white/8 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5] sm:grid">
+        <span>Локация</span>
+        <span>Протокол</span>
+        <span class="text-right">Отклик</span>
+      </div>
+      {
+        mainServers.map((s) => (
+          <div
+            class="status-row flex items-center gap-3.5 border-b border-white/8 px-4 py-3.5 transition-colors last:border-b-0 hover:bg-white/[0.03] sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6"
+            data-probe={s.host}
+          >
+            <div class="flex min-w-0 items-center gap-3">
+              <span class="text-[22px] leading-none" aria-hidden="true">{s.flag}</span>
+              <span class="min-w-0">
+                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-white">{s.name}</span>
+                <span class="block text-[12.5px] leading-snug text-[#8b98a5] sm:hidden">{s.speed}</span>
+              </span>
+            </div>
+            <span class="hidden min-w-0 text-[13px] text-[#9aa6b2] sm:block">{s.proto} · {s.speed}</span>
+            <div class="ml-auto flex shrink-0 items-center justify-end gap-2.5 sm:ml-0">
+              <span class="status-dot" data-dot></span>
+              <span class="min-w-[86px] text-right text-[13px] font-medium text-[#9aa6b2]" data-result>не проверено</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- game servers -->
+    <h2 class="mt-12 text-[24px] font-semibold tracking-tight text-white">Игровые серверы</h2>
+    <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
+      Работают по протоколу Hysteria2 поверх QUIC — браузерная проверка порта для них не показательна, поэтому статус показывает дежурное состояние.
+    </p>
+    <div class="glass mt-5 overflow-hidden rounded-3xl">
+      {
+        gameServers.map((s) => (
+          <div class="flex items-center gap-3.5 border-b border-white/8 px-4 py-3.5 last:border-b-0 sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6">
+            <div class="flex min-w-0 items-center gap-3">
+              <span class="text-[22px] leading-none" aria-hidden="true">{s.flag}</span>
+              <span class="min-w-0">
+                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-white">{s.name}</span>
+                <span class="block text-[12.5px] leading-snug text-[#8b98a5] sm:hidden">{s.speed}</span>
+              </span>
+            </div>
+            <span class="hidden min-w-0 text-[13px] text-[#9aa6b2] sm:block">{s.proto} · {s.speed}</span>
+            <div class="ml-auto flex shrink-0 items-center justify-end gap-2.5 sm:ml-0">
+              <span class="status-dot status-dot-idle" title="QUIC-сервер не пингуется из браузера"></span>
+              <span class="min-w-[86px] text-right text-[13px] font-medium text-[#9aa6b2]">в работе</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- auto-bypass summary -->
+    <div class="glass mt-10 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:gap-4">
+      <span class="text-[24px] leading-none" aria-hidden="true">⚡</span>
+      <p class="min-w-0 flex-1 text-[14.5px] leading-relaxed text-[#9aa6b2]">
+        <strong class="font-semibold text-white">Авто-обход</strong> — {autoCount} точек
+        подключения с автоматическим выбором рабочей. Клиент переключает их
+        самостоятельно, отдельная проверка не нужна: если одна точка замолчала,
+        подписка перейдёт на следующую.
+      </p>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var cards = document.querySelectorAll('#status-grid [data-probe]');
+      var btn = document.getElementById('status-run');
+      var label = document.getElementById('status-run-label');
+      var summary = document.getElementById('status-summary');
+      var timeEl = document.getElementById('status-time');
+      var okEl = document.getElementById('count-ok');
+      var failEl = document.getElementById('count-fail');
+      var TIMEOUT = 4500;
+      var running = false;
+
+      var CLASSES = {
+        idle: 'status-dot status-dot-idle',
+        check: 'status-dot status-dot-check',
+        ok: 'status-dot status-dot-ok',
+        fail: 'status-dot status-dot-fail'
+      };
+
+      function setState(card, state, text) {
+        var dot = card.querySelector('[data-dot]');
+        var out = card.querySelector('[data-result]');
+        if (dot) dot.className = CLASSES[state];
+        if (out) out.textContent = text;
+      }
+
+      function probe(host) {
+        return new Promise(function (resolve) {
+          var url = 'https://' + host + '/status-check-' + Date.now();
+          var t0 = performance.now();
+          var done = false;
+          var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+          var timer = setTimeout(function () {
+            if (done) return;
+            done = true;
+            if (ctrl) ctrl.abort();
+            resolve({ ok: false, ms: TIMEOUT });
+          }, TIMEOUT);
+          fetch(url, { mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+            .catch(function () {})
+            .then(function () {
+              if (done) return;
+              done = true;
+              clearTimeout(timer);
+              resolve({ ok: true, ms: Math.round(performance.now() - t0) });
+            });
+        });
+      }
+
+      function run() {
+        if (running) return;
+        running = true;
+        btn.disabled = true;
+        label.textContent = 'Проверяю…';
+        okEl.textContent = '—';
+        failEl.textContent = '—';
+        var tasks = [];
+        cards.forEach(function (card) {
+          var host = card.getAttribute('data-probe');
+          setState(card, 'check', 'проверяю…');
+          tasks.push(probe(host).then(function (r) {
+            if (r.ok) setState(card, 'ok', '~' + r.ms + ' мс');
+            else setState(card, 'fail', 'не отвечает');
+            return r.ok ? 1 : 0;
+          }));
+        });
+        Promise.all(tasks).then(function (results) {
+          var ok = results.filter(Boolean).length;
+          var fail = results.length - ok;
+          okEl.textContent = String(ok);
+          failEl.textContent = String(fail);
+          summary.textContent = ok === results.length
+            ? 'Все ' + results.length + ' локаций отвечают'
+            : 'Отвечают ' + ok + ' из ' + results.length + ' локаций';
+          timeEl.textContent = 'Последняя проверка: ' +
+            new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+          btn.disabled = false;
+          label.textContent = 'Проверить снова';
+          running = false;
+        });
+      }
+
+      btn.addEventListener('click', run);
+      setTimeout(run, 400);
+    })();
+  </script>
+</GuideLayout>
+
+<style>
+  /* neutralize .guide-body typography inside the tool area */
+  #status-root h2, #status-root h3, #status-root p { margin-top: 0 !important; }
+  #status-root { margin-top: 2.5rem; }
+
+  .status-dot {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+  }
+  .status-dot-idle { background: rgba(255, 255, 255, 0.25); }
+  .status-dot-check { background: #f0b34e; animation: status-pulse 1.1s ease-in-out infinite; }
+  .status-dot-ok { background: #8fc3c4; box-shadow: 0 0 10px rgba(143, 195, 196, 0.5); }
+  .status-dot-fail { background: #e06060; box-shadow: 0 0 10px rgba(224, 96, 96, 0.4); }
+  @keyframes status-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .status-dot-check { animation: none; }
+  }
+</style>

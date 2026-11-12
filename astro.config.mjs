@@ -63,6 +63,7 @@ const LLMS_PAGES = [
   ['refund/index.html', 'Возврат средств'],
   ['privacy/index.html', 'Политика обработки данных'],
   ['contacts/index.html', 'Контакты'],
+  ['status/index.html', 'Статус серверов'],
   ['vpn-dlya-youtube/index.html', 'VPN для YouTube'],
   ['vpn-dlya-instagram/index.html', 'VPN для Instagram'],
   ['vpn-dlya-raboty/index.html', 'VPN для работы'],
