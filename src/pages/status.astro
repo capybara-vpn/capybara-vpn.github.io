@@ -115,7 +115,10 @@ const autoCount = 11;
     <!-- main list -->
     <h2 class="mt-12 text-[24px] font-semibold tracking-tight text-white">Основные локации</h2>
     <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
-      Проверка стучится на порт сервера и замеряет время отклика. Значение — оценка из вашего браузера, а не замер скорости.
+      Проверка стучится на порт сервера и замеряет время ответа: соединение
+      прогревается, затем делается два замера — показывается лучший, чтобы
+      исключить помехи первого подключения. Значение — оценка из вашего
+      браузера, а не замер скорости.
     </p>
     <!-- legend -->
     <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#9aa6b2]">
@@ -227,9 +230,9 @@ const autoCount = 11;
         if (out) out.textContent = text;
       }
 
-      function probe(host) {
+      function probeOnce(host) {
         return new Promise(function (resolve) {
-          var url = 'https://' + host + '/status-check-' + Date.now();
+          var url = 'https://' + host + '/status-check-' + Date.now() + '-' + Math.floor(Math.random() * 1e6);
           var t0 = performance.now();
           var done = false;
           var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
@@ -248,6 +251,35 @@ const autoCount = 11;
               resolve({ ok: true, ms: Math.round(performance.now() - t0) });
             });
         });
+      }
+
+      /* Methodology: the first request to a host includes DNS + TCP + TLS
+         setup and swings wildly between runs; Reality proxies serve each
+         request over a fresh connection, so there is no keep-alive to lean
+         on. So: warm-up request (discarded), then three measured ones —
+         the smallest of the three is the cleanest estimate of the response
+         time, repeatable across runs. */
+      async function probe(host) {
+        var warm = await probeOnce(host);
+        if (warm.ok) {
+          var m1 = await probeOnce(host);
+          var m2 = await probeOnce(host);
+          var m3 = await probeOnce(host);
+          if (m1.ok || m2.ok || m3.ok) {
+            return { ok: true, ms: Math.min(m1.ms, m2.ms, m3.ms) };
+          }
+        }
+        // one retry cycle before declaring the server down
+        var warm2 = await probeOnce(host);
+        if (warm2.ok) {
+          var m1b = await probeOnce(host);
+          var m2b = await probeOnce(host);
+          var m3b = await probeOnce(host);
+          if (m1b.ok || m2b.ok || m3b.ok) {
+            return { ok: true, ms: Math.min(m1b.ms, m2b.ms, m3b.ms) };
+          }
+        }
+        return { ok: false, ms: TIMEOUT };
       }
 
       function run() {
