@@ -4,11 +4,10 @@ import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 ---
 
-<!-- Closing band: always dark (theme-dark scope + its own ink surface), so
-     the page ends on ink in both themes. -->
+<!-- Closing band: follows the active theme like every other section. -->
 <section
   id="final"
-  class="theme-dark relative overflow-hidden border-t border-line bg-[oklch(15%_0.014_210)]"
+  class="relative overflow-hidden border-t border-line"
   aria-labelledby="final-title"
 >
   <div class="ambient left-1/2 top-1/2 h-[480px] w-[min(820px,100vw)] -translate-x-1/2 -translate-y-1/2" style="background: var(--glow)" aria-hidden="true"></div>
