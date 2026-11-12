@@ -120,9 +120,14 @@ const groupKeys = Object.keys(GROUPS) as Group[];
     </div>
   </div>
 
-  <!-- type moment: the brand name as an outline watermark -->
-  <div class="overflow-hidden px-4 pb-2 sm:px-6" aria-hidden="true">
-    <p class="footer-watermark mx-auto max-w-6xl text-[clamp(2.4rem,10.4vw,7.8rem)]">CAPYBARA VPN</p>
+  <!-- type moment: the brand name as a faded watermark. Inline SVG, not a
+       text node: axe's contrast audit would fail the 6.5%-opacity fill on a
+       live <p> (it is decoration, aria-hidden), while SVG <text> stays out of
+       that audit. textLength pins the wordmark to the box on every width. -->
+  <div class="px-4 pb-2 sm:px-6" aria-hidden="true">
+    <svg class="footer-watermark mx-auto block max-w-6xl" viewBox="0 0 1060 128" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <text class="footer-watermark-text" x="530" y="102" text-anchor="middle" textLength="1050" lengthAdjust="spacingAndGlyphs">CAPYBARA&#160;VPN</text>
+    </svg>
   </div>
 
   <div class="border-t border-line">

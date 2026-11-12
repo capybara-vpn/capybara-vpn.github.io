@@ -721,17 +721,19 @@ details.footer-col[open] .footer-body {
 }
 
 /* ---------- footer watermark ----------
-   Solid fill at very low opacity, not an outline: Unbounded's glyphs are
-   built from overlapping contours, and a text-stroke exposes the
-   construction as ugly wireframe lines. */
+   Inline SVG (see Footer.astro for why not a text node). Solid fill at very
+   low opacity, not an outline: Unbounded's glyphs are built from overlapping
+   contours, and a text-stroke exposes the construction as ugly wireframe. */
 .footer-watermark {
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+.footer-watermark-text {
   font-family: var(--font-display);
   font-weight: 640;
-  line-height: 0.9;
-  letter-spacing: 0.01em;
-  color: color-mix(in oklab, var(--ink) 6.5%, transparent);
-  user-select: none;
-  white-space: nowrap;
+  font-size: 128px;
+  fill: color-mix(in oklab, var(--ink) 6.5%, transparent);
 }
 
 /* ---------- checklist ---------- */
@@ -1027,8 +1029,8 @@ html.has-consent #mobile-cta {
     color: CanvasText;
     -webkit-text-stroke: 0;
   }
-  .footer-watermark {
-    color: CanvasText;
+  .footer-watermark-text {
+    fill: CanvasText;
     opacity: 0.25;
   }
 }
