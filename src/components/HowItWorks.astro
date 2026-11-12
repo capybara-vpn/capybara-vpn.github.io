@@ -21,69 +21,81 @@ const steps = [
 ];
 ---
 
+<!--
+  Two columns: the heading column sticks while the steps scroll past it, and
+  a thin brand line fills down the steps' spine as you go (client script sets
+  --p; CSS paints it — no motion library).
+-->
 <section id="how" class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="how-title">
-  <div class="reveal max-w-2xl">
-    <p class="eyebrow">Как это работает</p>
-    <h2 id="how-title" class="display mt-4 text-4xl text-white sm:text-5xl">
-      Подключение за несколько шагов
-    </h2>
-    <p class="lead mt-4 text-[16px]">Ничего лишнего: три коротких действия — и вы онлайн.</p>
-  </div>
+  <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div class="self-start lg:sticky lg:top-28">
+      <p class="eyebrow">Как это работает</p>
+      <h2 id="how-title" class="mt-4 text-[clamp(1.7rem,1rem+2.2vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-ink">
+        Подключение за несколько шагов
+      </h2>
+      <p class="lead mt-4 text-[16px]">Ничего лишнего: три коротких действия — и вы онлайн.</p>
 
-  <div class="absolute left-0 right-0 top-10 hidden h-px bg-gradient-to-r from-transparent via-[#60a1a3]/40 to-transparent lg:block" aria-hidden="true"></div>
-  <ol class="relative mt-12 grid gap-4 lg:grid-cols-3">
-    {
-      steps.map((s, i) => (
-        <li
-          class="reveal hairline relative rounded-3xl bg-[#12151c]/80 p-7 sm:p-8"
-          style={`--reveal-delay:${i * 100}ms`}
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col">
+        <a
+          href={site.browserUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored nofollow"
+          class="btn btn-primary px-6 py-3.5 text-[15px] sm:flex-1 lg:flex-none"
+          data-cta
+          data-placement="how"
+          data-destination="browser"
         >
-          {/*
-            The step number was an outlined glyph (transparent fill + a 55%
-            alpha stroke). Colour-contrast tools read the transparent fill as
-            1:1, and at 1px/55% it is genuinely hard to see, so the number
-            now uses a real dim teal that passes AA for large text.
-          */}
-          <p
-            class="display text-[52px] text-[#4f7075]"
-            style="-webkit-text-stroke: 1px rgba(143,195,196,.4)"
-            aria-hidden="true"
-          >
-            {s.n}
-          </p>
-          <h3 class="mt-3 text-[19px] font-semibold tracking-tight text-white">{s.title}</h3>
-          <p class="mt-2 text-[14.5px] leading-relaxed text-[#9aa6b2]">{s.text}</p>
-        </li>
-      ))
-    }
-  </ol>
+          <Icon name="browser" class="h-5 w-5" />
+          Продолжить в браузере
+          <span class="sr-only"> — Capybara VPN</span>
+        </a>
+        <a
+          href={site.telegramUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored nofollow"
+          class="btn btn-ghost px-6 py-3.5 text-[15px] sm:flex-1 lg:flex-none"
+          data-cta
+          data-placement="how"
+          data-destination="telegram"
+        >
+          <Icon name="telegram" class="h-5 w-5" />
+          Подключиться в Telegram
+          <span class="sr-only"> — Capybara VPN</span>
+        </a>
+      </div>
+    </div>
 
-  <div class="reveal mt-8 flex flex-col gap-3 sm:flex-row">
-    <a
-      href={site.browserUrl}
-      target="_blank"
-      rel="noopener noreferrer sponsored nofollow"
-      class="btn btn-primary px-6 py-3.5 text-[15px]"
-      data-cta
-      data-placement="how"
-      data-destination="browser"
-    >
-      <Icon name="browser" class="h-5 w-5" />
-      Продолжить в браузере
-      <span class="sr-only"> — Capybara VPN</span>
-    </a>
-    <a
-      href={site.telegramUrl}
-      target="_blank"
-      rel="noopener noreferrer sponsored nofollow"
-      class="btn btn-ghost px-6 py-3.5 text-[15px]"
-      data-cta
-      data-placement="how"
-      data-destination="telegram"
-    >
-      <Icon name="telegram" class="h-5 w-5" />
-      Подключиться в Telegram
-      <span class="sr-only"> — Capybara VPN</span>
-    </a>
+    <div class="relative">
+      <div id="steps-line" class="absolute bottom-6 left-[27px] top-6 w-px bg-line-strong" aria-hidden="true"></div>
+      <ol class="relative grid gap-4">
+        {
+          steps.map((s) => (
+            <li class="reveal card card-hover spot flex gap-5 p-6 sm:gap-6 sm:p-7">
+              <span class="display relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-line bg-surface text-[19px] text-brand shadow-[var(--shadow-card)]" aria-hidden="true">
+                {s.n}
+              </span>
+              <div class="min-w-0">
+                <h3 class="text-[19px] font-semibold tracking-tight text-ink">{s.title}</h3>
+                <p class="mt-2 text-[14.5px] leading-relaxed text-ink-2">{s.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </section>
+
+<style>
+  /* Progress paint: the client script sets --p (0..1) while the section is
+     in view; the gradient fill scales down the spine. */
+  #steps-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 55%, var(--amber)));
+    transform: scaleY(var(--p, 0));
+    transform-origin: top;
+    transition: transform 0.18s linear;
+  }
+</style>

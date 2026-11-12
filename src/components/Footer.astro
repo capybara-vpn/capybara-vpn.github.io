@@ -18,8 +18,9 @@ type Group = keyof typeof GROUPS;
 const groupKeys = Object.keys(GROUPS) as Group[];
 ---
 
-<footer class="border-t border-white/8 bg-[#090c11]" aria-label="Подвал сайта">
-  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+<!-- Footer stays on ink in both themes: a dark anchor that closes every page. -->
+<footer class="theme-dark border-t border-line bg-[oklch(15%_0.014_210)]" aria-label="Подвал сайта">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
     <!--
       Весь подвал — одна сетка. Бренд занимает первые две колонки, ряд ссылок
       на разделы — последние две, ниже идут колонки гайдов. Благодаря общей
@@ -29,10 +30,10 @@ const groupKeys = Object.keys(GROUPS) as Group[];
     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
       <div class="max-w-sm sm:col-span-2 lg:col-span-2">
         <a href="#top" class="flex items-center gap-2.5" aria-label="Capybara VPN — наверх">
-          <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-white/15" />
-          <span class="text-[15px] font-semibold tracking-tight text-white">Capybara VPN</span>
+          <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong" />
+          <span class="text-[15px] font-semibold tracking-tight text-ink">Capybara VPN</span>
         </a>
-        <p class="mt-4 text-[13.5px] leading-relaxed text-[#8b98a5]">
+        <p class="mt-4 text-[13.5px] leading-relaxed text-ink-2">
           Спокойный и быстрый VPN. Подключение через Telegram
           <span class="sr-only"> — Capybara VPN</span> или браузер.
           Тарифы от 249 ₽ — до 10 устройств на тариф
@@ -48,7 +49,7 @@ const groupKeys = Object.keys(GROUPS) as Group[];
             data-placement="footer"
             data-destination="browser"
           >
-            <Icon name="globe" class="h-4 w-4 text-[#8fc3c4]" />
+            <Icon name="globe" class="h-4 w-4 text-brand" />
             Браузер
             <span class="sr-only"> — Capybara VPN</span>
           </a>
@@ -61,7 +62,7 @@ const groupKeys = Object.keys(GROUPS) as Group[];
             data-placement="footer"
             data-destination="telegram"
           >
-            <Icon name="telegram" class="h-4 w-4 text-[#8fc3c4]" />
+            <Icon name="telegram" class="h-4 w-4 text-brand" />
             Telegram
           </a>
         </div>
@@ -71,11 +72,12 @@ const groupKeys = Object.keys(GROUPS) as Group[];
         class="flex flex-wrap gap-x-6 gap-y-2 self-start text-[14px] sm:col-span-2 lg:col-span-2"
         aria-label="Разделы сайта"
       >
-        <a href={withBase('/#benefits')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Возможности</a>
-        <a href={withBase('/#how')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Как это работает</a>
-        <a href={withBase('/#platforms')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Устройства</a>
-        <a href={withBase('/#pricing')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">Тарифы</a>
-        <a href={withBase('/#faq')} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">FAQ</a>
+        <a href={withBase('/#benefits')} class="py-2 text-ink-2 transition-colors hover:text-ink">Возможности</a>
+        <a href={withBase('/#how')} class="py-2 text-ink-2 transition-colors hover:text-ink">Как это работает</a>
+        <a href={withBase('/#platforms')} class="py-2 text-ink-2 transition-colors hover:text-ink">Устройства</a>
+        <a href={withBase('/#pricing')} class="py-2 text-ink-2 transition-colors hover:text-ink">Тарифы</a>
+        <a href={withBase('/#faq')} class="py-2 text-ink-2 transition-colors hover:text-ink">FAQ</a>
+        <a href={withBase('/status/')} class="py-2 text-ink-2 transition-colors hover:text-ink">Статус серверов</a>
       </nav>
 
       {
@@ -89,7 +91,7 @@ const groupKeys = Object.keys(GROUPS) as Group[];
             data-footer-default={group === 'установка' || group === 'сервис' ? 'open' : undefined}
           >
             <summary>
-              <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b98a5]">
+              <span class="mono text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-3">
                 {GROUPS[group].title}
               </span>
               {/* No Tailwind display utilities on this span: the md+ hide rule
@@ -105,7 +107,7 @@ const groupKeys = Object.keys(GROUPS) as Group[];
                   {guides
                     .filter((g) => g.group === group)
                     .map((g) => (
-                      <a href={withBase(g.href)} class="py-2 text-[#9aa6b2] transition-colors hover:text-white">
+                      <a href={withBase(g.href)} class="py-2 text-ink-2 transition-colors hover:text-ink">
                         {g.title}
                       </a>
                     ))}
@@ -118,21 +120,26 @@ const groupKeys = Object.keys(GROUPS) as Group[];
     </div>
   </div>
 
-  <div class="border-t border-white/6">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-5 text-[12.5px] text-[#8b98a5] sm:px-6">
+  <!-- type moment: the brand name as an outline watermark -->
+  <div class="overflow-hidden px-4 pb-2 sm:px-6" aria-hidden="true">
+    <p class="footer-watermark mx-auto max-w-6xl text-[clamp(2.4rem,10.4vw,7.8rem)]">CAPYBARA VPN</p>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-5 text-[12.5px] text-ink-3 sm:px-6">
       <p>© {year} Capybara VPN. Все права защищены.</p>
       {/* Legal links live next to the copyright — audit 2026-11-11: the site
           collects analytics consent, so policy/terms/contacts must be
           reachable from every page. */}
       <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
-        <a href={withBase('/privacy/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Политика</a>
-        <a href={withBase('/oferta/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Условия</a>
-        <a href={withBase('/refund/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Возврат</a>
-        <a href={withBase('/contacts/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Контакты</a>
-        <a href={withBase('/status/')} class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white">Статус серверов</a>
+        <a href={withBase('/privacy/')} class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink">Политика</a>
+        <a href={withBase('/oferta/')} class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink">Условия</a>
+        <a href={withBase('/refund/')} class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink">Возврат</a>
+        <a href={withBase('/contacts/')} class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink">Контакты</a>
+        <a href={withBase('/status/')} class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink">Статус серверов</a>
         <a
           href={withBase('/pricing.md')}
-          class="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+          class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink"
           title="Тарифы в Markdown — для ИИ-агентов и покупающих ботов"
         >
           Тарифы в Markdown

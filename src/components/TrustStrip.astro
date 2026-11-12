@@ -13,7 +13,10 @@ const items: { icon: IconName; title: string; note: string }[] = [
 ] as const;
 ---
 
-<section aria-label="Ключевые факты о Capybara VPN" class="relative border-y border-white/8 bg-[#0e1219]/80">
+<section
+  aria-label="Ключевые факты о Capybara VPN"
+  class="relative border-y border-line bg-bg-2"
+>
   <div class="rail overflow-clip" role="list" tabindex="0" aria-label="Ключевые факты о Capybara VPN">
     <div class="rail-track flex w-max items-center will-change-transform">
       {
@@ -21,14 +24,14 @@ const items: { icon: IconName; title: string; note: string }[] = [
           <div class="flex items-center" aria-hidden={dup === 1 ? 'true' : undefined}>
             {items.map((it) => (
               <div role={dup === 0 ? 'listitem' : undefined} class="flex items-center gap-3 px-7 py-4">
-                <span class="flex h-9 w-9 items-center justify-center rounded-full border border-[#60a1a3]/30 bg-[#60a1a3]/10 text-[#8fc3c4]">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full border border-brand/30 bg-brand-soft text-brand">
                   <Icon name={it.icon} class="h-4.5 w-4.5" />
                 </span>
                 <span class="leading-tight">
-                  <span class="block text-[14.5px] font-semibold text-white">{it.title}</span>
-                  <span class="block text-[12px] text-[#8b98a5]">{it.note}</span>
+                  <span class="block text-[14.5px] font-semibold text-ink">{it.title}</span>
+                  <span class="block text-[12px] text-ink-3">{it.note}</span>
                 </span>
-                <span class="ml-5 h-1 w-1 rounded-full bg-white/15" aria-hidden="true" />
+                <span class="ml-5 h-1 w-1 rounded-full bg-line-strong" aria-hidden="true" />
               </div>
             ))}
           </div>

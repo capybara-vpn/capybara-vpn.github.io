@@ -78,14 +78,14 @@ const autoCount = 11;
 >
   <div id="status-root" class="not-prose">
     <!-- summary strip -->
-    <div class="glass relative overflow-hidden rounded-3xl p-6 sm:p-8">
+    <div class="card spot relative overflow-hidden p-6 sm:p-8">
       <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div class="min-w-0">
-          <p class="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#8fc3c4]">Сводка</p>
-          <p id="status-summary" class="mt-1.5 text-[17px] font-semibold text-white">
+          <p class="mono text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">Сводка</p>
+          <p id="status-summary" class="mt-2 text-[17px] font-semibold text-ink">
             Нажмите «Проверить сейчас» — опросим {mainServers.length} локаций
           </p>
-          <p id="status-time" class="mt-1 text-[13px] text-[#8b98a5]">Последняя проверка: —</p>
+          <p id="status-time" class="mono mt-1.5 text-[12.5px] text-ink-3">Последняя проверка: —</p>
         </div>
         <button
           id="status-run"
@@ -96,32 +96,32 @@ const autoCount = 11;
           <span id="status-run-label">Проверить сейчас</span>
         </button>
       </div>
-      <div class="mt-5 grid grid-cols-3 gap-2 sm:gap-3" role="presentation">
-        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
-          <p id="count-ok" class="display text-[24px] text-white sm:text-[26px]">—</p>
-          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">отвечают</p>
+      <div class="mt-6 grid grid-cols-3 gap-2 sm:gap-3" role="presentation">
+        <div class="hairline rounded-2xl bg-surface-2/70 px-1 py-3.5 text-center sm:px-3">
+          <p id="count-ok" class="display text-[24px] text-ink sm:text-[26px]">—</p>
+          <p class="mt-1 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-ink-3 sm:text-[11px] sm:tracking-[0.1em]">отвечают</p>
         </div>
-        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
-          <p id="count-fail" class="display text-[24px] text-white sm:text-[26px]">—</p>
-          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">не отвечают</p>
+        <div class="hairline rounded-2xl bg-surface-2/70 px-1 py-3.5 text-center sm:px-3">
+          <p id="count-fail" class="display text-[24px] text-ink sm:text-[26px]">—</p>
+          <p class="mt-1 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-ink-3 sm:text-[11px] sm:tracking-[0.1em]">не отвечают</p>
         </div>
-        <div class="hairline rounded-2xl bg-white/[0.03] px-1 py-3 text-center sm:px-3">
-          <p class="display text-[24px] text-white sm:text-[26px]">{mainServers.length + gameServers.length + autoCount}</p>
-          <p class="mt-0.5 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-[#8b98a5] sm:text-[11.5px] sm:tracking-[0.1em]">всего</p>
+        <div class="hairline rounded-2xl bg-surface-2/70 px-1 py-3.5 text-center sm:px-3">
+          <p class="display text-[24px] text-ink sm:text-[26px]">{mainServers.length + gameServers.length + autoCount}</p>
+          <p class="mt-1 whitespace-nowrap text-[10px] uppercase tracking-[0.06em] text-ink-3 sm:text-[11px] sm:tracking-[0.1em]">всего</p>
         </div>
       </div>
     </div>
 
     <!-- main list -->
-    <h2 class="mt-12 text-[24px] font-semibold tracking-tight text-white">Основные локации</h2>
-    <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
+    <h2 class="mt-12 text-[24px] font-bold tracking-[-0.02em] text-ink">Основные локации</h2>
+    <p class="mt-1.5 text-[14.5px] leading-relaxed text-ink-2">
       Проверка стучится на порт сервера и замеряет время ответа: соединение
       прогревается, затем делается два замера — показывается лучший, чтобы
       исключить помехи первого подключения. Значение — оценка из вашего
       браузера, а не замер скорости.
     </p>
     <!-- legend -->
-    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#9aa6b2]">
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-ink-2">
       <span class="inline-flex items-center gap-2">
         <span class="status-dot status-dot-ok"></span>
         работает, отклик нормальный
@@ -135,8 +135,8 @@ const autoCount = 11;
         сервер не отвечает
       </span>
     </div>
-    <div id="status-grid" class="glass mt-5 overflow-hidden rounded-3xl">
-      <div class="hidden grid-cols-[1.3fr_1.2fr_auto] gap-4 border-b border-white/8 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5] sm:grid">
+    <div id="status-grid" class="card mt-5 overflow-hidden !rounded-3xl">
+      <div class="mono hidden grid-cols-[1.3fr_1.2fr_auto] gap-4 border-b border-line px-6 py-3.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-ink-3 sm:grid">
         <span>Локация</span>
         <span>Протокол</span>
         <span class="text-right">Отклик</span>
@@ -144,20 +144,20 @@ const autoCount = 11;
       {
         mainServers.map((s) => (
           <div
-            class="status-row flex items-center gap-3.5 border-b border-white/8 px-4 py-3.5 transition-colors last:border-b-0 hover:bg-white/[0.03] sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6"
+            class="status-row flex items-center gap-3.5 border-b border-line px-4 py-3.5 transition-colors last:border-b-0 hover:bg-surface-2/60 sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6"
             data-probe={s.host}
           >
             <div class="flex min-w-0 items-center gap-3">
               <span class="text-[22px] leading-none" aria-hidden="true">{s.flag}</span>
               <span class="min-w-0">
-                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-white">{s.name}</span>
-                <span class="block text-[12.5px] leading-snug text-[#8b98a5] sm:hidden">{s.speed}</span>
+                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-ink">{s.name}</span>
+                <span class="mono block text-[11.5px] leading-snug text-ink-3 sm:hidden">{s.speed}</span>
               </span>
             </div>
-            <span class="hidden min-w-0 text-[13px] text-[#9aa6b2] sm:block">{s.proto} · {s.speed}</span>
+            <span class="hidden min-w-0 text-[13px] text-ink-2 sm:block">{s.proto} · {s.speed}</span>
             <div class="ml-auto flex shrink-0 items-center justify-end gap-2.5 sm:ml-0">
               <span class="status-dot" data-dot></span>
-              <span class="min-w-[86px] text-right text-[13px] font-medium text-[#9aa6b2]" data-result>не проверено</span>
+              <span class="mono min-w-[86px] text-right text-[12.5px] font-medium text-ink-2" data-result>не проверено</span>
             </div>
           </div>
         ))
@@ -165,25 +165,25 @@ const autoCount = 11;
     </div>
 
     <!-- game servers -->
-    <h2 class="mt-12 text-[24px] font-semibold tracking-tight text-white">Игровые серверы</h2>
-    <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
+    <h2 class="mt-12 text-[24px] font-bold tracking-[-0.02em] text-ink">Игровые серверы</h2>
+    <p class="mt-1.5 text-[14.5px] leading-relaxed text-ink-2">
       Работают по протоколу Hysteria2 поверх QUIC — браузерная проверка порта для них не показательна, поэтому статус показывает дежурное состояние.
     </p>
-    <div class="glass mt-5 overflow-hidden rounded-3xl">
+    <div class="card mt-5 overflow-hidden !rounded-3xl">
       {
         gameServers.map((s) => (
-          <div class="flex items-center gap-3.5 border-b border-white/8 px-4 py-3.5 last:border-b-0 sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6">
+          <div class="flex items-center gap-3.5 border-b border-line px-4 py-3.5 last:border-b-0 sm:grid sm:grid-cols-[1.3fr_1.2fr_auto] sm:items-center sm:gap-4 sm:px-6">
             <div class="flex min-w-0 items-center gap-3">
               <span class="text-[22px] leading-none" aria-hidden="true">{s.flag}</span>
               <span class="min-w-0">
-                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-white">{s.name}</span>
-                <span class="block text-[12.5px] leading-snug text-[#8b98a5] sm:hidden">{s.speed}</span>
+                <span class="block text-[15px] font-semibold leading-snug tracking-tight text-ink">{s.name}</span>
+                <span class="mono block text-[11.5px] leading-snug text-ink-3 sm:hidden">{s.speed}</span>
               </span>
             </div>
-            <span class="hidden min-w-0 text-[13px] text-[#9aa6b2] sm:block">{s.proto} · {s.speed}</span>
+            <span class="hidden min-w-0 text-[13px] text-ink-2 sm:block">{s.proto} · {s.speed}</span>
             <div class="ml-auto flex shrink-0 items-center justify-end gap-2.5 sm:ml-0">
               <span class="status-dot status-dot-idle" title="QUIC-сервер не пингуется из браузера"></span>
-              <span class="min-w-[86px] text-right text-[13px] font-medium text-[#9aa6b2]">в работе</span>
+              <span class="mono min-w-[86px] text-right text-[12.5px] font-medium text-ink-2">в работе</span>
             </div>
           </div>
         ))
@@ -191,10 +191,10 @@ const autoCount = 11;
     </div>
 
     <!-- auto-bypass summary -->
-    <div class="glass mt-10 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:gap-4">
+    <div class="card spot mt-10 flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:gap-4">
       <span class="text-[24px] leading-none" aria-hidden="true">⚡</span>
-      <p class="min-w-0 flex-1 text-[14.5px] leading-relaxed text-[#9aa6b2]">
-        <strong class="font-semibold text-white">Авто-обход</strong> — {autoCount} точек
+      <p class="min-w-0 flex-1 text-[14.5px] leading-relaxed text-ink-2">
+        <strong class="font-semibold text-ink">Авто-обход</strong> — {autoCount} точек
         подключения с автоматическим выбором рабочей. Клиент переключает их
         самостоятельно, отдельная проверка не нужна: если одна точка замолчала,
         подписка перейдёт на следующую.

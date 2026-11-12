@@ -17,4 +17,8 @@ export type IconName =
   | 'grid'
   | 'terminal'
   | 'tv'
-  | 'card';
+  | 'card'
+  | 'moon'
+  | 'sun'
+  | 'burger'
+  | 'close';

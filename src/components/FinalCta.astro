@@ -2,16 +2,21 @@
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-
 ---
 
-<section id="final" class="relative overflow-hidden border-t border-white/8" aria-labelledby="final-title">
-  <div class="ambient left-1/2 top-1/2 h-[480px] w-[min(820px,100vw)] -translate-x-1/2 -translate-y-1/2 bg-[#60a1a3]/16" aria-hidden="true"></div>
-  <div class="dotgrid absolute inset-0 opacity-50" aria-hidden="true"></div>
+<!-- Closing band: always dark (theme-dark scope + its own ink surface), so
+     the page ends on ink in both themes. -->
+<section
+  id="final"
+  class="theme-dark relative overflow-hidden border-t border-line bg-[oklch(15%_0.014_210)]"
+  aria-labelledby="final-title"
+>
+  <div class="ambient left-1/2 top-1/2 h-[480px] w-[min(820px,100vw)] -translate-x-1/2 -translate-y-1/2" style="background: var(--glow)" aria-hidden="true"></div>
+  <div class="dotgrid absolute inset-0 opacity-60" aria-hidden="true"></div>
 
   <div class="reveal relative mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:py-32">
-    <Logo class="h-24 w-24 rounded-full object-cover shadow-[0_24px_70px_-22px_rgba(96,161,163,0.32)] ring-1 ring-white/20 sm:h-28 sm:w-28" alt={site.logo.alt} large />
-    <h2 id="final-title" class="display mt-8 text-[42px] text-white sm:text-6xl">
+    <Logo class="h-24 w-24 rounded-full object-cover shadow-[0_24px_70px_-22px_rgba(96,161,163,0.32)] ring-1 ring-line-strong sm:h-28 sm:w-28" alt={site.logo.alt} large />
+    <h2 id="final-title" class="display mt-8 text-[clamp(2rem,1.2rem+3vw,3.4rem)] text-ink">
       Попробуйте Capybara сегодня
     </h2>
     <p class="lead mt-4 max-w-xl text-[16px]">
@@ -46,6 +51,6 @@ import Logo from './Logo.astro';
         <span class="sr-only"> — Capybara VPN</span>
       </a>
     </div>
-    <p class="mt-5 text-[13px] text-[#8b98a5]">1 день бесплатно, без карты · до 10 устройств / тариф · VLESS · 38 локаций</p>
+    <p class="mono mt-6 text-[12px] tracking-wide text-ink-3">1 день бесплатно, без карты · до 10 устройств / тариф · VLESS · 38 локаций</p>
   </div>
 </section>

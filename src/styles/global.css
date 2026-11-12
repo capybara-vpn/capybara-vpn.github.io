@@ -1,28 +1,194 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --color-ink: #0b0e14;
-  --color-ink-2: #12151c;
-  --color-ink-3: #1a1f2a;
-  --color-cream: #f2f4f3;
-  --color-muted: #9aa6b2;
-  --color-faint: #8b98a5;
-  --color-teal: #60a1a3;
-  --color-teal-soft: #8fc3c4;
-  --color-teal-deep: #3c6f71;
-  --color-line: rgba(255, 255, 255, 0.09);
+/* ============================================================
+   Capybara VPN — design system "Спокойная вода"
+   ------------------------------------------------------------
+   One token set, two themes. Light (warm paper, deep green) is
+   the new default; dark keeps the site's original night identity.
+   Themes are plain custom properties on <html data-theme>, so a
+   whole subtree can flip with a single scope class (.theme-dark).
+   Tailwind utilities are mapped onto the tokens via `@theme inline`
+   — bg-brand, text-ink, border-line, etc. follow the theme.
+   ============================================================ */
+
+/* ---------- theme tokens ----------
+   Dark is the brand default (owner, 2026-11-13): :root carries the night
+   palette and light is strictly opt-in via the header toggle, which sets
+   html[data-theme="light"]. The boot script always sets data-theme before
+   first paint; without JS the dark default simply stays. */
+:root {
+  color-scheme: dark;
+
+  --bg: oklch(17.5% 0.014 210);
+  --bg-2: oklch(19.8% 0.016 210);
+  --surface: oklch(21.5% 0.017 210);
+  --surface-2: oklch(24.5% 0.019 210);
+  --ink: oklch(93% 0.012 115);
+  --ink-2: oklch(72% 0.02 165);
+  --ink-3: oklch(60% 0.02 170);
+  --brand: oklch(72% 0.1 170);
+  --brand-strong: oklch(78% 0.1 170);
+  --brand-ink: oklch(19% 0.03 185);
+  --brand-soft: oklch(30% 0.045 175);
+  --brand-ring: oklch(72% 0.1 170);
+  --amber: oklch(80% 0.12 78);
+  --amber-ink: oklch(82% 0.115 78);
+  --amber-soft: oklch(30% 0.05 80);
+  --line: oklch(90% 0.02 150 / 10%);
+  --line-strong: oklch(90% 0.02 150 / 18%);
+  --glass-bg: oklch(20% 0.017 210 / 72%);
+  --glass-line: oklch(90% 0.02 150 / 9%);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 24%), 0 18px 44px -16px oklch(0% 0 0 / 46%);
+  --shadow-pop: 0 2px 4px oklch(0% 0 0 / 30%), 0 28px 72px -20px oklch(0% 0 0 / 60%);
+  --glow: oklch(70% 0.1 170 / 17%);
+  --glow-warm: oklch(80% 0.1 80 / 10%);
+  --spot: oklch(75% 0.1 170 / 8%);
+  --noise-opacity: 0.05;
+  --sel: oklch(72% 0.1 170 / 40%);
 }
 
-/* Base element styles live in the `base` layer so Tailwind utilities
-   (which sit in the later `utilities` layer) can always override them. */
-/* ---------- fonts ----------
-   The webfont arrives a moment after the first paint on a slow connection,
-   and a plain system-font fallback has different metrics: the text then
-   reflows when Inter swaps in (a visible jump in the hero and a layout
-   shift). "Inter Fallback" is the system font with Inter's own metrics
-   (size-adjust / ascent / descent overrides), so the swap changes nothing
-   on screen. */
+/* ---------- theme tokens (light, on system light preference) ---------- */
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: oklch(97.7% 0.008 100);            /* warm paper */
+  --bg-2: oklch(95.9% 0.01 95);            /* band background */
+  --surface: oklch(100% 0 0);              /* raised cards */
+  --surface-2: oklch(96.4% 0.008 100);     /* inset chips */
+  --ink: oklch(24.5% 0.02 175);            /* deep green-black */
+  --ink-2: oklch(45% 0.018 170);           /* secondary text */
+  --ink-3: oklch(54% 0.016 170);           /* tertiary text */
+  --brand: oklch(49% 0.097 170);           /* deep water green */
+  --brand-strong: oklch(42% 0.095 172);
+  --brand-ink: oklch(98% 0.012 130);       /* text on brand */
+  --brand-soft: oklch(92.5% 0.04 170);     /* tinted chip */
+  --brand-ring: oklch(58% 0.11 170);
+  --amber: oklch(78% 0.125 75);            /* capybara warmth */
+  --amber-ink: oklch(50% 0.115 70);
+  --amber-soft: oklch(94% 0.045 85);
+  --line: oklch(25% 0.02 175 / 11%);
+  --line-strong: oklch(25% 0.02 175 / 20%);
+  --glass-bg: oklch(100% 0 0 / 62%);
+  --glass-line: oklch(25% 0.02 175 / 10%);
+  --shadow-card: 0 1px 2px oklch(25% 0.02 175 / 5%), 0 16px 40px -16px oklch(25% 0.02 175 / 16%);
+  --shadow-pop: 0 2px 4px oklch(25% 0.02 175 / 6%), 0 24px 64px -20px oklch(25% 0.02 175 / 28%);
+  --glow: oklch(70% 0.09 170 / 22%);
+  --glow-warm: oklch(80% 0.1 80 / 18%);
+  --spot: oklch(60% 0.1 170 / 9%);         /* card spotlight */
+  --noise-opacity: 0.04;
+  --sel: oklch(80% 0.09 170 / 45%);
+}
+
+/* No JS: no toggle is reachable, so the dark default simply stays. Light
+   requires an explicit choice (html[data-theme="light"] from the toggle). */
+
+/* A subtree that must stay dark regardless of the page theme
+   (footer, closing band): re-declare the dark tokens locally. */
+.theme-dark {
+  color-scheme: dark;
+  --bg: oklch(15% 0.014 210);
+  --bg-2: oklch(17.5% 0.014 210);
+  --surface: oklch(20% 0.017 210);
+  --surface-2: oklch(23.5% 0.019 210);
+  --ink: oklch(92% 0.012 115);
+  --ink-2: oklch(70% 0.02 165);
+  --ink-3: oklch(58% 0.02 170);
+  --brand: oklch(72% 0.1 170);
+  --brand-strong: oklch(78% 0.1 170);
+  --brand-ink: oklch(19% 0.03 185);
+  --brand-soft: oklch(29% 0.045 175);
+  --brand-ring: oklch(72% 0.1 170);
+  --amber: oklch(80% 0.12 78);
+  --amber-ink: oklch(82% 0.115 78);
+  --amber-soft: oklch(29% 0.05 80);
+  --line: oklch(90% 0.02 150 / 10%);
+  --line-strong: oklch(90% 0.02 150 / 18%);
+  --glass-bg: oklch(19% 0.017 210 / 72%);
+  --glass-line: oklch(90% 0.02 150 / 9%);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 24%), 0 18px 44px -16px oklch(0% 0 0 / 46%);
+  --shadow-pop: 0 2px 4px oklch(0% 0 0 / 30%), 0 28px 72px -20px oklch(0% 0 0 / 60%);
+  --glow: oklch(70% 0.1 170 / 16%);
+  --glow-warm: oklch(80% 0.1 80 / 9%);
+  --spot: oklch(75% 0.1 170 / 8%);
+  --noise-opacity: 0.05;
+  --sel: oklch(72% 0.1 170 / 40%);
+}
+
+/* ---------- tailwind theme mapping ---------- */
+@theme inline {
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Unbounded", "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  /* No monospace face by design (owner, 2026-11-13): the "data voice" is
+     Inter with tabular figures, see .mono below. The token stays so older
+     utilities keep resolving. */
+  --font-mono: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-amber: var(--amber);
+  --color-amber-ink: var(--amber-ink);
+  --color-amber-soft: var(--amber-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+}
+
+/* ---------- base element styles ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Fixed floating header (~64px + gap). */
+    scroll-padding-top: 92px;
+    overflow-x: clip;
+    interpolate-size: allow-keywords; /* progressive: smooth height:auto in time */
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  ::selection {
+    background: var(--sel);
+    color: var(--ink);
+  }
+
+  /* Thin, quiet scrollbar that follows the theme. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--ink) 22%, transparent) transparent;
+  }
+
+  /* Body copy sits in sections: keep measure comfortable on wide screens. */
+  p { text-wrap: pretty; }
+  h1, h2, h3, h4 { text-wrap: balance; }
+
+  /* Instant feedback on press (fluid interfaces: respond on down). */
+  button, summary, a { -webkit-tap-highlight-color: transparent; }
+  button:active { transition: transform 0.08s ease-out; }
+}
+
+/* ---------- components ----------
+   Registered in the `components` layer so Tailwind utilities (later
+   `utilities` layer) always outrank them. */
+@layer components {
+
+/* ---------- fonts fallback metrics (kept from the old system) ----------
+   "Inter Fallback" is the system font with Inter's own metrics, so the
+   swap never reflows text. */
 @font-face {
   font-family: "Inter Fallback";
   src: local("Arial"), local("Liberation Sans"), local("Roboto"), local("Helvetica Neue"), local("DejaVu Sans");
@@ -32,83 +198,119 @@
   line-gap-override: 0%;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    /* Matches the fixed header height (99px) plus a small gap. */
-    scroll-padding-top: 112px;
-    overflow-x: clip;
-  }
-
-  /* Below 1024px the header carries the extra sub-nav row (147px). */
-  @media (max-width: 1023px) {
-    html {
-      scroll-padding-top: 164px;
-    }
-  }
-
-  body {
-    background: var(--color-ink);
-    color: var(--color-cream);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    overflow-x: clip;
-  }
-
-  ::selection {
-    background: rgba(96, 161, 163, 0.35);
-    color: #fff;
-  }
-}
-
-/* ---------- components ----------
-   Every custom class below is registered in the `components` layer.
-   Unlayered rules outrank ALL layered rules regardless of specificity,
-   so an unlayered `.btn { display: inline-flex }` used to beat Tailwind's
-   `hidden` utility (both specificity 0-1-0) and the "Тарифы" button
-   stayed visible below 640px. Keeping our classes in `components` puts
-   them below `utilities` in the cascade, so utilities win as intended. */
-@layer components {
-
-/* ---------- surfaces ---------- */
+/* ---------- materials ---------- */
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
-  border: 1px solid var(--color-line);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
 }
 
 .hairline {
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--line);
 }
 
-.eyebrow {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-teal-soft);
-  /* Dash is painted on the element itself (not a separate node or
-     pseudo-element) so translators, extensions and any browser
-     cannot drop it independently of the text. */
-  background: linear-gradient(var(--color-teal), var(--color-teal)) left
-    center / 22px 1px no-repeat;
-  padding-left: calc(22px + 0.5rem);
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card);
 }
 
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease,
+    box-shadow 0.3s ease, background 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--brand) 35%, var(--line));
+  box-shadow: var(--shadow-pop);
+}
+.card-hover:hover .icon-wrap {
+  transform: translateY(-2px) scale(1.06);
+}
+.icon-wrap {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease, background 0.3s ease;
+}
+
+/* Pointer spotlight on cards: the client script writes --mx/--my in px,
+   the overlay is a radial gradient parked at the pointer. Pure decoration,
+   pointer-events none. */
+.spot {
+  position: relative;
+  overflow: hidden;
+}
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    var(--spot),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.spot:hover::before {
+  opacity: 1;
+}
+
+/* ---------- typography voices ---------- */
 .display {
-  font-weight: 650;
-  letter-spacing: -0.035em;
-  line-height: 0.98;
+  font-family: var(--font-display);
+  font-weight: 540;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
   text-wrap: balance;
+  font-variation-settings: "wght" 540;
 }
 
 .lead {
-  color: var(--color-muted);
-  line-height: 1.6;
+  color: var(--ink-2);
+  line-height: 1.65;
   text-wrap: pretty;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 560;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.4em;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand), color-mix(in oklab, var(--brand) 40%, transparent));
+}
+.eyebrow.justify-center { justify-content: center; }
+
+/* Data voice: same family as the page, tabular figures so numbers align. */
+.mono {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.01em;
+}
+
+.grad-text {
+  background: linear-gradient(
+    92deg,
+    var(--brand) 10%,
+    color-mix(in oklab, var(--brand) 55%, var(--amber)) 55%,
+    var(--brand) 95%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ---------- buttons ---------- */
@@ -117,43 +319,80 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  gap: 0.55rem;
+  font-weight: 590;
+  letter-spacing: -0.008em;
   border-radius: 999px;
-  transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease,
+    background 0.28s ease, border-color 0.28s ease, color 0.2s ease;
 }
-
 .btn:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px) scale(0.985);
+  transition-duration: 0.05s;
+}
+.btn .btn-arrow {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
 }
 
 .btn-primary {
-  background: linear-gradient(180deg, #7dbdbf, #60a1a3 55%, #4d888a);
-  color: #061114;
-  box-shadow: 0 0 0 1px rgba(143, 195, 196, 0.45) inset, 0 10px 34px -10px rgba(96, 161, 163, 0.65), 0 2px 10px rgba(0, 0, 0, 0.35);
+  background: var(--brand);
+  color: var(--brand-ink);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 30%, transparent),
+    0 10px 28px -10px color-mix(in oklab, var(--brand) 70%, transparent);
 }
-
 .btn-primary:hover {
-  box-shadow: 0 0 0 1px rgba(180, 230, 231, 0.6) inset, 0 14px 44px -10px rgba(96, 161, 163, 0.8), 0 2px 10px rgba(0, 0, 0, 0.35);
+  background: var(--brand-strong);
   transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 35%, transparent),
+    0 14px 36px -10px color-mix(in oklab, var(--brand) 80%, transparent);
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  color: var(--color-cream);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
 }
-
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(143, 195, 196, 0.5);
+  background: color-mix(in oklab, var(--brand) 7%, transparent);
+  border-color: color-mix(in oklab, var(--brand) 45%, var(--line));
   transform: translateY(-1px);
 }
 
+/* Dark-on-light solid for light surfaces inside dark scopes. */
+.btn-light {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn-light:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-pop);
+}
+
 .btn:focus-visible, a:focus-visible, summary:focus-visible, button:focus-visible, div[tabindex]:focus-visible {
-  outline: 2px solid #8fc3c4;
+  outline: 2px solid var(--brand-ring);
   outline-offset: 3px;
+  border-radius: 6px;
+}
+.btn:focus-visible { border-radius: 999px; }
+
+/* ---------- chips & badges ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 550;
+  color: var(--ink-2);
 }
 
 /* ---------- background decor ---------- */
@@ -163,7 +402,7 @@
   inset: 0;
   z-index: 40;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: var(--noise-opacity);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
 
@@ -175,48 +414,17 @@
 }
 
 .dotgrid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.13) 1px, transparent 1px);
+  background-image: radial-gradient(color-mix(in oklab, var(--ink) 16%, transparent) 1px, transparent 1px);
   background-size: 26px 26px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 35%, black 25%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 35%, black 25%, transparent 72%);
 }
 
-/* ---------- hero orbit ---------- */
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
-@keyframes spin-rev {
-  to { transform: rotate(-360deg); }
-}
-@keyframes floaty {
-  0%, 100% { transform: translateY(-7px); }
-  50% { transform: translateY(7px); }
-}
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.06); }
-}
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(10px, -12px); }
-}
-
-.orbit-slow { animation: spin-slow 46s linear infinite; }
-.orbit-rev { animation: spin-rev 64s linear infinite; }
-.floaty { animation: floaty 7s ease-in-out infinite; }
-.floaty-2 { animation: floaty 9s ease-in-out 1.2s infinite; }
-.floaty-3 { animation: floaty 8s ease-in-out 0.6s infinite; }
-.glow-pulse { animation: pulse-glow 7s ease-in-out infinite; }
-
-/* ---------- hero entrance ----------
-   A pure CSS animation, so the first screen paints as soon as the stylesheet
-   arrives. The previous transition needed a class toggled by the module
-   script, which on a slow connection meant the whole hero stayed at
-   opacity:0 until the JS had loaded and run. */
+/* ---------- hero entrance (pure CSS: paints with the stylesheet) ---------- */
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(22px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -224,14 +432,14 @@
   }
 }
 [data-hero-in] {
-  animation: hero-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--hero-i, 0) * 60ms);
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--hero-i, 0) * 70ms);
 }
 
-/* ---------- reveal ---------- */
+/* ---------- reveal on scroll ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(24px);
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
@@ -240,12 +448,16 @@
   transform: none;
 }
 
-/* ---------- marquee ---------- */
+/* ---------- marquee rail ---------- */
 @keyframes rail {
   to { transform: translateX(-50%); }
 }
+.rail {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
 .rail-track {
-  animation: rail 36s linear infinite;
+  animation: rail 40s linear infinite;
 }
 .rail:hover .rail-track,
 .rail:focus-within .rail-track,
@@ -253,34 +465,110 @@
   animation-play-state: paused;
 }
 
-/* ---------- cards ---------- */
-.card-lift {
-  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+/* ---------- connection-card loop (hero illustration) ---------- */
+@keyframes slide-cycle {
+  /* 3 slides x 3.2s; each row visible ~1/3 of the cycle */
+  0%, 26% { opacity: 1; transform: translateY(0); }
+  33%, 93% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
-/* Glow budget: the primary action and the brand mark are the only two
-   elements that emit colour light. Cards and rows get neutral depth. */
-.card-lift:hover {
-  transform: translateY(-4px);
-  border-color: rgba(143, 195, 196, 0.4);
-  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.7), 0 8px 24px rgba(0, 0, 0, 0.4);
+.slide-cycle > * {
+  animation: slide-cycle 9.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
-.card-lift:hover .icon-wrap {
-  transform: translateY(-2px) scale(1.05);
+.slide-cycle > *:nth-child(2) { animation-delay: -3.2s; }
+.slide-cycle > *:nth-child(3) { animation-delay: -6.4s; }
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -36; }
 }
-.icon-wrap {
-  transition: transform 0.28s ease, color 0.28s ease;
+.spark-flow {
+  stroke-dasharray: 5 7;
+  animation: dash-flow 1.6s linear infinite;
 }
 
-/* ---------- faq ---------- */
+@keyframes ping-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.86); }
+}
+.ping-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  animation: ping-soft 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(-6px); }
+  50% { transform: translateY(6px); }
+}
+.floaty { animation: floaty 8s ease-in-out infinite; }
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+}
+.glow-pulse { animation: glow-pulse 8s ease-in-out infinite; }
+
+/* ---------- conic gradient border (featured plan) ---------- */
+@property --ga {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes conic-spin {
+  to { --ga: 360deg; }
+}
+.border-conic {
+  position: relative;
+  background-clip: padding-box;
+}
+.border-conic::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--ga),
+    var(--brand),
+    color-mix(in oklab, var(--brand) 40%, var(--amber)),
+    var(--amber),
+    var(--brand)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: conic-spin 7s linear infinite;
+  pointer-events: none;
+}
+
+/* ---------- faq ----------
+   Closing is JS-managed (see site.ts): the click on an open item is
+   cancelled, .is-closing pins the body at 0fr while the transition runs,
+   and [open] is removed on transitionend. Native instant-close never
+   happens, so the motion replays on every open/close, not just once. */
 details.faq {
-  border: 1px solid var(--color-line);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.025);
-  transition: border-color 0.25s ease, background 0.25s ease;
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: var(--surface);
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+/* .reveal also declares a transition; one declaration wins the cascade, so
+   spell out the combined list or the entrance fade is lost. */
+details.faq.reveal {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+details.faq:hover {
+  border-color: var(--line-strong);
 }
 details.faq[open] {
-  border-color: rgba(143, 195, 196, 0.35);
-  background: rgba(96, 161, 163, 0.07);
+  border-color: color-mix(in oklab, var(--brand) 40%, var(--line));
+  box-shadow: var(--shadow-card);
 }
 details.faq summary {
   list-style: none;
@@ -289,18 +577,46 @@ details.faq summary {
 details.faq summary::-webkit-details-marker {
   display: none;
 }
-details.faq summary .chev {
-  transition: transform 0.3s ease;
+details.faq summary .plus {
+  position: relative;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;
 }
-details.faq[open] summary .chev {
+details.faq summary .plus::before,
+details.faq summary .plus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 1.6px;
+  border-radius: 2px;
+  background: var(--brand);
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+details.faq summary .plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+details.faq[open] summary .plus {
+  background: var(--brand-soft);
+  border-color: color-mix(in oklab, var(--brand) 45%, var(--line));
   transform: rotate(180deg);
+}
+details.faq[open] summary .plus::after {
+  transform: translate(-50%, -50%) rotate(0deg);
 }
 details.faq .faq-body {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
-details.faq[open] .faq-body {
+/* Open, unless a JS-managed close is in flight. */
+details.faq[open]:not(.is-closing) .faq-body {
   grid-template-rows: 1fr;
 }
 .faq-body > div {
@@ -309,36 +625,57 @@ details.faq[open] .faq-body {
 
 /* ---------- header ---------- */
 #site-header {
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-  border-bottom: 1px solid transparent;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease,
+    background 0.3s ease, border-color 0.3s ease;
 }
-#site-header.is-scrolled {
-  background: rgba(11, 14, 20, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.7);
+#site-header.is-scrolled .header-pill {
+  box-shadow: var(--shadow-pop);
 }
 
-/* horizontal mobile sub-nav: fade the trailing edge as a scroll affordance */
-#site-header .overflow-x-auto {
-  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
-}
-/* On lg the same strip lives inline in the header row without scrolling —
-   the fade edge must not fade the last link into nothing. */
-@media (min-width: 1024px) {
-  #site-header .overflow-x-auto {
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
+/* ---------- mobile menu sheet ---------- */
+/* A near-opaque veil: page content must not read through the links. */
+.menu-veil {
+  background: color-mix(in oklab, var(--bg) 90%, transparent);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
 }
 
-/* Footer guide columns: <details> accordions on mobile. From md up every
-   column is forced open by site.ts (matchMedia listener toggles .open) —
-   UA hiding then applies to nothing, and the regular flex column renders.
-   The chevron is hidden on desktop via .footer-chev, which carries no
-   Tailwind display utility that could out-rank this rule. */
+/* The open sheet owns the screen: the sticky dock, the consent card and the
+   cookie pill float at higher z-indexes and would punch through it. */
+html.menu-open #mobile-cta,
+html.menu-open #consent,
+html.menu-open #consent-manage-wrap {
+  visibility: hidden;
+}
+
+#mobile-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-14px);
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.45s;
+}
+#mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+#mobile-menu .menu-link {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--mi, 0) * 40ms);
+}
+#mobile-menu.open .menu-link {
+  opacity: 1;
+  transform: none;
+}
+html.menu-open, html.menu-open body {
+  overflow: hidden;
+}
+
+/* ---------- footer columns ---------- */
 details.footer-col summary {
   display: flex;
   align-items: center;
@@ -359,12 +696,10 @@ details.footer-col summary::-webkit-details-marker {
   width: 1.5rem;
   height: 1.5rem;
   margin-top: 0.125rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--line-strong);
   border-radius: 9999px;
-  color: #8fc3c4;
+  color: var(--brand);
 }
-/* Same smooth accordion motion as the FAQ block: grid-rows transition,
-   prefers-reduced-motion already zeroes it globally. */
 details.footer-col .footer-body {
   display: grid;
   grid-template-rows: 0fr;
@@ -385,8 +720,21 @@ details.footer-col[open] .footer-body {
   }
 }
 
-/* Whitelist checklist: square boxes instead of bullets — a visible "you can
-   check this yourself" affordance for the diagnostic section. */
+/* ---------- footer watermark ----------
+   Solid fill at very low opacity, not an outline: Unbounded's glyphs are
+   built from overlapping contours, and a text-stroke exposes the
+   construction as ugly wireframe lines. */
+.footer-watermark {
+  font-family: var(--font-display);
+  font-weight: 640;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: color-mix(in oklab, var(--ink) 6.5%, transparent);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ---------- checklist ---------- */
 .guide-body ul.checklist {
   list-style: none;
   padding-left: 0;
@@ -404,35 +752,36 @@ details.footer-col[open] .footer-body {
   top: 0.4em;
   width: 0.95em;
   height: 0.95em;
-  border: 1.5px solid rgba(143, 195, 196, 0.6);
+  border: 1.5px solid color-mix(in oklab, var(--brand) 65%, transparent);
   border-radius: 4px;
 }
 
-/* Server status page: status dots. Global (not scoped) on purpose — the
-   client script rewrites dot className at runtime, and Astro's scoped
-   attributes must not get in the way. */
+/* ---------- server status dots (client script rewrites className — global) ---------- */
 .status-dot {
   display: inline-block;
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.25);
+  background: color-mix(in oklab, var(--ink) 25%, transparent);
+}
+.status-dot-idle {
+  background: color-mix(in oklab, var(--ink) 25%, transparent);
 }
 .status-dot-check {
-  background: #f0b34e;
+  background: var(--amber);
   animation: status-pulse 1.1s ease-in-out infinite;
 }
 .status-dot-ok {
-  background: #8fc3c4;
-  box-shadow: 0 0 10px rgba(143, 195, 196, 0.5);
+  background: var(--brand);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--brand) 55%, transparent);
 }
 .status-dot-slow {
-  background: #f0b34e;
-  box-shadow: 0 0 10px rgba(240, 179, 78, 0.4);
+  background: var(--amber);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--amber) 45%, transparent);
 }
 .status-dot-fail {
-  background: #e06060;
-  box-shadow: 0 0 10px rgba(224, 96, 96, 0.4);
+  background: oklch(58% 0.19 25);
+  box-shadow: 0 0 10px oklch(58% 0.19 25 / 45%);
 }
 @keyframes status-pulse {
   0%, 100% { opacity: 1; }
@@ -442,15 +791,14 @@ details.footer-col[open] .footer-body {
   .status-dot-check { animation: none; }
 }
 
-/* forced-colors (Windows High Contrast): gradient text would vanish — fall back to CanvasText */
-@media (forced-colors: active) {
-  .bg-clip-text.text-transparent,
-  .display.text-transparent {
-    background: none;
-    color: CanvasText;
-    -webkit-text-stroke: 0;
-  }
+/* ---------- reading progress ---------- */
+#read-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  will-change: transform;
 }
+
+/* ---------- misc ---------- */
 [data-count] {
   font-variant-numeric: tabular-nums;
 }
@@ -459,8 +807,8 @@ details.footer-col[open] .footer-body {
   left: 16px;
   top: -60px;
   z-index: 100;
-  background: #60a1a3;
-  color: #061114;
+  background: var(--brand);
+  color: var(--brand-ink);
   font-weight: 700;
   padding: 10px 16px;
   border-radius: 12px;
@@ -479,7 +827,7 @@ details.footer-col[open] .footer-body {
   z-index: 1;
   pointer-events: none;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(96, 161, 163, 0.09), transparent 65%);
+  background: radial-gradient(circle, var(--glow), transparent 65%);
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -489,45 +837,69 @@ details.footer-col[open] .footer-body {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
 }
 #mobile-cta.is-hidden {
-  transform: translateY(120%);
+  transform: translateY(130%);
   opacity: 0;
   pointer-events: none;
 }
 
+/* horizontal scroll affordance: fade the trailing edge */
+.scroll-fade {
+  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+}
+
 /* ---------- guide articles ---------- */
 .guide-body {
-  color: var(--color-muted);
-  font-size: 16px;
+  color: var(--ink-2);
+  font-size: 16.5px;
   line-height: 1.75;
 }
 .guide-body > * + * {
   margin-top: 1.1em;
 }
 .guide-body h2 {
-  color: var(--color-cream);
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 640;
+  letter-spacing: -0.022em;
   font-size: 24px;
   line-height: 1.25;
-  margin-top: 2em !important;
+  margin-top: 2.2em !important;
+  /* a small tick that ties the heading to the brand, without a numbering scheme */
+  padding-left: 0.95em;
+  position: relative;
+}
+.guide-body h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.28em;
+  width: 4px;
+  height: 0.85em;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 45%, var(--amber)));
 }
 .guide-body h3 {
-  color: var(--color-cream);
-  font-weight: 600;
+  color: var(--ink);
+  font-weight: 620;
   font-size: 18px;
-  margin-top: 1.6em !important;
+  letter-spacing: -0.015em;
+  margin-top: 1.7em !important;
 }
 .guide-body strong {
-  color: var(--color-cream);
-  font-weight: 600;
+  color: var(--ink);
+  font-weight: 620;
 }
 .guide-body a {
-  color: var(--color-teal-soft);
+  color: var(--brand);
+  font-weight: 480;
   text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--brand) 35%, transparent);
   text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.2s ease, background 0.2s ease;
 }
 .guide-body a:hover {
-  color: #fff;
+  text-decoration-color: var(--brand);
 }
 .guide-body ul, .guide-body ol {
   padding-left: 1.3em;
@@ -537,13 +909,23 @@ details.footer-col[open] .footer-body {
 .guide-body ul {
   list-style: disc;
 }
+.guide-body ul li::marker {
+  color: var(--brand);
+}
 .guide-body ol {
   list-style: decimal;
 }
+.guide-body ol li::marker {
+  color: var(--brand);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 .guide-body blockquote {
-  border-left: 2px solid var(--color-teal);
-  padding: 0.2em 0 0.2em 1em;
-  color: var(--color-cream);
+  border-left: 3px solid var(--brand);
+  padding: 0.55em 0 0.55em 1.1em;
+  border-radius: 0 12px 12px 0;
+  background: color-mix(in oklab, var(--brand) 5%, transparent);
+  color: var(--ink);
 }
 .guide-body table {
   width: 100%;
@@ -551,39 +933,32 @@ details.footer-col[open] .footer-body {
   font-size: 14.5px;
   margin-top: 1.4em !important;
 }
-/* Wide comparison tables scroll inside their own box on a phone, so the
-   page itself never scrolls sideways. The box is focusable: a scrollable
-   region must be reachable with the keyboard. */
 .guide-body .table-scroll {
   margin-top: 1.4em;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
-  /* Scroll shadows without a line of JS: the two flat gradients are tied
-     to the scrollport (background-attachment: local) and cover the two
-     radial shadows (background-attachment: scroll) when an edge is
-     reached. The shadow is therefore visible exactly when there is more
-     table to the right — a wide comparison table is cut off in a 768px
-     column, and a silent cut-off reads as a broken layout. */
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  /* Scroll shadows without JS: the two flat gradients are tied to the
+     scrollport (background-attachment: local) and cover the two radial
+     shadows (background-attachment: scroll) when an edge is reached. */
   background-image:
-    linear-gradient(to right, var(--color-ink) 40%, rgba(11, 14, 20, 0)),
-    linear-gradient(to left, var(--color-ink) 40%, rgba(11, 14, 20, 0)),
-    radial-gradient(farthest-side at 0 50%, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0)),
-    radial-gradient(farthest-side at 100% 50%, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0));
+    linear-gradient(to right, var(--surface) 40%, transparent),
+    linear-gradient(to left, var(--surface) 40%, transparent),
+    radial-gradient(farthest-side at 0 50%, color-mix(in oklab, var(--ink) 12%, transparent), transparent),
+    radial-gradient(farthest-side at 100% 50%, color-mix(in oklab, var(--ink) 12%, transparent), transparent);
   background-position: left center, right center, left center, right center;
   background-repeat: no-repeat;
   background-size: 36px 100%, 36px 100%, 14px 100%, 14px 100%;
   background-attachment: local, local, scroll, scroll;
 }
-/* The line under a wide table: says out loud that it scrolls sideways. */
 .guide-body .table-hint {
   margin-top: 0.6em;
   font-size: 13px;
-  color: var(--color-faint);
+  color: var(--ink-3);
 }
-/* Six columns have to fit a 768px column: tighter cells and a hair
-   smaller type, so the table ends flush on a desktop screen and only
-   scrolls on a phone. */
 .guide-body .table-scroll.table-compare th,
 .guide-body .table-scroll.table-compare td {
   padding: 0.65em 0.7em;
@@ -594,68 +969,87 @@ details.footer-col[open] .footer-body {
   min-width: 640px;
 }
 .guide-body .table-scroll:focus-visible {
-  outline: 2px solid var(--color-teal);
+  outline: 2px solid var(--brand);
   outline-offset: 4px;
   border-radius: 6px;
 }
 .guide-body th, .guide-body td {
   text-align: left;
   padding: 0.7em 0.9em;
-  border-bottom: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--line);
+}
+.guide-body tr:last-child td {
+  border-bottom: 0;
 }
 .guide-body th {
-  color: var(--color-cream);
+  color: var(--ink-2);
   font-weight: 600;
-  font-size: 12.5px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
+}
+.guide-body thead th {
+  background: var(--surface-2);
 }
 .guide-body code {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid var(--color-line);
-  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 7px;
   padding: 0.1em 0.4em;
-  font-size: 0.9em;
-  color: var(--color-cream);
+  font-size: 0.88em;
+  font-family: var(--font-mono);
+  color: var(--ink);
+}
+.guide-body hr {
+  border: 0;
+  height: 1px;
+  margin: 2em 0 !important;
+  background: linear-gradient(90deg, var(--line-strong), transparent);
 }
 
 }
 
 /* ---------- state overrides (unlayered) ---------- */
-.card-lift:hover .icon-wrap {
-  color: #a8d8d9;
+.card-hover:hover .icon-wrap {
+  color: var(--brand);
 }
 
-/* Short viewports (small phones, or a phone in landscape): the hero has to
-   give up some height, otherwise the primary CTA ends up behind the consent
-   bar and below the fold. The header shrinks too — the announcement strip
-   and the section sub-nav are not needed to start using the service. */
-@media (max-width: 767px) and (max-height: 720px) {
-  #announce,
-  #subnav {
-    display: none !important;
-  }
-  #hero {
-    padding-top: 80px !important;
-  }
-  #hero h1 {
-    font-size: 38px !important;
-  }
-  #hero .lead {
-    margin-top: 14px !important;
-  }
-  #hero [data-hero-in].mt-7 {
-    margin-top: 20px !important;
-  }
-}
-/* The consent bar owns the bottom strip of the screen while the analytics
-   choice is pending, so the mobile sticky CTA steps aside. */
+/* The consent bar owns the bottom strip while the analytics choice is
+   pending, so the mobile sticky CTA steps aside. */
 html.has-consent #mobile-cta {
   display: none;
 }
 
+/* forced-colors: gradient text would vanish — fall back to CanvasText */
+@media (forced-colors: active) {
+  .grad-text {
+    background: none;
+    color: CanvasText;
+    -webkit-text-stroke: 0;
+  }
+  .footer-watermark {
+    color: CanvasText;
+    opacity: 0.25;
+  }
+}
+
+/* Translucency is decoration, not information: frost it solid. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .menu-veil {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .rail { mask-image: none; -webkit-mask-image: none; }
+}
+
 /* Reduced-motion overrides stay unlayered so they outrank every layered
-   rule above (they are a user preference, not a design default). */
+   rule above (a user preference, not a design default). */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-hero-in] {
@@ -663,12 +1057,12 @@ html.has-consent #mobile-cta {
     opacity: 1;
     transform: none;
   }
-  .orbit-slow, .orbit-rev, .floaty, .floaty-2, .floaty-3, .glow-pulse, .rail-track {
+  .orbit-slow, .orbit-rev, .floaty, .glow-pulse, .rail-track,
+  .slide-cycle > *, .spark-flow, .ping-dot::after,
+  .border-conic::before {
     animation: none !important;
   }
-  .rail {
-    overflow-x: auto;
-  }
+  .rail { overflow-x: auto; }
   .reveal {
     opacity: 1;
     transform: none;
@@ -678,5 +1072,16 @@ html.has-consent #mobile-cta {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Short viewports (small phones, landscape): the hero gives up some height
+   so the primary CTA stays above the fold with the consent bar visible. */
+@media (max-width: 767px) and (max-height: 720px) {
+  #hero {
+    padding-top: 96px !important;
+  }
+  #hero h1 {
+    font-size: clamp(1.9rem, 8.5vw, 2.4rem) !important;
   }
 }

@@ -3,12 +3,13 @@ import { site } from '../data/site';
 import Icon from './Icon.astro';
 ---
 
-<div class="reveal hairline relative mt-12 overflow-hidden rounded-3xl bg-gradient-to-b from-[#60a1a3]/14 to-transparent p-7 text-center sm:p-10">
-  <p class="display text-2xl text-white sm:text-3xl">Попробуйте Capybara сегодня</p>
-  <p class="lead mx-auto mt-3 max-w-md text-[15px]">
+<div class="reveal card spot relative mt-12 overflow-hidden border-brand/35 p-7 text-center sm:p-10" style="background: linear-gradient(165deg, color-mix(in oklab, var(--brand) 14%, var(--surface)), var(--surface) 60%)">
+  <div class="ambient -right-16 -top-16 h-56 w-56" style="background: var(--glow)" aria-hidden="true"></div>
+  <p class="display relative text-2xl text-ink sm:text-3xl">Попробуйте Capybara сегодня</p>
+  <p class="lead relative mx-auto mt-3 max-w-md text-[15px]">
     Первый день бесплатно, без карты. Подключение за пару минут.
   </p>
-  <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+  <div class="relative mt-6 flex flex-col justify-center gap-3 sm:flex-row">
     <a
       href={site.browserUrl}
       target="_blank"
@@ -20,7 +21,7 @@ import Icon from './Icon.astro';
     >
       <Icon name="globe" class="h-5 w-5" />
       Продолжить в браузере
-        <span class="sr-only"> — Capybara VPN</span>
+      <span class="sr-only"> — Capybara VPN</span>
     </a>
     <a
       href={site.telegramUrl}
@@ -33,7 +34,7 @@ import Icon from './Icon.astro';
     >
       <Icon name="telegram" class="h-5 w-5" />
       Открыть в Telegram
-        <span class="sr-only"> — Capybara VPN</span>
+      <span class="sr-only"> — Capybara VPN</span>
     </a>
   </div>
 </div>

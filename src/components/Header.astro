@@ -6,36 +6,54 @@ import Logo from './Logo.astro';
 import { withBase } from '../lib/url';
 ---
 
-<header id="site-header" class="fixed inset-x-0 top-0 z-50">
-  <!-- announcement strip -->
-  <div id="announce" class="border-b border-white/8 bg-[#0b0e14]/95 backdrop-blur-sm">
-    <p class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-[12.5px] leading-snug text-[#9aa6b2]">
-      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#60a1a3]" aria-hidden="true"></span>
-      <span class="hidden sm:inline">Capybara VPN — спокойный VPN с подпиской от 249 ₽. </span>Подключение через Telegram или браузер.
-    </p>
-  </div>
-
-  <!--
-    One nav for both layouts: on lg the section links sit in the header row
-    (grid column 2), below lg they drop to their own scrollable strip under
-    the row. The links exist in the DOM once — the old hidden desktop copy
-    plus the mobile strip duplicated the same four links twice.
-  -->
-  <nav
-    class="mx-auto grid max-w-6xl grid-cols-[auto_1fr] items-center gap-x-3 px-4 sm:px-6 lg:grid-cols-[auto_1fr_auto]"
-    aria-label="Основная навигация"
+<!--
+  One floating glass pill for every breakpoint. On lg the section links sit
+  inline; below lg they live in the full-screen menu sheet. The old
+  announcement strip folded into the hero's pill — the offer line is the
+  first thing the eye meets anyway.
+-->
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">
+  <div
+    class="header-pill glass mx-auto flex h-14 max-w-5xl items-center gap-2 rounded-2xl px-2.5 sm:px-3.5"
   >
-    <a href={withBase("/#top")} class="row-start-1 flex shrink-0 items-center gap-2.5 py-3" aria-label="Capybara VPN — на главную страницу">
-      <Logo
-        class="h-9 w-9 rounded-full object-cover ring-1 ring-white/15"
-        eager
-      />
-      <span class="whitespace-nowrap text-[15px] font-semibold tracking-tight text-[#f2f4f3]">Capybara VPN</span>
+    <a
+      href={withBase('/#top')}
+      class="flex shrink-0 items-center gap-2.5 rounded-xl py-1 pl-1 pr-2"
+      aria-label="Capybara VPN — на главную страницу"
+    >
+      <Logo class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong" eager />
+      <span class="whitespace-nowrap text-[14.5px] font-semibold tracking-tight text-ink max-[359px]:hidden"
+        >Capybara&nbsp;VPN</span
+      >
     </a>
 
-    <div class="row-start-1 flex items-center justify-end gap-2 py-3 lg:col-start-3">
+    <nav class="ml-3 hidden items-center gap-0.5 lg:flex" aria-label="Основная навигация">
+      {
+        nav.map((n) => (
+          <a
+            href={withBase(n.href)}
+            class="rounded-full px-3.5 py-2 text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-brand-soft hover:text-ink"
+          >
+            {n.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="ml-auto flex items-center gap-1.5 sm:gap-2">
+      <button
+        id="theme-toggle"
+        type="button"
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-2 transition-colors hover:border-brand hover:text-ink"
+        aria-label="Переключить светлую и тёмную тему"
+      >
+        {/* moon shows in light, sun in dark; toggled by html[data-theme] */}
+        <span class="i-moon flex"><Icon name="moon" class="h-4 w-4" /></span>
+        <span class="i-sun flex"><Icon name="sun" class="h-4 w-4" /></span>
+      </button>
+
       <a
-        href={withBase("/#pricing")}
+        href={withBase('/#pricing')}
         class="btn btn-ghost hidden px-4 py-2 text-[13.5px] sm:inline-flex"
       >
         Тарифы
@@ -44,37 +62,104 @@ import { withBase } from '../lib/url';
         href={site.browserUrl}
         target="_blank"
         rel="noopener noreferrer sponsored nofollow"
-        class="btn btn-primary px-4 py-2 text-[13.5px] sm:px-5 sm:py-2.5 sm:text-sm"
+        class="btn btn-primary px-3.5 py-2 text-[13.5px] sm:px-5 sm:py-2.5"
         data-cta
         data-placement="header"
         data-destination="browser"
       >
         <Icon name="globe" class="h-4 w-4" />
-        Подключиться
+        <span class="hidden min-[480px]:inline">Подключиться</span>
+        <span class="min-[480px]:sr-only">Подключить</span>
         <span class="sr-only"> — Capybara VPN</span>
       </a>
-    </div>
 
-    <nav
-      id="subnav"
-      aria-label="Навигация по разделам"
-      class="col-span-full -mx-4 border-t border-white/6 px-4 sm:-mx-6 sm:px-6 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:border-0 lg:px-0"
-    >
-      <div
-        class="flex items-center gap-4 overflow-x-auto py-2 text-[12.5px] font-medium text-[#9aa6b2] sm:gap-5 sm:text-[13px] lg:justify-center lg:gap-7 lg:overflow-visible lg:py-0 lg:text-[14px]"
-        tabindex="0"
+      <button
+        id="menu-btn"
+        type="button"
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-brand lg:hidden"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
-        {
-          nav.map((n) => (
-            <a
-              href={withBase(n.href)}
-              class="inline-flex min-h-[32px] items-center whitespace-nowrap py-1 transition-colors hover:text-white"
-            >
-              {n.label}
-            </a>
-          ))
-        }
-      </div>
-    </nav>
-  </nav>
+        <span class="i-burger flex"><Icon name="burger" class="h-4.5 w-4.5" /></span>
+        <span class="i-close flex"><Icon name="close" class="h-4.5 w-4.5" /></span>
+      </button>
+    </div>
+  </div>
 </header>
+
+<!--
+  Full-screen menu sheet (below lg). Opens with a spring-ish slide and
+  staggered links; closes on Esc (client script) and on any link tap.
+-->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 lg:hidden"
+  aria-label="Меню"
+>
+  <div class="menu-veil absolute inset-0"></div>
+  <div class="relative flex h-full flex-col px-6 pb-8 pt-24">
+    <nav class="flex flex-col" aria-label="Навигация по разделам">
+      {
+        nav.map((n, i) => (
+          <a
+            href={withBase(n.href)}
+            class="menu-link flex min-h-[56px] items-center justify-between border-b border-line text-[19px] font-semibold tracking-tight text-ink"
+            style={`--mi:${i}`}
+          >
+            {n.label}
+            <span class="text-brand" aria-hidden="true">
+              <Icon name="arrow" class="h-4.5 w-4.5" />
+            </span>
+          </a>
+        ))
+      }
+    </nav>
+    <div class="menu-link mt-auto grid gap-2.5 pt-10" style="--mi:6">
+      <a
+        href={site.browserUrl}
+        target="_blank"
+        rel="noopener noreferrer sponsored nofollow"
+        class="btn btn-primary w-full px-5 py-4 text-[15px]"
+        data-cta
+        data-placement="header"
+        data-destination="browser"
+      >
+        <Icon name="globe" class="h-5 w-5" />
+        Продолжить в браузере
+        <span class="sr-only"> — Capybara VPN</span>
+      </a>
+      <a
+        href={site.telegramUrl}
+        target="_blank"
+        rel="noopener noreferrer sponsored nofollow"
+        class="btn btn-ghost w-full px-5 py-4 text-[15px]"
+        data-cta
+        data-placement="header"
+        data-destination="telegram"
+      >
+        <Icon name="telegram" class="h-5 w-5" />
+        Открыть в Telegram
+        <span class="sr-only"> — Capybara VPN</span>
+      </a>
+      <p class="mt-2 text-center text-[12.5px] text-ink-3">
+        1 день бесплатно, без карты · от 249 ₽
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Theme and menu icon swaps follow the root state, so no JS icon logic. */
+  html[data-theme='dark'] .i-moon,
+  html:not([data-theme='dark']) .i-sun {
+    display: none;
+  }
+  html:not([data-theme]) #theme-toggle {
+    display: none;
+  }
+  html.menu-open .i-burger,
+  html:not(.menu-open) .i-close {
+    display: none;
+  }
+</style>

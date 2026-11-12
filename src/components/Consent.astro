@@ -3,41 +3,42 @@ import { site } from '../data/site';
 ---
 
 <!--
-  Consent is a NON-MODAL, single-row bar pinned to the bottom of the viewport.
-  The old floating card (bottom-left, 235px tall on mobile) covered both hero
-  CTAs and the mobile sticky bar, so a phone visitor could not reach the
-  primary action. This bar never overlaps the hero CTAs, sits below the
-  mobile sticky bar, and hides that bar while a choice is pending.
+  Consent is a NON-MODAL floating card pinned above the bottom edge. The old
+  full-width bar covered hero CTAs on small phones; this card never overlaps
+  the primary actions, and the mobile sticky bar steps aside while a choice
+  is pending (html.has-consent).
 -->
 <div
   id="consent"
-  class="fixed inset-x-0 bottom-0 z-[70] hidden border-t border-white/10 bg-[#0b0e14]/95 px-3 py-2 backdrop-blur-xl sm:px-4"
+  class="fixed inset-x-3 bottom-3 z-[70] hidden sm:inset-x-auto sm:bottom-4 sm:left-1/2 sm:w-[min(560px,calc(100vw-2rem))] sm:-translate-x-1/2"
   role="region"
   aria-label="Настройка аналитики"
 >
-  <div class="mx-auto flex max-w-4xl items-center gap-3">
-    <p class="min-w-0 flex-1 text-[12.5px] leading-snug text-[#9aa6b2] sm:text-[13.5px]">
-      Аналитика — на ваш выбор.
-      <span class="sr-only sm:not-sr-only">Яндекс Метрика собирает обезличенную статистику работы сайта; GA4 подключаем только с вашего согласия.</span>
-    </p>
-    <div class="flex shrink-0 gap-2">
-      <button id="consent-accept" type="button" class="btn btn-primary px-3 py-2.5 text-[12.5px] sm:text-[13px]">
-        Разрешить
-      </button>
-      <button id="consent-decline" type="button" class="btn btn-ghost px-3 py-2.5 text-[12.5px] sm:text-[13px]">
-        Не сейчас
-      </button>
+  <div class="glass rounded-2xl border border-line-strong p-3 shadow-[var(--shadow-pop)] sm:px-4">
+    <div class="flex items-center gap-3">
+      <p class="min-w-0 flex-1 text-[12.5px] leading-snug text-ink-2 sm:text-[13px]">
+        Аналитика — на ваш выбор.
+        <span class="sr-only sm:not-sr-only">Яндекс Метрика собирает обезличенную статистику работы сайта; GA4 подключаем только с вашего согласия.</span>
+      </p>
+      <div class="flex shrink-0 gap-2">
+        <button id="consent-accept" type="button" class="btn btn-primary px-3.5 py-2.5 text-[12.5px] sm:text-[13px]">
+          Разрешить
+        </button>
+        <button id="consent-decline" type="button" class="btn btn-ghost bg-surface/70 px-3.5 py-2.5 text-[12.5px] sm:text-[13px]">
+          Не сейчас
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Re-open the analytics choice. Only shown once a choice has been made,
-     so it never competes with the bar above for the same corner. -->
+     so it never competes with the card above for the same corner. -->
 <div id="consent-manage-wrap" class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-3 z-[70] hidden md:bottom-6 md:right-6">
   <button
     id="consent-manage"
     type="button"
-    class="hairline rounded-full bg-[#12151c]/90 px-3.5 py-2 text-[12px] font-medium text-[#9aa6b2] backdrop-blur-xl transition-colors hover:text-white"
+    class="glass rounded-full border border-line px-3.5 py-2 text-[12px] font-medium text-ink-2 transition-colors hover:text-ink"
     aria-label="Изменить настройки аналитики"
   >
     Cookie

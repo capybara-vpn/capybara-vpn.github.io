@@ -33,7 +33,7 @@ const {
 } = Astro.props;
 
 import { withBase } from '../lib/url';
-import { fontFaces, fontUrls } from '../lib/fonts';
+import { fontFaces, preloadUrls } from '../lib/fonts';
 
 // site.siteUrl is the full public URL (origin + base). Derive origin here so
 // asset URLs never get a doubled base path (withBase already includes it).
@@ -157,13 +157,35 @@ const jsonLdAll = [
 const jsonLd = jsonLdAll.filter(
   (x) => faqList.length > 0 || (x as Record<string, unknown>)["@type"] !== "FAQPage"
 );
+
+// Approximations of the two theme backgrounds, for the browser chrome only.
+const themeColorLight = '#f7f5f1';
+const themeColorDark = '#151b20';
+
+// Theme before first paint: always dark unless the visitor has explicitly
+// switched to light (the choice is remembered). The system preference is
+// deliberately ignored — the owner's call (2026-11-13): dark is the brand
+// look, light is opt-in via the header toggle. ?theme=light|dark overrides
+// for one view (screenshots, debugging) without touching the stored choice.
+const themeBoot = `(function(){try{var t=localStorage.getItem('capybara-theme');if(t!=='light'){t='dark';}var q=new URLSearchParams(location.search).get('theme');if(q==='light'||q==='dark'){t=q;}document.documentElement.dataset.theme=t;var m=document.getElementById('meta-theme-color');if(m){m.content=t==='dark'?'${themeColorDark}':'${themeColorLight}';}}catch(e){document.documentElement.dataset.theme='dark';}})();`;
 ---
 
 <!doctype html>
-<html lang="ru" data-ga-id={gaId} data-ym-id={site.ymId}>
+<html lang="ru" data-type="software" data-ga-id={gaId} data-ym-id={site.ymId}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="site-kind" content="software" />
+    <meta name="page-type" content="software" />
+    {/* Browser chrome color for the default (dark) theme; the boot script
+        right below repaints it when the resolved theme is light. */}
+    <meta name="theme-color" id="meta-theme-color" content={themeColorDark} />
+
+    {/* Theme must exist before the first paint: dark is the brand default,
+        light only when the visitor's system asks for it. ?theme=light|dark
+        overrides for one view (screenshots, debugging) without touching the
+        stored choice. Without JS the CSS falls back to the same rule. */}
+    <script is:inline set:html={themeBoot} />
 
     {/* Yandex Metrika: inline, first thing after the base metas so it starts
         loading before anything else (owner decision 2026-11-07). */}
@@ -205,8 +227,9 @@ const jsonLd = jsonLdAll.filter(
       })();
     </script>
     <style is:inline set:html={fontFaces} />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.latin} />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href={fontUrls.cyrillic} />
+    {preloadUrls.map((u) => (
+      <link rel="preload" as="font" type="font/woff2" crossorigin href={u} />
+    ))}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Capybara VPN" />
@@ -216,8 +239,8 @@ const jsonLd = jsonLdAll.filter(
     {!noindex && <link rel="canonical" href={pageUrl} />}
     <link rel="sitemap" type="application/xml" href={withBase('sitemap-index.xml')} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
-    <meta name="theme-color" content={site.themeColor} />
-    <meta name="color-scheme" content="dark" />
+    {/* Browser chrome color follows the active theme (see boot script + theme toggle). */}
+    <meta name="color-scheme" content="dark light" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Capybara VPN" />

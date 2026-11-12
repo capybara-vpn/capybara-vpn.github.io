@@ -13,8 +13,10 @@ export async function GET() {
     start_url: `${site.siteUrl}/`,
     scope: `${site.siteUrl}/`,
     display: 'standalone',
-    background_color: '#0b0e14',
-    theme_color: '#0b0e14',
+    // Dark is the brand default; the light variant is applied when the
+    // visitor's system asks for it (see the boot script in BaseLayout).
+    background_color: '#151b20',
+    theme_color: '#151b20',
     icons: [
       {
         src: `${site.siteUrl}/icon-192.png`,

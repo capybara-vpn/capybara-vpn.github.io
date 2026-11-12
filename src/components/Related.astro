@@ -25,20 +25,20 @@ const items = [...relatedPaths, ...fill.map((g) => g.href)]
 <nav class="reveal mt-14" aria-label="Читайте также">
   {/* <p> вместо <h2>: это подпись навигационного блока, а не раздел статьи —
       лишний h2 в конце каждой страницы размывал структуру заголовков. */}
-  <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8b98a5]">Читайте также</p>
+  <p class="mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-3">Читайте также</p>
   <ul class="mt-4 grid gap-3 sm:grid-cols-2">
     {
       items.map((g) => (
         <li>
           <a
             href={withBase(g.href)}
-            class="card-lift glass group flex items-center justify-between gap-3 rounded-2xl px-5 py-4"
+            class="card card-hover spot group flex items-center justify-between gap-3 px-5 py-4"
           >
-            <span>
-              <span class="block text-[15px] font-semibold tracking-tight text-white">{g.title}</span>
-              <span class="mt-0.5 block text-[13px] text-[#8b98a5]">{g.note}</span>
+            <span class="min-w-0">
+              <span class="block text-[15px] font-semibold tracking-tight text-ink">{g.title}</span>
+              <span class="mt-0.5 block text-[13px] text-ink-3">{g.note}</span>
             </span>
-            <span class="text-[#8fc3c4] transition-transform group-hover:translate-x-1" aria-hidden="true">
+            <span class="text-brand transition-transform group-hover:translate-x-1" aria-hidden="true">
               →
             </span>
           </a>

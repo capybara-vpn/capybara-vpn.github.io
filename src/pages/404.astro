@@ -5,7 +5,6 @@ import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
 import { site } from '../data/site';
-
 import { b } from '../lib/url';
 ---
 
@@ -18,9 +17,15 @@ import { b } from '../lib/url';
 >
   <Header />
   <div id="top">
-  <main id="main" tabindex="-1" class="mx-auto flex min-h-screen min-h-dvh max-w-xl flex-col items-center justify-center px-6 text-center">
-    <p class="eyebrow">404</p>
-    <h1 class="display mt-4 text-5xl text-white">Такой страницы нет</h1>
+  <main id="main" tabindex="-1" class="relative mx-auto flex min-h-screen min-h-dvh max-w-xl flex-col items-center justify-center px-6 py-24 text-center">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-[420px]" aria-hidden="true">
+      <div class="ambient left-1/2 top-[-160px] h-[380px] w-[min(680px,100vw)] -translate-x-1/2" style="background: var(--glow)"></div>
+    </div>
+    <p class="display reveal is-visible relative text-[clamp(5rem,20vw,9rem)] leading-none text-ink" aria-hidden="true">
+      4<span class="grad-text">0</span>4
+    </p>
+    <p class="eyebrow mt-2">Ошибка</p>
+    <h1 class="display mt-4 text-3xl text-ink sm:text-4xl">Такой страницы нет</h1>
     <p class="lead mt-4">Зато есть быстрый VPN от 249 ₽. Вернёмся к главному?</p>
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
       <a href={`${b}/`} class="btn btn-primary px-6 py-3.5">На главную</a>

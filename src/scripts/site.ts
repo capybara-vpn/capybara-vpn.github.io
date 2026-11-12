@@ -1,9 +1,54 @@
 /**
- * Lightweight client behaviour: header, reveals, analytics (consent-aware),
- * mobile CTA visibility, cursor glow, FAQ tracking.
+ * Lightweight client behaviour: theme, header, mobile menu, card spotlights,
+ * reveals, reading progress, analytics (consent-aware), mobile CTA visibility,
+ * cursor glow, FAQ tracking.
  * No framework, no animation libraries: entrance motion is CSS + IntersectionObserver.
  */
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- theme (light / dark) ----------
+   The boot script in <head> has already set html[data-theme] before first
+   paint (system default unless the visitor chose one). This only reacts to
+   the toggle and remembers the choice. */
+{
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const meta = document.getElementById('meta-theme-color');
+  const CHROME: Record<'light' | 'dark', string> = { light: '#f7f5f1', dark: '#151b20' };
+  const set = (t: 'light' | 'dark') => {
+    root.dataset.theme = t;
+    // Keep the browser chrome bar in sync with the active theme.
+    if (meta) meta.setAttribute('content', CHROME[t]);
+    try {
+      localStorage.setItem('capybara-theme', t);
+    } catch {
+      /* noop */
+    }
+  };
+  btn?.addEventListener('click', () => {
+    set(root.dataset.theme === 'dark' ? 'light' : 'dark');
+    track('theme_toggle', { to: root.dataset.theme || '?' });
+  });
+}
+
+/* ---------- mobile menu sheet ---------- */
+{
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('menu-btn');
+  const open = (v: boolean) => {
+    menu?.classList.toggle('open', v);
+    document.documentElement.classList.toggle('menu-open', v);
+    btn?.setAttribute('aria-expanded', String(v));
+  };
+  btn?.addEventListener('click', () => open(!menu?.classList.contains('open')));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => open(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      open(false);
+      btn?.focus();
+    }
+  });
+}
 
 function track(name: string, params: Record<string, string> = {}) {
   try {
@@ -72,7 +117,8 @@ if (reduced || !('IntersectionObserver' in window)) {
           const step = (t: number) => {
             const k = Math.min(1, (t - t0) / dur);
             const eased = 1 - Math.pow(1 - k, 3);
-            el.textContent = `${Math.round(target * eased).toLocaleString('ru-RU')} ₽`;
+            // digits only: the currency sign is a separate styled node
+            el.textContent = `${Math.round(target * eased).toLocaleString('ru-RU')}`;
             if (k < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
@@ -103,13 +149,42 @@ document.querySelectorAll<HTMLAnchorElement>('a[data-cta]').forEach((a) => {
   });
 });
 
-/* ---------- FAQ open tracking ---------- */
+/* ---------- FAQ: open tracking + JS-managed close ----------
+   A pure-CSS close on <details> is impossible: the UA hides the content
+   the moment [open] is removed, so the collapse never animates — and after
+   the first cycle Chrome stops animating the open too. So: intercept the
+   summary click on an open item, pin the body at 0fr with .is-closing
+   (CSS transition runs), remove [open] on transitionend. */
 document.querySelectorAll<HTMLDetailsElement>('details.faq').forEach((d) => {
   d.addEventListener('toggle', () => {
     if (d.open) {
       const q = d.querySelector('summary')?.textContent?.trim().slice(0, 80) || 'faq';
       track('faq_open', { question: q });
     }
+  });
+  d.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement | null;
+    const onSummary = !!t?.closest('summary');
+    if (!onSummary || t?.closest('a, button')) return;
+    // A click mid-close is swallowed: restarting the transition would snap.
+    if (d.classList.contains('is-closing')) {
+      e.preventDefault();
+      return;
+    }
+    if (!d.open) return; // opening: native path, CSS animates 0fr -> 1fr
+    e.preventDefault();
+    d.classList.add('is-closing');
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      d.classList.remove('is-closing');
+      d.open = false;
+    };
+    d.querySelector('.faq-body')?.addEventListener('transitionend', finish, { once: true });
+    // Fallback: reduced motion zeroes the duration before transitionend
+    // can be relied on, and a hidden tab can pause rAF entirely.
+    setTimeout(finish, 500);
   });
 });
 
@@ -128,6 +203,18 @@ const onScrollDepth = () => {
       track(`scroll_${d}`, {});
     }
   }
+  // reading progress bar shares the rAF slot
+  const bar = document.getElementById('read-progress');
+  if (bar && max > 0) bar.style.transform = `scaleX(${Math.min(1, window.scrollY / max)})`;
+  // sticky steps progress line
+  const steps = document.getElementById('steps-line');
+  const stepsSection = document.getElementById('how');
+  if (steps && stepsSection) {
+    const r = stepsSection.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.4;
+    const done = Math.min(1, Math.max(0, -r.top / (total > 0 ? total : 1)));
+    steps.style.setProperty('--p', done.toFixed(4));
+  }
 };
 let depthRaf = 0;
 window.addEventListener(
@@ -141,6 +228,34 @@ window.addEventListener(
   },
   { passive: true }
 );
+
+/* ---------- card spotlight: --mx/--my follow the pointer (rAF-throttled) ---------- */
+if (!reduced && window.matchMedia('(pointer: fine)').matches) {
+  let spotRaf = 0;
+  let px = 0;
+  let py = 0;
+  let target: Element | null = null;
+  document.addEventListener(
+    'pointermove',
+    (e) => {
+      const el = (e.target as Element | null)?.closest?.('.spot') ?? null;
+      if (!el) return;
+      px = e.clientX;
+      py = e.clientY;
+      target = el;
+      if (!spotRaf) {
+        spotRaf = requestAnimationFrame(() => {
+          spotRaf = 0;
+          const r = target!.getBoundingClientRect();
+          const st = (target! as HTMLElement).style;
+          st.setProperty('--mx', `${px - r.left}px`);
+          st.setProperty('--my', `${py - r.top}px`);
+        });
+      }
+    },
+    { passive: true }
+  );
+}
 
 /* ---------- mobile sticky CTA visibility ---------- */
 const mobileCta = document.getElementById('mobile-cta');

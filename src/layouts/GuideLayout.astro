@@ -6,7 +6,6 @@ import MobileCta from '../components/MobileCta.astro';
 import Consent from '../components/Consent.astro';
 import Related from '../components/Related.astro';
 import GuideCta from '../components/GuideCta.astro';
-import Icon from '../components/Icon.astro';
 import { b } from '../lib/url';
 import { formatRuDate } from '../lib/dates';
 
@@ -76,65 +75,68 @@ const {
   )}
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleLd).replace(/</g, '\u003c')} />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\u003c')} />
+  {/* Reading progress: a 2px brand line across the very top, driven by the
+      scroll handler (scaleX transform only — no layout work per frame). */}
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2.5px]" aria-hidden="true">
+    <div id="read-progress" class="h-full w-full bg-gradient-to-r from-brand via-brand to-amber"></div>
+  </div>
   <div id="top">
     <Header />
     <main id="main" tabindex="-1">
-      <article class="relative mx-auto max-w-3xl px-4 pt-[168px] pb-8 sm:px-6 sm:pt-[156px] lg:pt-[168px]">
-        <nav class="reveal text-[13px] text-[#8b98a5]" aria-label="Хлебные крошки">
+      <article class="relative mx-auto max-w-3xl px-4 pb-8 pt-[108px] sm:px-6">
+        <nav class="reveal text-[13px]" aria-label="Хлебные крошки">
           <ol class="flex flex-wrap items-center gap-2">
             <li class="flex items-center gap-2">
-              <a href={`${b}/`} class="py-1 transition-colors hover:text-white">Главная</a>
-              <span aria-hidden="true"> → </span>
+              <a href={`${b}/`} class="rounded-md py-1 text-ink-3 transition-colors hover:text-brand">Главная</a>
+              <span class="text-ink-3" aria-hidden="true">/</span>
             </li>
-            <li><span class="text-[#9aa6b2]" aria-current="page">{crumbName}</span></li>
+            <li><span class="text-ink-2" aria-current="page">{crumbName}</span></li>
           </ol>
         </nav>
-        <p class="eyebrow reveal mt-6">{eyebrow}</p>
-        <h1 class="display reveal mt-4 text-4xl text-white sm:text-5xl">
+        <p class="eyebrow reveal mt-7">{eyebrow}</p>
+        <h1 class="display reveal mt-4 text-[clamp(1.8rem,1.1rem+2.6vw,2.9rem)] text-ink">
           {heading}
         </h1>
-        <p class="lead reveal mt-4 text-[16.5px]">
+        <p class="lead reveal mt-5 text-[16.5px]">
           {lead}
         </p>
 
-        <p class="reveal mt-3 text-[13px] text-[#8b98a5]">
+        <p class="reveal mono mt-4 text-[12px] text-ink-3">
           Обновлено{' '}
           <time datetime={dateModified}>{formatRuDate(dateModified)}</time>
         </p>
 
         {
           summary && (
-            <div class="reveal mt-6 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
-              <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8fc3c4]">Коротко</p>
-              <p class="mt-1.5 text-[15px] leading-relaxed text-[#c6d4d4]">{summary}</p>
+            <div class="reveal mt-7 rounded-2xl border border-brand/30 px-5 py-4" style="background: linear-gradient(150deg, color-mix(in oklab, var(--brand) 10%, var(--surface)), var(--surface) 65%)">
+              <p class="mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-brand">Коротко</p>
+              <p class="mt-2 text-[15px] leading-relaxed text-ink">{summary}</p>
             </div>
           )
         }
 
-        <div class="guide-body reveal mt-8">
+        <div class="guide-body reveal mt-9">
           <slot />
         </div>
 
         {
           faqs.length > 0 && (
             <section class="reveal mt-14" aria-labelledby="guide-faq">
-              <h2 id="guide-faq" class="text-[26px] font-semibold tracking-tight text-white sm:text-[30px]">
+              <h2 id="guide-faq" class="text-[26px] font-bold tracking-[-0.02em] text-ink sm:text-[30px]">
                 Частые вопросы
               </h2>
-              <div class="mt-5 grid gap-3">
+              <div class="mt-5 grid gap-2.5">
                 {faqs.map((f) => (
-                  <details class="faq">
+                  <details class="faq spot">
                     <summary class="flex items-center justify-between gap-4 px-5 py-4 text-left">
                       {/* An honest h3 inside summary — valid per HTML spec,
                           consistent with the homepage FAQ. */}
-                      <h3 class="text-[15.5px] font-semibold tracking-tight text-white">{f.q}</h3>
-                      <span class="chev flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8fc3c4]">
-                        <Icon name="chevron" class="h-4 w-4" />
-                      </span>
+                      <h3 class="text-[15.5px] font-semibold tracking-tight text-ink">{f.q}</h3>
+                      <span class="plus" aria-hidden="true"></span>
                     </summary>
                     <div class="faq-body">
                       <div>
-                        <p class="px-5 pb-5 text-[14.5px] leading-relaxed text-[#9aa6b2]">{f.a}</p>
+                        <p class="px-5 pb-5 text-[14.5px] leading-relaxed text-ink-2">{f.a}</p>
                       </div>
                     </div>
                   </details>
