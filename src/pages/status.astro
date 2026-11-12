@@ -117,6 +117,21 @@ const autoCount = 11;
     <p class="mt-1.5 text-[14.5px] text-[#9aa6b2]">
       Проверка стучится на порт сервера и замеряет время отклика. Значение — оценка из вашего браузера, а не замер скорости.
     </p>
+    <!-- legend -->
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#9aa6b2]">
+      <span class="inline-flex items-center gap-2">
+        <span class="status-dot status-dot-ok"></span>
+        работает, отклик нормальный
+      </span>
+      <span class="inline-flex items-center gap-2">
+        <span class="status-dot status-dot-slow"></span>
+        работает, отклик высокий
+      </span>
+      <span class="inline-flex items-center gap-2">
+        <span class="status-dot status-dot-fail"></span>
+        сервер не отвечает
+      </span>
+    </div>
     <div id="status-grid" class="glass mt-5 overflow-hidden rounded-3xl">
       <div class="hidden grid-cols-[1.3fr_1.2fr_auto] gap-4 border-b border-white/8 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b98a5] sm:grid">
         <span>Локация</span>
@@ -200,8 +215,10 @@ const autoCount = 11;
         idle: 'status-dot status-dot-idle',
         check: 'status-dot status-dot-check',
         ok: 'status-dot status-dot-ok',
+        slow: 'status-dot status-dot-slow',
         fail: 'status-dot status-dot-fail'
       };
+      var SLOW_MS = 300;
 
       function setState(card, state, text) {
         var dot = card.querySelector('[data-dot]');
@@ -245,9 +262,16 @@ const autoCount = 11;
           var host = card.getAttribute('data-probe');
           setState(card, 'check', 'проверяю…');
           tasks.push(probe(host).then(function (r) {
-            if (r.ok) setState(card, 'ok', '~' + r.ms + ' мс');
-            else setState(card, 'fail', 'не отвечает');
-            return r.ok ? 1 : 0;
+            if (!r.ok) {
+              setState(card, 'fail', 'не отвечает');
+              return 0;
+            }
+            if (r.ms > SLOW_MS) {
+              setState(card, 'slow', '~' + r.ms + ' мс');
+            } else {
+              setState(card, 'ok', '~' + r.ms + ' мс');
+            }
+            return 1;
           }));
         });
         Promise.all(tasks).then(function (results) {
@@ -276,22 +300,4 @@ const autoCount = 11;
   /* neutralize .guide-body typography inside the tool area */
   #status-root h2, #status-root h3, #status-root p { margin-top: 0 !important; }
   #status-root { margin-top: 2.5rem; }
-
-  .status-dot {
-    display: inline-block;
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 9999px;
-  }
-  .status-dot-idle { background: rgba(255, 255, 255, 0.25); }
-  .status-dot-check { background: #f0b34e; animation: status-pulse 1.1s ease-in-out infinite; }
-  .status-dot-ok { background: #8fc3c4; box-shadow: 0 0 10px rgba(143, 195, 196, 0.5); }
-  .status-dot-fail { background: #e06060; box-shadow: 0 0 10px rgba(224, 96, 96, 0.4); }
-  @keyframes status-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .status-dot-check { animation: none; }
-  }
 </style>
